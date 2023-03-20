@@ -1,0 +1,12 @@
+labellers_name:
+  - "samuele"
+  - "michele_j"
+  - "michele_m"
+  - "roberto"
+  - "others"
+
+labellers:
+  samuele:    {min: 0, max: 10}
+  michele_m:  {min: 11, max: 20}
+  michele_j:  {min: 21, max: 30}
+  roberto:    {min: 31, max: 41}
