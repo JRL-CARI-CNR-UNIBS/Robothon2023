@@ -14,6 +14,7 @@ import cv2
 @dataclass
 class ImageLabelling:
     img: np.ndarray
+    fig_name : str
     acquired_keypoints: int = field(default=0, init=False)
     finished: bool = field(default=False, init=False)
     known_keypoints: List[str] = field(init=True)
@@ -27,7 +28,7 @@ class ImageLabelling:
             rospy.loginfo(UserMessages.CUSTOM_GREEN.value.format(
                 f"Keypoint: {self.known_keypoints[self.acquired_keypoints]} acquired"))
             image = cv2.circle(self.img, (x, y), 2, (255, 0, 0), 2)
-            cv2.imshow('image', image)
+            cv2.imshow(self.fig_name, image)
             self.keypoints[self.known_keypoints[self.acquired_keypoints]] = {"x": x, "y": y}
             rospy.loginfo(f"({x},{y})")
 
@@ -128,23 +129,18 @@ def main():
         mistake = True
         while mistake:
 
-            img_labelling = ImageLabelling(img.copy(), known_keypoints)
-
+            img_labelling = ImageLabelling(img.copy(), fig_name, known_keypoints)
+            cv2.namedWindow(fig_name, cv2.WINDOW_NORMAL)
             # Show base image
-            cv2.imshow("image", img)
+            cv2.imshow(fig_name, img)
 
             # Callback for image  labelling
-            cv2.setMouseCallback('image', img_labelling.set_keypoint)
+            cv2.setMouseCallback(fig_name, img_labelling.set_keypoint)
             try:
                 while not img_labelling.is_finished():
                     cv2.waitKey(1)
                 if img_labelling.is_finished():
-                    try:
-                        add_to_yaml(labels_path, fig_name, img_labelling.get_labels())
-                    except KeyError:
-                        rospy.logerr(UserMessages.CUSTOM_RED.value.format(f"Duplicate key: {fig_name} in labels ("
-                                                                          f"image already labelled)"))
-                        return 0
+
                     cv2.waitKey(500)
                     cv2.destroyAllWindows()
 
@@ -152,8 +148,14 @@ def main():
                 print("Press Ctrl-C to terminate while statement")
                 cv2.destroyAllWindows()
                 break
-            user_input = input(UserMessages.CUSTOM_YELLOW.value.format("Do you wonna go on? "))
+            user_input = input(UserMessages.CUSTOM_YELLOW.value.format("Something go wrong?"))
             if not user_input:
+                try:
+                    add_to_yaml(labels_path, fig_name, img_labelling.get_labels())
+                except KeyError:
+                    rospy.logerr(UserMessages.CUSTOM_RED.value.format(f"Duplicate key: {fig_name} in labels ("
+                                                                      f"image already labelled)"))
+                    return 0
                 print("Go on with next image ...")
                 mistake = False
 
