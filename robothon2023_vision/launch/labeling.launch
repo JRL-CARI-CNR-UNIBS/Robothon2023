@@ -7,6 +7,8 @@
 
   <rosparam command="load" file="$(find robothon2023_vision)/config/labels.yaml" />
   <param name="dataset_path" value="$(find robothon2023_vision)/dataset/" />
+  <param name="labels_path" value="$(find robothon2023_vision)/labels/lebels.yaml" />
+
   <param name="fig_prefix_name" value="$(arg fig_prefix_name)" />
 
   <node name="labeling_node" pkg="robothon2023_vision" type="main_labeling.py" output="screen">

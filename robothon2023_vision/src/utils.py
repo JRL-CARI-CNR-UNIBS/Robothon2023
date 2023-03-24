@@ -1,6 +1,7 @@
 from enum import Enum
 from typing import List
 import rospy
+import ruamel.yaml
 
 
 class Color(Enum):
@@ -55,3 +56,4 @@ def check_params_existence(params_name: List[str]):
             rospy.logerr(UserMessages.PARAM_NOT_DEFINED_ERROR.value.format(param_name))
             all_params_exist = False
     return all_params_exist
+

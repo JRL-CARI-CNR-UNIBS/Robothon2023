@@ -17,18 +17,20 @@ class ImageLabelling:
     acquired_keypoints: int = field(default=0, init=False)
     finished: bool = field(default=False, init=False)
     known_keypoints: List[str] = field(init=True)
+    keypoints: Dict = field(default=False, init=False)
 
     def __post_init__(self):
-        pass
+        self.keypoints = dict.fromkeys(self.known_keypoints, None)
 
     def set_keypoint(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN and not self.is_finished():
-            print(UserMessages.CUSTOM_GREEN.value.format(
+            rospy.loginfo(UserMessages.CUSTOM_GREEN.value.format(
                 f"Keypoint: {self.known_keypoints[self.acquired_keypoints]} acquired"))
-            image = cv2.circle(self.img, (x, y), 4, (255, 0, 0), 2)
-            print(id(image))
+            image = cv2.circle(self.img, (x, y), 2, (255, 0, 0), 2)
             cv2.imshow('image', image)
-            print(f"({x},{y})")
+            self.keypoints[self.known_keypoints[self.acquired_keypoints]] = {"x": x, "y": y}
+            rospy.loginfo(f"({x},{y})")
+
             self.acquired_keypoints += 1
 
     def is_finished(self):
@@ -36,13 +38,13 @@ class ImageLabelling:
             return True
         return False
 
-    def get_labels(self):
+    def get_labels(self) -> Dict:
+        return self.keypoints
         # TODO: Get image labels
-        pass
+        # pass
 
 
 def check_labellers_params(labellers_range, labeller_name):
-
     # Check that the labellers name is in the labeller range
     if labeller_name not in labellers_range.keys():
         rospy.logerr(
@@ -52,7 +54,7 @@ def check_labellers_params(labellers_range, labeller_name):
     for name in labellers_range:
         range_min, range_max = labellers_range[name]["min"], labellers_range[name]["max"]
         other_labellers_name = list(labellers_range.keys())
-        print(other_labellers_name)
+
         # Check intersection with other labellers
         for other_labeller in other_labellers_name:
             if other_labeller is name:
@@ -65,15 +67,39 @@ def check_labellers_params(labellers_range, labeller_name):
     return True
 
 
+def add_to_yaml(filename, figure_name, keypoints):
+    file = Path(filename)
+
+    yaml = ruamel.yaml.YAML(typ='rt')
+    yaml.preserve_quotes = True
+    # yaml.indent(mapping=2, sequence=4, offset=2)
+    try:
+        data = yaml.load(file)
+    except Exception:
+        data = None
+
+    with open(file, 'wb') as f:
+        if data is None:
+            data = {}
+        if not figure_name in data:
+            data[figure_name] = keypoints
+            yaml.dump(data, f)
+            return True
+        else:
+            yaml.dump(data, f)
+            raise KeyError
+
+
 def main():
     rospy.init_node('keypoints_labeling')
 
     if not check_params_existence(
-            ["known_keypoints", "dataset_path", "fig_prefix_name", "~labellers", "~labeller_name"]):
+            ["known_keypoints", "dataset_path", "labels_path", "fig_prefix_name", "~labellers", "~labeller_name"]):
         return 0
 
     fig_prefix_name = rospy.get_param("fig_prefix_name")
     dataset_path = rospy.get_param("dataset_path")
+    labels_path = rospy.get_param("labels_path")
     known_keypoints = rospy.get_param("known_keypoints")
 
     labellers = rospy.get_param("~labellers")
@@ -85,9 +111,11 @@ def main():
 
     range_min, range_max = labellers[labeller_name]["min"], labellers[labeller_name]["max"]
 
-    for n_fig in range(range_min, range_max+1):
+    labelled_keypoints = {}
+    for n_fig in range(range_min, range_max + 1):
         # Load image
-        fig_path = f"{dataset_path}{fig_prefix_name}{n_fig}.png"
+        fig_name = f"{fig_prefix_name}{n_fig}.png"
+        fig_path = f"{dataset_path}{fig_name}"
         rospy.loginfo(UserMessages.CUSTOM_GREEN.value.format(f"Analyzing image: {fig_path}"))
         img = cv2.imread(str(fig_path))
 
@@ -111,6 +139,12 @@ def main():
                 while not img_labelling.is_finished():
                     cv2.waitKey(1)
                 if img_labelling.is_finished():
+                    try:
+                        add_to_yaml(labels_path, fig_name, img_labelling.get_labels())
+                    except KeyError:
+                        rospy.logerr(UserMessages.CUSTOM_RED.value.format(f"Duplicate key: {fig_name} in labels ("
+                                                                          f"image already labelled)"))
+                        return 0
                     cv2.waitKey(500)
                     cv2.destroyAllWindows()
 
@@ -122,6 +156,9 @@ def main():
             if not user_input:
                 print("Go on with next image ...")
                 mistake = False
+
+        # labelled_keypoints[f"{fig_prefix_name}{n_fig}.png"] = img_labelling.get_labels()
+    print(labelled_keypoints)
 
 
 if __name__ == "__main__":
