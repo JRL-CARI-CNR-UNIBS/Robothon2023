@@ -1,0 +1,671 @@
+frame_0.png:
+  red_button:
+    x: 370
+    y: 384
+  blue_button:
+    x: 393
+    y: 384
+  red_plug:
+    x: 354
+    y: 291
+  black_plug:
+    x: 395
+    y: 290
+  screw_1:
+    x: 352
+    y: 395
+  screw_2:
+    x: 352
+    y: 368
+  screw_3:
+    x: 310
+    y: 337
+  screw_4:
+    x: 310
+    y: 311
+  screw_5:
+    x: 347
+    y: 257
+  screw_6:
+    x: 347
+    y: 231
+  screw_7:
+    x: 295
+    y: 258
+  screw_8:
+    x: 268
+    y: 257
+  cable_wrap_screw_left_1:
+    x: 431
+    y: 354
+  cable_wrap_screw_left_2:
+    x: 432
+    y: 328
+  cable_wrap_screw_right_1:
+    x: 439
+    y: 153
+  cable_wrap_screw_right_2:
+    x: 440
+    y: 126
+  door_screw_left:
+    x: 235
+    y: 192
+  door_screw_right:
+    x: 236
+    y: 99
+  door_handle:
+    x: 384
+    y: 147
+  slider:
+    x: 269
+    y: 326
+frame_1.png:
+  red_button:
+    x: 336
+    y: 405
+  blue_button:
+    x: 359
+    y: 412
+  red_plug:
+    x: 341
+    y: 313
+  black_plug:
+    x: 381
+    y: 322
+  screw_1:
+    x: 316
+    y: 415
+  screw_2:
+    x: 322
+    y: 389
+  screw_3:
+    x: 288
+    y: 348
+  screw_4:
+    x: 295
+    y: 322
+  screw_5:
+    x: 342
+    y: 278
+  screw_6:
+    x: 349
+    y: 253
+  screw_7:
+    x: 291
+    y: 267
+  screw_8:
+    x: 266
+    y: 261
+  cable_wrap_screw_left_1:
+    x: 402
+    y: 393
+  cable_wrap_screw_left_2:
+    x: 408
+    y: 367
+  cable_wrap_screw_right_1:
+    x: 455
+    y: 199
+  cable_wrap_screw_right_2:
+    x: 462
+    y: 174
+  door_screw_left:
+    x: 248
+    y: 191
+  door_screw_right:
+    x: 270
+    y: 100
+  door_handle:
+    x: 404
+    y: 181
+  slider:
+    x: 251
+    y: 329
+frame_2.png:
+  red_button:
+    x: 276
+    y: 400
+  blue_button:
+    x: 296
+    y: 412
+  red_plug:
+    x: 314
+    y: 314
+  black_plug:
+    x: 349
+    y: 336
+  screw_1:
+    x: 255
+    y: 401
+  screw_2:
+    x: 270
+    y: 380
+  screw_3:
+    x: 251
+    y: 329
+  screw_4:
+    x: 266
+    y: 307
+  screw_5:
+    x: 326
+    y: 282
+  screw_6:
+    x: 341
+    y: 260
+  screw_7:
+    x: 281
+    y: 254
+  screw_8:
+    x: 260
+    y: 239
+  cable_wrap_screw_left_1:
+    x: 344
+    y: 409
+  cable_wrap_screw_left_2:
+    x: 359
+    y: 388
+  cable_wrap_screw_right_1:
+    x: 459
+    y: 245
+  cable_wrap_screw_right_2:
+    x: 473
+    y: 223
+  door_screw_left:
+    x: 266
+    y: 167
+  door_screw_right:
+    x: 319
+    y: 90
+  door_handle:
+    x: 416
+    y: 211
+  slider:
+    x: 223
+    y: 298
+frame_3.png:
+  red_button:
+    x: 228
+    y: 375
+  blue_button:
+    x: 242
+    y: 394
+  red_plug:
+    x: 293
+    y: 306
+  black_plug:
+    x: 318
+    y: 339
+  screw_1:
+    x: 207
+    y: 369
+  screw_2:
+    x: 228
+    y: 354
+  screw_3:
+    x: 229
+    y: 300
+  screw_4:
+    x: 250
+    y: 285
+  screw_5:
+    x: 315
+    y: 280
+  screw_6:
+    x: 337
+    y: 265
+  screw_7:
+    x: 283
+    y: 239
+  screw_8:
+    x: 267
+    y: 218
+  cable_wrap_screw_left_1:
+    x: 289
+    y: 407
+  cable_wrap_screw_left_2:
+    x: 310
+    y: 391
+  cable_wrap_screw_right_1:
+    x: 452
+    y: 291
+  cable_wrap_screw_right_2:
+    x: 473
+    y: 275
+  door_screw_left:
+    x: 299
+    y: 152
+  door_screw_right:
+    x: 373
+    y: 98
+  door_handle:
+    x: 425
+    y: 245
+  slider:
+    x: 213
+    y: 261
+frame_4.png:
+  red_button:
+    x: 187
+    y: 342
+  blue_button:
+    x: 196
+    y: 364
+  red_plug:
+    x: 269
+    y: 293
+  black_plug:
+    x: 284
+    y: 332
+  screw_1:
+    x: 169
+    y: 330
+  screw_2:
+    x: 193
+    y: 321
+  screw_3:
+    x: 208
+    y: 269
+  screw_4:
+    x: 233
+    y: 260
+  screw_5:
+    x: 298
+    y: 274
+  screw_6:
+    x: 322
+    y: 265
+  screw_7:
+    x: 277
+    y: 225
+  screw_8:
+    x: 268
+    y: 201
+  cable_wrap_screw_left_1:
+    x: 237
+    y: 389
+  cable_wrap_screw_left_2:
+    x: 262
+    y: 379
+  cable_wrap_screw_right_1:
+    x: 426
+    y: 321
+  cable_wrap_screw_right_2:
+    x: 451
+    y: 312
+  door_screw_left:
+    x: 317
+    y: 146
+  door_screw_right:
+    x: 404
+    y: 115
+  door_handle:
+    x: 413
+    y: 269
+  slider:
+    x: 205
+    y: 227
+frame_5.png:
+  red_button:
+    x: 157
+    y: 293
+  blue_button:
+    x: 158
+    y: 316
+  red_plug:
+    x: 251
+    y: 270
+  black_plug:
+    x: 254
+    y: 312
+  screw_1:
+    x: 143
+    y: 275
+  screw_2:
+    x: 169
+    y: 274
+  screw_3:
+    x: 200
+    y: 229
+  screw_4:
+    x: 226
+    y: 228
+  screw_5:
+    x: 284
+    y: 261
+  screw_6:
+    x: 310
+    y: 260
+  screw_7:
+    x: 279
+    y: 209
+  screw_8:
+    x: 278
+    y: 182
+  cable_wrap_screw_left_1:
+    x: 191
+    y: 353
+  cable_wrap_screw_left_2:
+    x: 217
+    y: 351
+  cable_wrap_screw_right_1:
+    x: 392
+    y: 345
+  cable_wrap_screw_right_2:
+    x: 418
+    y: 344
+  door_screw_left:
+    x: 341
+    y: 145
+  door_screw_right:
+    x: 433
+    y: 142
+  door_handle:
+    x: 395
+    y: 292
+  slider:
+    x: 210
+    y: 188
+frame_6.png:
+  red_button:
+    x: 160
+    y: 234
+  blue_button:
+    x: 153
+    y: 257
+  red_plug:
+    x: 256
+    y: 243
+  black_plug:
+    x: 245
+    y: 283
+  screw_1:
+    x: 151
+    y: 213
+  screw_2:
+    x: 177
+    y: 220
+  screw_3:
+    x: 221
+    y: 187
+  screw_4:
+    x: 246
+    y: 195
+  screw_5:
+    x: 290
+    y: 244
+  screw_6:
+    x: 315
+    y: 252
+  screw_7:
+    x: 303
+    y: 193
+  screw_8:
+    x: 310
+    y: 168
+  cable_wrap_screw_left_1:
+    x: 172
+    y: 302
+  cable_wrap_screw_left_2:
+    x: 198
+    y: 309
+  cable_wrap_screw_right_1:
+    x: 366
+    y: 359
+  cable_wrap_screw_right_2:
+    x: 391
+    y: 365
+  door_screw_left:
+    x: 382
+    y: 153
+  door_screw_right:
+    x: 469
+    y: 179
+  door_handle:
+    x: 386
+    y: 308
+  slider:
+    x: 244
+    y: 151
+frame_7.png:
+  red_button:
+    x: 185
+    y: 176
+  blue_button:
+    x: 170
+    y: 194
+  red_plug:
+    x: 270
+    y: 223
+  black_plug:
+    x: 244
+    y: 255
+  screw_1:
+    x: 186
+    y: 153
+  screw_2:
+    x: 207
+    y: 170
+  screw_3:
+    x: 261
+    y: 158
+  screw_4:
+    x: 281
+    y: 175
+  screw_5:
+    x: 301
+    y: 238
+  screw_6:
+    x: 321
+    y: 255
+  screw_7:
+    x: 333
+    y: 197
+  screw_8:
+    x: 350
+    y: 177
+  cable_wrap_screw_left_1:
+    x: 170
+    y: 243
+  cable_wrap_screw_left_2:
+    x: 191
+    y: 260
+  cable_wrap_screw_right_1:
+    x: 324
+    y: 373
+  cable_wrap_screw_right_2:
+    x: 345
+    y: 389
+  door_screw_left:
+    x: 421
+    y: 192
+  door_screw_right:
+    x: 490
+    y: 251
+  door_handle:
+    x: 364
+    y: 336
+  slider:
+    x: 297
+    y: 134
+frame_8.png:
+  red_button:
+    x: 212
+    y: 143
+  blue_button:
+    x: 193
+    y: 157
+  red_plug:
+    x: 282
+    y: 211
+  black_plug:
+    x: 249
+    y: 236
+  screw_1:
+    x: 219
+    y: 122
+  screw_2:
+    x: 235
+    y: 144
+  screw_3:
+    x: 290
+    y: 146
+  screw_4:
+    x: 305
+    y: 167
+  screw_5:
+    x: 308
+    y: 233
+  screw_6:
+    x: 323
+    y: 254
+  screw_7:
+    x: 350
+    y: 202
+  screw_8:
+    x: 371
+    y: 186
+  cable_wrap_screw_left_1:
+    x: 180
+    y: 205
+  cable_wrap_screw_left_2:
+    x: 196
+    y: 226
+  cable_wrap_screw_right_1:
+    x: 296
+    y: 370
+  cable_wrap_screw_right_2:
+    x: 312
+    y: 391
+  door_screw_left:
+    x: 436
+    y: 219
+  door_screw_right:
+    x: 488
+    y: 293
+  door_handle:
+    x: 344
+    y: 343
+  slider:
+    x: 331
+    y: 131
+frame_9.png:
+  red_button:
+    x: 242
+    y: 118
+  blue_button:
+    x: 221
+    y: 128
+  red_plug:
+    x: 297
+    y: 199
+  black_plug:
+    x: 259
+    y: 216
+  screw_1:
+    x: 254
+    y: 99
+  screw_2:
+    x: 264
+    y: 124
+  screw_3:
+    x: 318
+    y: 136
+  screw_4:
+    x: 329
+    y: 161
+  screw_5:
+    x: 318
+    y: 226
+  screw_6:
+    x: 328
+    y: 250
+  screw_7:
+    x: 365
+    y: 203
+  screw_8:
+    x: 389
+    y: 193
+  cable_wrap_screw_left_1:
+    x: 198
+    y: 172
+  cable_wrap_screw_left_2:
+    x: 209
+    y: 196
+  cable_wrap_screw_right_1:
+    x: 279
+    y: 357
+  cable_wrap_screw_right_2:
+    x: 290
+    y: 381
+  door_screw_left:
+    x: 446
+    y: 238
+  door_screw_right:
+    x: 481
+    y: 321
+  door_handle:
+    x: 331
+    y: 341
+  slider:
+    x: 361
+    y: 131
+frame_10.png:
+  red_button:
+    x: 272
+    y: 100
+  blue_button:
+    x: 248
+    y: 105
+  red_plug:
+    x: 311
+    y: 189
+  black_plug:
+    x: 270
+    y: 200
+  screw_1:
+    x: 286
+    y: 82
+  screw_2:
+    x: 292
+    y: 109
+  screw_3:
+    x: 342
+    y: 132
+  screw_4:
+    x: 348
+    y: 157
+  screw_5:
+    x: 326
+    y: 219
+  screw_6:
+    x: 331
+    y: 245
+  screw_7:
+    x: 376
+    y: 206
+  screw_8:
+    x: 402
+    y: 200
+  cable_wrap_screw_left_1:
+    x: 218
+    y: 144
+  cable_wrap_screw_left_2:
+    x: 225
+    y: 170
+  cable_wrap_screw_right_1:
+    x: 263
+    y: 342
+  cable_wrap_screw_right_2:
+    x: 269
+    y: 367
+  door_screw_left:
+    x: 449
+    y: 255
+  door_screw_right:
+    x: 468
+    y: 344
+  door_handle:
+    x: 318
+    y: 335
+  slider:
+    x: 386
+    y: 134
