@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="fig_prefix_name" default="frame_"/>
+
+  <param name="dataset_path" value="$(find robothon2023_vision)/dataset/" />
+
+  <param name="fig_prefix_name" value="$(arg fig_prefix_name)" />
+
+  <node name="labeling_node" pkg="robothon2023_vision" type="check_labeling.py" output="screen">
+    <rosparam ns="image_label" command="load" file="$(find robothon2023_vision)/labels/labels.yaml" />
+  </node>
+
+</launch>
