@@ -13,7 +13,7 @@ import cv2
 @dataclass
 class ImageLabelling:
     img: np.ndarray
-    fig_name : str
+    fig_name: str
     acquired_keypoints: int = field(default=0, init=False)
     finished: bool = field(default=False, init=False)
     known_keypoints: List[str] = field(init=True)
@@ -135,20 +135,21 @@ def main():
 
             # Callback for image  labelling
             cv2.setMouseCallback(fig_name, img_labelling.set_keypoint)
-            try:
-                while not img_labelling.is_finished():
-                    cv2.waitKey(1)
-                if img_labelling.is_finished():
 
-                    cv2.waitKey(500)
+            while not img_labelling.is_finished():
+
+                if cv2.waitKey(1) == ord("q"):
                     cv2.destroyAllWindows()
+                    rospy.loginfo(UserMessages.CUSTOM_RED.value.format("Program stopped. Exit..."))
+                    return 0
 
-            except KeyboardInterrupt:
-                print("Press Ctrl-C to terminate while statement")
+            if img_labelling.is_finished():
+                cv2.waitKey(500)
                 cv2.destroyAllWindows()
-                break
-            user_input = input(UserMessages.CUSTOM_YELLOW.value.format("Something go wrong?"))
-            if not user_input:
+
+            user_input = input(UserMessages.CUSTOM_YELLOW.value.format("Something go wrong? (y - to say yes):"))
+
+            if user_input != "y":
                 try:
                     add_to_yaml(labels_path, fig_name, img_labelling.get_labels())
                 except KeyError:
@@ -157,6 +158,8 @@ def main():
                     return 0
                 print("Go on with next image ...")
                 mistake = False
+            else:
+                rospy.loginfo(UserMessages.CUSTOM_GREEN.value.format(f"----- Repeat labelling image:  {fig_name}"))
 
         # labelled_keypoints[f"{fig_prefix_name}{n_fig}.png"] = img_labelling.get_labels()
     print(labelled_keypoints)
