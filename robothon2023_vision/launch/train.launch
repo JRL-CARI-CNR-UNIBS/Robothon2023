@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="fig_prefix_name" default="frame_"/>
+  <arg name="labeller_name" default="name"/>
+
+  <param name="dataset_path" value="$(find robothon2023_vision)/dataset/" />
+  <param name="labels_path" value="$(find robothon2023_vision)/labels/" />
+
+  <param name="fig_prefix_name" value="$(arg fig_prefix_name)" />
+  <rosparam command="load" file="$(find robothon2023_vision)/config/labels.yaml" />
+
+  <node name="labeling_node" pkg="robothon2023_vision" type="training.py" output="screen">
+       <rosparam command="load" ns="image_label" file="$(find robothon2023_vision)/labels/labels.yaml" />
+  </node>
+
+</launch>

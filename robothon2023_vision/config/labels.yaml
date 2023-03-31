@@ -2,7 +2,7 @@ known_keypoints:
   - "red_button"
   - "blue_button"
   - "red_plug"
-  - "black_plug"
+  # - "black_plug"
   - "screw_1"
   - "screw_2"
   - "screw_3"
