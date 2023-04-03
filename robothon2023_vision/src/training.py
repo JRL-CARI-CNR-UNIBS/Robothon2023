@@ -147,14 +147,15 @@ def main():
     # learn.lr_find()
 
     learn = vision_learner(dls, resnet18, loss_func=MSELossFlat())
-
+    learn.freeze()
+    learn.fit_flat_cos(2, 1e-2)
     learn.summary()
     # learn.model()
     #learn.lr_find()
     # learn.remove_cb(ProgressCallback)
 
-    learn.fine_tune(10,5e-3)
-    # learn.show_results()
+    # learn.fine_tune(2,5e-3)
+    learn.show_results()
     # plt.show()
 
 
