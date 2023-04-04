@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
+  <arg name="kinematics_config" default="$(find robothon2023_description)/config/cembre_ur10e.yaml"/>
+   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find robothon2023_description)/urdf/robothon2023_simplified.xacro'
+      transmission_hw_interface:=$(arg transmission_hw_interface)
+      kinematics_config:=$(arg kinematics_config)"
+  />
+    <include file="$(find robothon2023_description)/launch/cameras.launch"/>
+</launch>

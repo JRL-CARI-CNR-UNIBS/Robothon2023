@@ -1,0 +1,295 @@
+group_names_map:
+  mg1:  manipulator
+  mg2:  manipulator
+  mg3:  manipulator
+  mg4:  manipulator
+  goal_hamp_multigoal: manipulator
+  baseline_hamp_multigoal: manipulator
+  warp_strategy: manipulator
+  dirrt_paper:  manipulator
+  informed_rrt: manipulator
+  timebased: manipulator
+  dirrt_paper_warp: manipulator
+  multigoal_ssm_test: manipulator
+  hamp_test: manipulator
+  # timebased:                     manipulator
+
+default_planner_config: mg1
+
+mg1:
+  type: Multigoal
+  max_distance: 2.0
+  max_refine_time: 3.0     # time for refine solution
+  utopia_tolerance: 0.003  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  # max_refine_time: 3.0   # time for refine solution
+  # utopia_tolerance: 0.05  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  rewire_radius: 4.0
+  extend: true
+  local_bias: 0.25
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  warp: false
+  warp_once: true
+  collision_distance: 0.01
+
+mg2:
+  type: Multigoal
+  max_distance: 1.0
+  inherit_from: mg1
+
+mg4:
+  type: Multigoal
+  max_distance: 3.0
+  inherit_from: mg1
+
+mg3:
+  type: Multigoal
+  max_distance: 2.0
+  max_refine_time: 3.0     # time for refine solution
+  utopia_tolerance: 0.003  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  # max_refine_time: 3.0   # time for refine solution
+  # utopia_tolerance: 0.05  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  rewire_radius: 4.0
+  extend: true
+  local_bias: 0.25
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  warp: false
+  warp_once: true
+  collision_distance: 0.01
+  display_bubbles: true
+
+
+timebased:
+  type: TimeBasedMultigoal
+  max_distance: 0.2
+  max_refine_time: 1500.0
+  extend: false
+  local_bias: 0.0
+  tube_radius: 0.02
+  collision_distance: 0.01
+baseline_hamp_multigoal:
+  type: Multigoal
+  max_distance: 2.0
+  max_refine_time: 1.0
+  rewire_radius: 4.0
+  extend: true
+  local_bias: 0.25 # initial probability of local sampling
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  utopia_tolerance: 0.05
+  warp: false
+  warp_once: true
+  collision_distance: 0.01
+  use_avoidance_goal: true # set true if the human avoidance is done only at the goal. Useful in Multigoal planning. ***CHANGE IT***
+  use_avoidance_path: false # set true if the human avoidance is done during the path. It is slower than use_avoidance_goal. ***CHANGE IT***
+  #If use_avoidance_goal and use_avoidance_path are both true, use_avoidance_path is used.
+
+  detector_topic: /centroids #topic name of the message type geometry_msgs/PoseArray. ***CHANGE IT IF NEEDED***
+  base_frame: world #base_frame of the chain. Note: poses must be published in this frame ***CHANGE IT***
+  tool_frame: open_tip #tool_frame of the chain. ***CHANGE IT***
+
+  min_avoidance_distance: 2.0 # minimum distance between robot and human in meters. if distance<=min_avoidance_distance the penalty is equal to the max_penalty. Default value is ok
+  max_avoidance_distance: 10.0 # maximum distance  between robot and human in meters. if distance>=max_avoidance_distance the penalty is 0. Default value is ok
+  max_penalty: 1.0 # maximum penalty due to the distance between robot and human. Default value is ok
+  display_bubbles: true #display penalty bubbles in rviz on topic "/goal_cost_function/avoidance_points". Default value is ok
+  links: # links used for measuring the distance between robot and human. ***CHANGE IT***
+  - open_tip
+  - tool0
+  - wrist_1_link
+  - wrist_2_link
+  - wrist_3_link
+  - forearm_link
+  - upper_arm_link
+
+
+goal_hamp_multigoal:
+  type: Multigoal
+  max_distance: 2.0
+  max_refine_time: 1.0
+  rewire_radius: 4.0
+  extend: true
+  local_bias: 0.25 # initial probability of local sampling
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  utopia_tolerance: 0.05
+  warp: false
+  warp_once: true
+  collision_distance: 0.01
+  use_avoidance_goal: true # set true if the human avoidance is done only at the goal. Useful in Multigoal planning. ***CHANGE IT***
+  use_avoidance_path: false # set true if the human avoidance is done during the path. It is slower than use_avoidance_goal. ***CHANGE IT***
+  #If use_avoidance_goal and use_avoidance_path are both true, use_avoidance_path is used.
+
+  detector_topic: /centroids #topic name of the message type geometry_msgs/PoseArray. ***CHANGE IT IF NEEDED***
+  base_frame: world #base_frame of the chain. Note: poses must be published in this frame ***CHANGE IT***
+  tool_frame: open_tip #tool_frame of the chain. ***CHANGE IT***
+
+  min_avoidance_distance: 0.4 # minimum distance between robot and human in meters. if distance<=min_avoidance_distance the penalty is equal to the max_penalty. Default value is ok
+  max_avoidance_distance: 0.8 # maximum distance  between robot and human in meters. if distance>=max_avoidance_distance the penalty is 0. Default value is ok
+  max_penalty: 20.0 # maximum penalty due to the distance between robot and human. Default value is ok
+  display_bubbles: true #display penalty bubbles in rviz on topic "/goal_cost_function/avoidance_points". Default value is ok
+  links: # links used for measuring the distance between robot and human. ***CHANGE IT***
+  - open_tip
+  - tool0
+  - wrist_1_link
+  - wrist_2_link
+  - wrist_3_link
+  - forearm_link
+  - upper_arm_link
+
+warp_strategy:
+  type: Multigoal
+  max_distance: 2.0
+  max_refine_time: 1500.0
+  rewire_radius: 4.0
+  extend: true
+  local_bias: 0.0
+  forgetting_factor: 0.000001
+  tube_radius: 0.02
+  informed: true
+  mixed_strategy: false
+  warp: true
+  utopia_tolerance: 0.0000001
+  collision_distance: 0.01
+
+informed_rrt:
+  type: Multigoal
+  max_distance: 2.0
+  max_refine_time: 1500.0
+  extend: true
+  rewire_radius: 4.0
+  local_bias: 0.0
+  forgetting_factor: 0
+  tube_radius: 0.01
+  utopia_tolerance: 0.0000001
+  collision_distance: 0.01
+  informed: true
+  mixed_strategy: false
+  warp: false
+  warp_once: false
+
+dirrt_paper:
+  type: Multigoal
+  max_distance: 2.0
+  max_avoidance_distance: 0.3
+  min_avoidance_distance: 0.2
+  max_penalty: 1
+  extend: true
+  rewire_radius: 15.0
+  max_refine_time: 1500.0   # time for refine solution
+  utopia_tolerance: 0.0000001  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  # max_refine_time: 3.0   # time for refine solution
+  # utopia_tolerance: 0.05  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  #rewire_radius: 4.0
+  local_bias: 0.5
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  warp: false
+  warp_once: false
+  collision_distance: 0.01
+  bidirectional_: true
+  display_bubbles: true
+  use_avoidance_path: true
+  base_frame: world #base_frame of the chain. Note: poses must be published in this frame ***CHANGE IT***
+  tool_frame: open_tip #tool_frame of the chain. ***CHANGE IT***
+  minimum_distance: 0.2
+  detector_topic: /centroids  
+  links: # links used for measuring the distance between robot and human. ***CHANGE IT***
+  - open_tip
+  - tool0
+  - wrist_1_link
+  - wrist_2_link
+  - wrist_3_link
+  - forearm_link
+  - upper_arm_link
+
+
+dirrt_paper_warp:
+  type: Multigoal
+  max_distance: 2.0
+  rewire_radius: 4.0
+  max_refine_time: 1500.0   # time for refine solution
+  utopia_tolerance: 0.0000001  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  # max_refine_time: 3.0   # time for refine solution
+  # utopia_tolerance: 0.05  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  #rewire_radius: 4.0
+  extend: true
+  local_bias: 0.5
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  warp: false
+  warp_once: true
+  collision_distance: 0.01
+  mixed_strategy: true  
+
+
+multigoal_ssm_test:
+  type: MultigoalSSM
+  max_distance: 2.0
+  max_refine_time: 300.0
+  rewire_radius: 15.0
+  extend: true
+  local_bias: 0.25 # initial probability of local sampling
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  utopia_tolerance: 0.05
+  warp: false
+  warp_once: true
+  collision_distance: 0.01
+  collision_thread: 16
+  bidirectional_: true
+  use_avoidance_goal: false # set true if the human avoidance is done only at the goal. Useful in Multigoal planning. ***CHANGE IT***
+  use_avoidance_path: true # set true if the human avoidance is done during the path. It is slower than use_avoidance_goal. ***CHANGE IT***
+  #If use_avoidance_goal and use_avoidance_path are both true, use_avoidance_path is used.
+
+  # detector_topic: /centroids #topic name of the message type geometry_msgs/PoseArray. ***CHANGE IT IF NEEDED***
+  base_frame: world #base_frame of the chain. Note: poses must be published in this frame ***CHANGE IT***
+  tool_frame: open_tip #tool_frame of the chain. ***CHANGE IT***
+  minimum_distance: 0.2
+  min_avoidance_distance: 0.2 # minimum distance between robot and human in meters. if distance<=min_avoidance_distance the penalty is equal to the max_penalty. Default value is ok
+  max_avoidance_distance: 0.3 # maximum distance  between robot and human in meters. if distance>=max_avoidance_distance the penalty is 0. Default value is ok
+  max_penalty: 100.0 # maximum penalty due to the distance between robot and human. Default value is ok
+  display_bubbles: false #display penalty bubbles in rviz on topic "/goal_cost_function/avoidance_points". Default value is ok
+  links: # links used for measuring the distance between robot and human. ***CHANGE IT***
+  - open_tip
+  - tool0
+  - wrist_1_link
+  - wrist_2_link
+  - wrist_3_link
+  - forearm_link
+  - upper_arm_link
+
+
+hamp_test:
+  type: HAMPTimeBasedMultiGoalPlanner
+  max_distance: 2.0
+  max_refine_time: 1.0
+  rewire_radius: 4.0
+  extend: true
+  local_bias: 0.25 # initial probability of local sampling
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  utopia_tolerance: 0.05
+  warp: false
+  warp_once: true
+  collision_distance: 0.01
+  use_avoidance_goal: true # set true if the human avoidance is done only at the goal. Useful in Multigoal planning. ***CHANGE IT***
+  use_avoidance_path: false # set true if the human avoidance is done during the path. It is slower than use_avoidance_goal. ***CHANGE IT***
+  #If use_avoidance_goal and use_avoidance_path are both true, use_avoidance_path is used.
+
+  detector_topic: /centroids #topic name of the message type geometry_msgs/PoseArray. ***CHANGE IT IF NEEDED***
+  base_frame: world #base_frame of the chain. Note: poses must be published in this frame ***CHANGE IT***
+  tool_frame: open_tip #tool_frame of the chain. ***CHANGE IT***
+  minimum_distance: 0.2
+  min_avoidance_distance: 0.4 # minimum distance between robot and human in meters. if distance<=min_avoidance_distance the penalty is equal to the max_penalty. Default value is ok
+  max_avoidance_distance: 0.8 # maximum distance  between robot and human in meters. if distance>=max_avoidance_distance the penalty is 0. Default value is ok
+  max_penalty: 20.0 # maximum penalty due to the distance between robot and human. Default value is ok
+  display_bubbles: true #display penalty bubbles in rviz on topic "/goal_cost_function/avoidance_points". Default value is ok
+  links: # links used for measuring the distance between robot and human. ***CHANGE IT***
+  - open_tip
+  - tool0
+  - wrist_1_link
+  - wrist_2_link
+  - wrist_3_link
+  - forearm_link
+  - upper_arm_link

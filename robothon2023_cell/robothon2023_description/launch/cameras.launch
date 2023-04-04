@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_camera"  args="0.626327   1.0771  2.65563  0.246795  0.199702 -0.726767 0.609114  world camera_link 100" /> -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="word_to_camera2" args="0.585 -1.071 2.681   1.634 0.827 0.060  world camera2_link 100" /> -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_camera2" args="0.554074 -1.05671  2.68398 -0.28837 0.305113 0.608344 0.673547  world camera2_link 100" /> -->
+
+  <!-- Calibration with new method (welcome back to CARI) -->
+
+  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_camera"  args="0.631728 1.02877 2.84961   0.320989 0.309749 -0.649651 0.615609  world camera_link 100" /> -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="world_to_camera"  args="0.587424 1.07135 2.54635   -0.117898 0.910791 -0.391804 0.0552253 world camera_link 100" /> -->
+  <node pkg="tf" type="static_transform_publisher" name="world_to_camera"  args="0.568424 1.05188 2.54787   0.242207 0.287003 -0.572742 0.72865 world camera_link 100" />
+  <node pkg="tf" type="static_transform_publisher" name="world_to_camera2" args="0.529124 -1.04225 2.56049   -0.238396 0.279184 0.593347 0.716354 world camera2_link 100" />
+  
+  <!--            End              -->
+
+
+  <!-- CAMERA 1 -->
+  <!-- 0.523      1.065   2.652  -1.668 0.659 0.060 -->
+  <!-- 0.626327   1.0771  2.65563  0.246795  0.199702 -0.726767 0.609114 -->
+  <!-- 0.624578   1.0818  2.65293  0.245861  0.198156 -0.726794 0.609965 -->
+  <!-- 0.613595   1.08218  2.65106   0.24606  0.197345 -0.725752 0.611386 -->
+
+  <!-- CAMERA 2 -->
+  <!-- 0.566493 -1.06941  2.68044 -0.286286  0.303411  0.609879 0.673818 -->
+  <!-- 0.558104 -1.05428  2.68521 -0.288663  0.30604   0.60884  0.672553  GOOD-->
+  <!-- 0.554074 -1.05671  2.68398 -0.28837   0.305113  0.608344 0.673547 -->
+  <!-- 0.611058 -1.03563  2.70186 -0.290383  0.318467  0.619242 0.656351  BAD-->
+  <!-- 0.609714 -1.03808  2.70047 -0.289891  0.317129  0.619075 0.657372 -->
+
+
+</launch>

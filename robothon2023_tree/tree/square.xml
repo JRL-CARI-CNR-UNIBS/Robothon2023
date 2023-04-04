@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="square">
+    <Sequence name="square">
+      <SkillExecutionNode    name="square/l1"/>
+      <SkillExecutionNode    name="square/l2"/>
+      <SkillExecutionNode    name="square/l3"/>
+    </Sequence>
+  </BehaviorTree>
+</root>

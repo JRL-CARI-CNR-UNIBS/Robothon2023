@@ -1,0 +1,124 @@
+control_configurations:
+- name: "watch"
+  components:
+  - {hardware_interface: "ur10e_hw",   controller: "js_pub", description: ""}
+  - {hardware_interface: "planner_hw", controller: "js_pub", description: ""}
+  - {hardware_interface: "ur10e_hw", controller: "ft_pub", description: ""}
+
+- name: "ctrl"
+  depends: ["watch"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "ur10e_hw", controller: "ctrl1", description: ""}
+
+- name: "freq_est"
+  depends: ["watch"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "ur10e_hw", controller: "freq_est", description: ""}
+
+- name: "posvel_ctrl"
+  depends: ["watch"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "ur10e_hw", controller: "posvel_ctrl", description: ""}
+
+- name: "posvel_freq_est"
+  depends: ["posvel_ctrl"]
+  hidden: false  # do not appear in the gui
+  components:
+  - {hardware_interface: "planner_hw", controller: "freq_est", description: ""}
+
+- name: "posvel_ctrl_planner"
+  depends: ["posvel_ctrl"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "planner_hw", controller: "microinterpolator", description: ""}
+
+- name: "trajectory_tracking"
+  depends: ["ctrl"]
+  components:
+  - {hardware_interface: "planner_hw", controller: "microinterpolator", description: ""}
+
+- name: "impedance"
+  depends: ["watch"]
+  components:
+  - {hardware_interface: "ur10e_hw", controller: "cart_impedance", description: "",  runtime_check: false} # disable check controller status
+
+- name: "trajectory_tracking_impedance"
+  depends: ["impedance"]
+  components:
+  - {hardware_interface: "planner_hw", controller: "microinterpolator_impedance", description: ""}
+
+- name: simple_touch
+  depends: ["watch"]
+  components:
+    - {hardware_interface: "ur10e_hw", controller: "cartesian_velocity"}
+    - {hardware_interface: "planner_hw", controller: "simple_touch", runtime_check: false}
+
+- name: lin_xyz_manual_guidance
+  depends: ["watch"]
+  components:
+    - {hardware_interface: "ur10e_hw", controller: "lin_xyz_manual_guidance",  runtime_check: false}
+
+- name: manual_guidance
+  depends: ["watch"]
+  components:
+    - {hardware_interface: "ur10e_hw", controller: "manual_guidance",  runtime_check: false}
+
+- name: rot_xyz_manual_guidance
+  depends: ["watch"]
+  components:
+    - {hardware_interface: "ur10e_hw", controller: "rot_xyz_manual_guidance",  runtime_check: false}
+
+- name: cart_teleop
+  depends: ["watch"]
+  components:
+    - {hardware_interface: "ur10e_hw", controller: "cartesian_velocity",  runtime_check: false}
+
+
+- name: cartesian_position
+  depends: ["watch"]
+  components:
+    - {hardware_interface: "ur10e_hw", controller: "cartesian_position",  runtime_check: true}
+
+- name: "elastoplastic_controller"
+  depends: ["watch"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "ur10e_hw", controller: "elastoplastic_controller", description: "",  runtime_check: false} # disable check controller status
+
+- name: "elastoplastic_controller_idle"
+  depends: ["watch"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "ur10e_hw", controller: "elastoplastic_controller_idle", description: "",  runtime_check: false} # disable check controller status
+
+- name: "elastoplastic_controller_trj"
+  depends: ["watch"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "ur10e_hw", controller: "elastoplastic_controller_trj", description: "",  runtime_check: false} # disable check controller status
+
+- name: "elastoplastic_controller_trajectory"
+  depends: ["elastoplastic_controller"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "planner_hw", controller: "microinterpolator_elastoplastic", description: ""}
+
+- name: "elastoplastic_controller_trajectory_idle"
+  depends: ["elastoplastic_controller_idle"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "planner_hw", controller: "microinterpolator_elastoplastic", description: ""}
+
+- name: "elastoplastic_controller_trajectory_trj"
+  depends: ["elastoplastic_controller_trj"]
+  hidden: true  # do not appear in the gui
+  components:
+  - {hardware_interface: "planner_hw", controller: "microinterpolator_elastoplastic", description: ""}
+
+- name: "trajectory_replanning"
+  depends: ["ctrl"]
+  components:
+  - {hardware_interface: "planner_hw", controller: "replanner", description: ""}

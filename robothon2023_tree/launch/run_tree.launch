@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="tree_name" default="root" />
+  <arg name="load_param" default="true" />
+
+  <param name="tree_name" type="string" value="$(arg tree_name)" />
+
+  <include if = "$(arg load_param)" file="$(find robothon2023_tree)/launch/load_params.launch"/>
+
+  <node name="run_tree_node" pkg="robothon2023_tree" type="run_tree" output="screen"/>
+</launch>

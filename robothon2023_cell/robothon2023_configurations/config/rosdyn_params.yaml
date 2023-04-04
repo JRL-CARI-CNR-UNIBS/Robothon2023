@@ -1,0 +1,13 @@
+type: ik_solver/RosdynIkSolver
+base_frame: world # base frame of the chain
+flange_frame: flange # end frame of the chain
+
+tool_frame: open_tip # destination frame of the IK (it should be rigid attached to flange_frame)
+desired_solutions: 32 # number of desired solution
+joint_names:
+    - shoulder_pan_joint
+    - shoulder_lift_joint
+    - elbow_joint
+    - wrist_1_joint
+    - wrist_2_joint
+    - wrist_3_joint

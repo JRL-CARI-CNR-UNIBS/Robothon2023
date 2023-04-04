@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <arg name="debug" default="false" />
+  <arg if="$(arg debug)" name="launch_prefix" default="xterm -e gdb -ex run  --args" />
+  <arg unless="$(arg debug)" name="launch_prefix" default="" />
+
+
+<node pkg="ik_solver"  type="ik_solver_node" name="manipulator" output="screen" launch-prefix="$(arg launch_prefix)" >
+  <rosparam command="load" file="$(find robothon2023_configurations)/config/rosdyn_params.yaml"/>
+</node>
+</launch>

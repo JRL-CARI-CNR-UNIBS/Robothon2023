@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: sharework_cembre_description
+    relative_path: urdf/sharework_cembre_simplified.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/sharework_cembre_simplified.srdf
+  CONFIG:
+    author_name: Cesare Tonola
+    author_email: c.tonola001@unibs.it
+    generated_timestamp: 1627562639

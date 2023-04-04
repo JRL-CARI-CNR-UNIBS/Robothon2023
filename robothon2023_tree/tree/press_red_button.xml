@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="press_red_button">
+    <Sequence name="press_red_button">
+      <SkillExecutionNode    name="press_red_button/move_to_red_button"/>
+      <SkillExecutionNode    name="press_red_button/press_button"/>
+    </Sequence>
+  </BehaviorTree>
+</root>

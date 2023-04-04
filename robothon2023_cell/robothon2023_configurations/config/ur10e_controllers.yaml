@@ -1,0 +1,383 @@
+ur10e_hw:
+  remap_source_args:
+  - "/ur10e_hw/js_pub/joint_states"
+  - "/ur10e_hw/microinterpolator/follow_joint_trajectory/cancel"
+  - "/ur10e_hw/microinterpolator/follow_joint_trajectory/feedback"
+  - "/ur10e_hw/microinterpolator/follow_joint_trajectory/goal"
+  - "/ur10e_hw/microinterpolator/follow_joint_trajectory/result"
+  - "/ur10e_hw/microinterpolator/follow_joint_trajectory/status"
+
+  - "/ur10e_hw/microinterpolator/unscaled_joint_target/joint_states"
+  - "/ur10e_hw/cartesian_position/unscaled_joint_target"
+
+  - "/ur10e_hw/cartesian_position/relative_move/cancel"
+  - "/ur10e_hw/cartesian_position/relative_move/feedback"
+  - "/ur10e_hw/cartesian_position/relative_move/goal"
+  - "/ur10e_hw/cartesian_position/relative_move/result"
+  - "/ur10e_hw/cartesian_position/relative_move/status"
+
+  remap_target_args:
+  - "/ur10/joint_states"
+  - "/manipulator/follow_joint_trajectory/cancel"
+  - "/manipulator/follow_joint_trajectory/feedback"
+  - "/manipulator/follow_joint_trajectory/goal"
+  - "/manipulator/follow_joint_trajectory/result"
+  - "/manipulator/follow_joint_trajectory/status"
+
+  - "/unscaled_joint_target"
+  - "/unscaled_joint_target"
+
+  - "/relative_move/cancel"
+  - "/relative_move/feedback"
+  - "/relative_move/goal"
+  - "/relative_move/result"
+  - "/relative_move/status"
+
+  js_pub:
+    appenders: [file, screen]
+    levels: [trace, info]
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%L][%c] %m%n"
+    file_name: "ur10e_hw_js_pub"
+
+    type:         cnr/control/JointStatePublisher
+    controlled_joint: all
+    base_link: "world"
+    tool_link: "tool0"
+    robot_description_param: /robot_description
+    robot_description_planning_param: /robot_description_planning
+
+  ft_pub:
+    appenders: [file, screen]
+    levels: [trace, info]
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%L][%c] %m%n"
+    file_name: "ur10e_hw_ft_pub"
+
+    type: "cnr/control/ForceTorquePublisher"
+    name: wrench
+    published_topic: "/ur10/wrench"
+
+  cartesian_velocity:
+    appenders: [file, screen]
+    levels: [debug, info]
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%L][%c] %m%n"
+    file_name: "cartesian_velocity"
+
+    type: cnr/control/CartesianVelocityController
+    controlled_joints : all
+    kin_update_period : 0.002
+    target_twist_topic: /target_cart_twist  # setpoint twist topic name
+
+
+  cartesian_position:
+    appenders: [file, screen]
+    levels: [debug, info]
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%L][%c] %m%n"
+    file_name: "cartesian_position"
+
+    type: cnr/control/CartesianPositionController
+    controlled_joints : all
+    kin_update_period : 0.002
+    max_cartesian_linear_acceleration: 0.15
+    cartesian_linear_tolerance: 0.0005
+
+    overrides:
+    - /test_ovr
+    # - /safe_ovr_1
+    # - /safe_ovr_2
+    # - /cartesian_ovr
+
+  ctrl1:
+    type:        cnr/control/OpenLoopPositionController
+    setpoint_topic_name: "/joint_target"
+    controlled_joint: all
+    enable_setpoint_watchdog: false
+
+
+  freq_est:
+    type:        cnr/control/MultisineIdentificationController
+    controlled_joints: all
+    base_link  : "world"
+    tool_link  : "tool0"
+    kin_update_period: 0.002
+    appenders: [file, screen]
+    levels: [trace, info]
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%L][%c] %m%n"
+    file_name: "freq_est"
+    # REQUIRED:
+    active_joint: "shoulder_pan_joint"
+
+    # multisine parameters:
+    rampup_time: 10.0  # [seconds] transient time before and after the multisine signal.
+
+    carrier:
+      angular_frequency: 0.1       # [rad/s]            angular frequency
+      amplitude: 0.1               # [rad or m]         amplitude of the carrier
+      periods:   2.0               # [-]                number of repetitions of the carriers (round using std::ceil)
+
+    input:
+      max_pos: 0.1                 # [rad     or m]     maximum amplitude of the signal in position (deflection from the starting point)
+      max_vel: 2.0                 # [rad/s   or m/s]   maximum velocity of the signal
+      max_acc: 5.0                 # [rad/s^2 or m/s^2] maximum acceleration of the signal
+
+      min_angular_frequency: 1.0   # [rad/s]            must be high than carrier/angular_frequency
+      max_angular_frequency: 100.0 # [rad/s]            must be high than input/min_angular_frequency
+      harmonics_number: 40         # [-]                number of harmonics in the multisine signal
+
+    # multisine parameters:
+    rampup_time: 10.0  # [seconds] transient time before and after the multisine signal.
+
+    carrier:
+      angular_frequency: 0.1       # [rad/s]            angular frequency
+      amplitude: 0.1               # [rad or m]         amplitude of the carrier
+      periods:   2.0               # [-]                number of repetitions of the carriers (round using std::ceil)
+
+    input:
+      max_pos: 0.05                # [rad     or m]     maximum amplitude of the signal in position (deflection from the starting point)
+      max_vel: 2.0                 # [rad/s   or m/s]   maximum velocity of the signal
+      max_acc: 5.0                 # [rad/s^2 or m/s^2] maximum acceleration of the signal
+
+      min_angular_frequency: 1.0   # [rad/s]            must be high than carrier/angular_frequency
+      max_angular_frequency: 100.0 # [rad/s]            must be high than input/min_angular_frequency
+      harmonics_number: 40         # [-]                number of harmonics in the multisine signal
+
+
+
+  microinterpolator:
+    type: "cnr/control/ScaledFJTPosVelEffController"
+    controlled_joints: all
+    continuity_order: 1
+    appenders: [file, screen]
+    levels: [debug, info]
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%L][%c] %m%n"
+    file_name: "microinterpolator"
+
+
+  posvel_ctrl:
+    appenders: [file, screen]
+    levels: [trace, info]
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%L][%c] %m%n"
+    file_name: "posvel"
+    type: "cnr/control/PositionToVelocityController"
+    controlled_joints : all # controlled joints
+    setpoint_topic_name: "/joint_target" # name of the JointState topic with provide the position setpoint
+    use_target_velocity: true # if true, the velocity feedforward (namely, the velocity field of setpoint_topic_name) is added to the controller output. if false, velocity feedforward is not used.
+    antiwindup_ratio: 1.0 #antiwindup_ratio = T_t/T_i. if you don't know what you're doing keep it equal to 1.0
+
+    position_maximum_error: 1.0 # maximum allowed error, controller goes in error mode if it is exceeded. Error mode will set the command velocity equal to zero.
+    position_minimum_error: 0.00001 # minimum error, if the absolute value of error is smaller than this threshold, the error is set equal to 0. It is useful in case of stick-slip to reduce chattering.
+
+    interpolate_setpoint: false # to enable/disable interpolation of setpoint topic if there are not new messages. The interpolation is a first-order-hold, that is: target_position=last_received_target_position+last_received_target_velocity*time_from_last_message. This option is used when the setpoint_topic has a frequency smaller than the controller rate. If disable the last value of target position is used.
+    maximum_interpolation_time: 0.01 # maximum time from last message used for interpolation. If time_from_last_message is greater than maximum_interpolation_time, the target position is set as target_position=last_received_target_position+last_received_target_velocity*maximum_interpolation_time.
+
+    pos_filter: {type: "unity", dof: 6} # filter on feedback position, if you don't know what you're doing keep it disable, that is type: unity
+    target_pos_filter: {type: "unity", dof: 6} # filter on setpoint position, if you don't know what you're doing keep it disable, that is type: unity
+    controller: {type: "proportional_controller", proportional_gain: 0.05, dof: 6} # controller (excluding the integral part). If the lower controllers works properly, a proportional controller should be sufficient. See eigen_control_toolbox to implement advanced controllers.
+    integral_controller: {type: "proportional_controller", proportional_gain: 0.0, dof: 6} # controller (excluding the integral part). If the lower controllers works properly, an integral controller should not be required (set it as a constant equal to 0). See eigen_control_toolbox to implement advanced controllers.
+    use_target_torque: false
+
+  cart_impedance:
+    appenders: [file, screen]
+    levels: [trace, info]
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%L][%c] %m%n"
+    file_name: "cart_impedance"
+    # REQUIRED:
+    controlled_joints : all
+    type                  : "cnr_control/CartImpedanceController"
+    inertia               : [ 10, 10, 10, 10, 10, 10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+    stiffness             : [100,100,1200, 120,120,120]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+    damping               : [120,120,120, 120,120,120]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+    joint_target_topic    : "/joint_target"                # setpoint joint topic name
+    base_frame            : world                          # name of the base link
+    tool_frame            : tool0                          # name of the tool link
+    sensor_frame          : tool0                          # name of the sensor link (has to be integral with tool_frame)
+
+    # OPTIONAL:
+    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+    wrench_deadband       : [0.1, 0.1, 0.1, 0.0, 0.0, 0.0] # deadband on the wrench topic [DEFAULT: zero]
+    external_wrench_topic : "/ur10/wrench"      # wrench topic name [DEFAULT: ~/external_wrench]
+    zeroing_sensor_at_startup: true    # remove offset from wrench at startup [DEFALT: true]
+    # damping_ratio         : [1,1,0.8, 1,1,2]               # adimensional damping ratio. NOTE: possibile alternative to speficy damping. If specified, it is used instead of the damping. In this case the stiffness should be positive.
+
+  lin_xyz_manual_guidance:
+    # REQUIRED:
+    type                  : "cnr_control/CartImpedanceController"
+    controlled_joints: all
+    inertia               : [ 10,   10,  10,  10, 10,  10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+    stiffness             : [  0,    0,   0, 120, 120, 120]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+    damping               : [120, 120,  120, 120, 120, 120]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+    joint_target_topic    : "/joint_target"                # setpoint joint topic name
+    base_frame            : world                          # name of the base link
+    tool_frame            : tool0                          # name of the tool link
+    sensor_frame          : tool0                          # name of the sensor link (has to be integral with tool_frame)
+
+    # OPTIONAL:
+    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+    wrench_deadband       : [1.0, 1.0, 1.0, 0.1, 0.1, 0.1] # deadband on the wrench topic [DEFAULT: zero]
+    external_wrench_topic : "/ur10/wrench"      # wrench topic name [DEFAULT: ~/external_wrench]
+    zeroing_sensor_at_startup: true    # remove offset from wrench at startup [DEFALT: true]
+    # damping_ratio         : [1,1,0.8, 1,1,2]               # adimensional damping ratio. NOTE: possibile alternative to speficy damping. If specified, it is used instead of the damping. In this case the stiffness should be positive.
+
+  rot_xyz_manual_guidance:
+    # REQUIRED:
+    type                  : "cnr_control/CartImpedanceController"
+    controlled_joints: all
+    inertia               : [   10,   10,    10,    1,  1,  1]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+    stiffness             : [ 1200, 1200,  1200,    0,  0,  0]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+    damping               : [  120,  120,   120,   12, 12, 12]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+    joint_target_topic    : "/joint_target"                # setpoint joint topic name
+    base_frame            : world                          # name of the base link
+    tool_frame            : tool0                          # name of the tool link
+    sensor_frame          : tool0                          # name of the sensor link (has to be integral with tool_frame)
+
+    # OPTIONAL:
+    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+    wrench_deadband       : [1.0, 1.0, 1.0, 0.1, 0.1, 0.1] # deadband on the wrench topic [DEFAULT: zero]
+    external_wrench_topic : "/ur10/wrench"      # wrench topic name [DEFAULT: ~/external_wrench]
+    zeroing_sensor_at_startup: true    # remove offset from wrench at startup [DEFALT: true]
+    # damping_ratio         : [1,1,0.8, 1,1,2]               # adimensional damping ratio. NOTE: possibile alternative to speficy damping. If specified, it is used instead of the damping. In this case the stiffness should be positive.
+
+  manual_guidance:
+    # REQUIRED:
+    type                  : "cnr_control/CartImpedanceController"
+    controlled_joints: all
+    inertia               : [   10,   10,    10,    1,  1,  1]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+    stiffness             : [    0,    0,     0,    0,  0,  0]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+    damping               : [   60,   60,    60,    6,  6,  6]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+    joint_target_topic    : "/joint_target"                # setpoint joint topic name
+    base_frame            : world                          # name of the base link
+    tool_frame            : tool0                          # name of the tool link
+    sensor_frame          : tool0                          # name of the sensor link (has to be integral with tool_frame)
+
+    # OPTIONAL:
+    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+    wrench_deadband       : [10, 10, 10, 1.0, 1.0, 1.0] # deadband on the wrench topic [DEFAULT: zero]
+    external_wrench_topic : "/ur10/wrench"      # wrench topic name [DEFAULT: ~/external_wrench]
+    zeroing_sensor_at_startup: true    # remove offset from wrench at startup [DEFALT: true]
+    # damping_ratio         : [1,1,0.8, 1,1,2]               # adimensional damping ratio. NOTE: possibile alternative to speficy damping. If specified, it is used instead of the damping. In this case the stiffness should be positive.
+
+  elastoplastic_controller:
+    # REQUIRED:
+    type                  : "phri/control/CartImpedanceLuGreController"
+    base_frame            : world                          # name of the base link
+    tool_frame            : tool0                          # name of the tool link
+    sensor_frame          : tool0                          # name of the sensor link (has to be integral with tool_frame)
+    joint_target_topic    : "/joint_target"                # setpoint joint topic name
+
+    inertia               : [   20,   20,    20,    10,  10,  10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+    damping               : [  280,  280,   280,   12, 12, 12]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+
+    # inertia               : [   15,   15,    15,    10,  10,  10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+    # damping               : [  300,  300,   300,   12, 12, 12]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+    #                         [  150,  150,   150,   12, 12, 12]
+    sigma0                : 1500
+    sigma1                : 150
+    c0                    : 15
+    z_ss                  : 0.01 #c0/sigma0
+    z_ba                  : 0.009 # 0.9*z_ss
+    # #
+    inertia_trj           : [   13,   13,    13,    10,  10,  10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+    damping_trj           : [  150,  150,   150,   12, 12, 12]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+    sigma0_trj            : 800
+    sigma1_trj            : 80
+    c0_trj                : 16
+    z_ss_trj              : 0.02 #c0/sigma0
+    z_ba_trj              : 0.018 # 0.9*z_ss
+    # #
+    stiffness             : [ 100, 100,  100,    120,  120,  120]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+    mu_k                  : 0.78
+    # OPTIONAL:
+    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+    wrench_deadband       : [2.0, 2.0, 2.0, 0.1, 0.1, 0.1] # deadband on the wrench topic [DEFAULT: zero]
+    external_wrench_topic : "/ur10/wrench"      # wrench topic name [DEFAULT: ~/external_wrench]
+    Tp                    : 0.5  # tempo previsione per reset
+    acceleration_deadband : [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001 ]
+    kp_acceleration       : 0.5
+    ks_acceleration       : 2
+    interpolation_to_trj  : 2
+    interpolation_to_idle : 2
+    trj_ratio_limit       : 0.95
+    controlled_joint:
+    - shoulder_pan_joint
+    - shoulder_lift_joint
+    - elbow_joint
+    - wrist_1_joint
+    - wrist_2_joint
+    - wrist_3_joint
+    #zeroing_sensor_at_startup: true    # remove offset from wrench at startup [DEFALT: true]
+
+  elastoplastic_controller_idle: # tuned only for idle state
+    # REQUIRED:
+    type                  : "phri/control/CartImpedanceLuGreController"
+    base_frame            : world                          # name of the base link
+    tool_frame            : tool0                          # name of the tool link
+    sensor_frame          : tool0                          # name of the sensor link (has to be integral with tool_frame)
+    joint_target_topic    : "/joint_target"                # setpoint joint topic name
+    inertia               : [   20,   20,    20,    10,  10,  10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+    damping               : [  280,  280,   280,   12, 12, 12]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+    sigma0                : 1500
+    sigma1                : 150
+    c0                    : 15
+    z_ss                  : 0.01 #c0/sigma0
+    z_ba                  : 0.009 # 0.9*z_ss
+    # #
+    stiffness             : [ 100, 100,  100,    120,  120,  120]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+    mu_k                  : 0.78
+    # OPTIONAL:
+    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+    wrench_deadband       : [2.0, 2.0, 2.0, 0.1, 0.1, 0.1] # deadband on the wrench topic [DEFAULT: zero]
+    external_wrench_topic : "/ur10/wrench"      # wrench topic name [DEFAULT: ~/external_wrench]
+    Tp                    : 0.5  # tempo previsione per reset
+    acceleration_deadband : [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001 ]
+    kp_acceleration       : 0.5
+    ks_acceleration       : 2
+    interpolation_to_trj  : 0.1
+    interpolation_to_idle : 0.1
+    trj_ratio_limit       : 0.95
+    controlled_joint:
+    - shoulder_pan_joint
+    - shoulder_lift_joint
+    - elbow_joint
+    - wrist_1_joint
+    - wrist_2_joint
+    - wrist_3_joint
+    #zeroing_sensor_at_startup: true    # remove offset from wrench at startup [DEFALT: true]
+
+  elastoplastic_controller_trj: # tuned only for trj following
+    # REQUIRED:
+    type                  : "phri/control/CartImpedanceLuGreController"
+    base_frame            : world                          # name of the base link
+    tool_frame            : tool0                          # name of the tool link
+    sensor_frame          : tool0                          # name of the sensor link (has to be integral with tool_frame)
+    joint_target_topic    : "/joint_target"                # setpoint joint topic name
+    # #
+    inertia               : [   13,   13,    13,    10,  10,  10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+    damping               : [  150,  150,   150,   12, 12, 12]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+    #inertia               : [   10,   10,    10,    10,  10,  10]
+    #damping               : [  120,  120,   120,   12, 12, 12]
+    sigma0                : 800
+    sigma1                : 80
+    c0                    : 16
+    z_ss                  : 0.02 #c0/sigma0
+    z_ba                  : 0.018 # 0.9*z_ss
+    # #
+    stiffness             : [ 100, 100,  100,    120,  120,  120]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+    mu_k                  : 0.78
+    # OPTIONAL:
+    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+    wrench_deadband       : [2.0, 2.0, 2.0, 0.1, 0.1, 0.1] # deadband on the wrench topic [DEFAULT: zero]
+    external_wrench_topic : "/ur10/wrench"      # wrench topic name [DEFAULT: ~/external_wrench]
+    Tp                    : 0.5  # tempo previsione per reset
+    acceleration_deadband : [0.0001, 0.0001, 0.0001, 0.0001, 0.0001, 0.0001 ]
+    kp_acceleration       : 0.5
+    ks_acceleration       : 2
+    interpolation_to_trj  : 0.1
+    interpolation_to_idle : 0.1
+    trj_ratio_limit       : 0.95
+    controlled_joint:
+    - shoulder_pan_joint
+    - shoulder_lift_joint
+    - elbow_joint
+    - wrist_1_joint
+    - wrist_2_joint
+    - wrist_3_joint
+    #zeroing_sensor_at_startup: true    # remove offset from wrench at startup [DEFALT: true]

@@ -112,18 +112,29 @@ def main():
     imgs_keyp = ImagesKeypointManager(known_keyp)
     global labels_path
     labels_path = rospy.get_param("labels_path")
-
+    print(labels_path)
     for image in image_label:
         imgs_keyp.add_image_label(image, image_label[image])
         imgs_keyp.create_txt(labels_path,image)
 
 
+
     dataset_folder_path = Path(dataset_path)
     imgs = get_image_files(dataset_folder_path)
-    # print(imgs)
-    item_tfms = [Resize(448, method='squish')]
-    batch_tfms = [Flip(), Rotate()]  # , Zoom(), Warp(), ClampBatch()]
 
+    for t in range(0,10):
+        print(t)
+        # img = PILImage.create(dataset_path + f"frame_{t}.png")
+        # ax = img.show(figsize=(12, 12))
+        #
+        # get_ip(img,get_y(labels_path+f"frame_{t}.png")).show(ctx=ax)
+        # plt.show()
+
+    # print(imgs)
+    # item_tfms = [Resize(448, method='squish')]
+    item_tfms = []
+    # batch_tfms = [Flip(), Rotate()]  # , Zoom(), Warp(), ClampBatch()]
+    batch_tfms = []
 
     dblock = DataBlock(blocks=(ImageBlock, PointBlock),
                        get_items=get_image_files,
@@ -147,15 +158,24 @@ def main():
     # learn.lr_find()
 
     learn = vision_learner(dls, resnet18, loss_func=MSELossFlat())
-
     learn.summary()
+
+    learn.freeze()
+    learn.fit_flat_cos(50, 1e-7)
+    learn.unfreeze()
+    learn.lr_find()
+    learn.fit_flat_cos(10, 1e-7)
+
     # learn.model()
-    #learn.lr_find()
+
     # learn.remove_cb(ProgressCallback)
 
-    learn.fine_tune(10,5e-3)
-    # learn.show_results()
-    # plt.show()
+    # learn.fine_tune(100,learn.lr_find(),freeze_epochs=100)
+    learn.show_results()
+    learn.save('model')
+
+
+    plt.show()
 
 
     # dblock.summary(dataset_folder_path)

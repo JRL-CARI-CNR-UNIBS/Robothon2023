@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="robothon2023_simplified" >
+
+  <!-- Sharework cell -->
+  <xacro:include filename="$(find robothon2023_description)/urdf/sharework_cell.urdf.xacro" />
+  <xacro:sharework_cell
+    simplified='false'
+  /> <!--DO NOT DELETE -->
+</robot>

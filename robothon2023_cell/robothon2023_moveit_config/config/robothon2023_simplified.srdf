@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="sharework_cembre_simplified">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="manipulator">
+        <chain base_link="world" tip_link="open_tip"/>
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="pose1" group="manipulator">
+      <joint name="shoulder_pan_joint" value="1.5"/>
+      <joint name="shoulder_lift_joint" value="-0.5"/>
+      <joint name="elbow_joint" value="0.5"/>
+      <joint name="wrist_1_joint" value="0"/>
+      <joint name="wrist_2_joint" value="1.5"/>
+      <joint name="wrist_3_joint" value="0"/>
+  </group_state>
+    <group_state name="home" group="manipulator">
+      <joint name="shoulder_pan_joint" value="1.5707963267949"/>
+      <joint name="shoulder_lift_joint" value="-2.44346095279206"/>
+      <joint name="elbow_joint" value="2.44346095279206"/>
+        <joint name="wrist_1_joint" value="-1.5707963267949"/>
+        <joint name="wrist_2_joint" value="1.5707963267949"/>
+        <joint name="wrist_3_joint" value="0"/>
+    </group_state>
+    
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="end_effector" parent_link="robotiq_coupler" group="manipulator"/>
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="fixed_base" type="fixed" parent_frame="world" child_link="world"/>
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="base_link_inertia" link2="cursor" reason="Adjacent"/>
+    <disable_collisions link1="base_link_inertia" link2="guide_fixed" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="left_column" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="lower_beam" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="rail" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="right_column" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="robotiq_coupler" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="rq_connector" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="screwdriver_holder" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="shoulder_link" reason="Adjacent"/>
+    <disable_collisions link1="base_link_inertia" link2="table" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="upper_arm_link" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="upper_beam" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="virtual_wall_1" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="wall" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="wrist_1_link" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="wrist_2_link" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="wrist_3_link" reason="Never"/>
+    <disable_collisions link1="cursor" link2="guide_fixed" reason="Adjacent"/>
+    <disable_collisions link1="cursor" link2="left_column" reason="Never"/>
+    <disable_collisions link1="cursor" link2="lower_beam" reason="Never"/>
+    <disable_collisions link1="cursor" link2="rail" reason="Never"/>
+    <disable_collisions link1="cursor" link2="right_column" reason="Never"/>
+    <disable_collisions link1="cursor" link2="screwdriver_holder" reason="Never"/>
+    <disable_collisions link1="cursor" link2="shoulder_link" reason="Default"/>
+    <disable_collisions link1="cursor" link2="table" reason="Never"/>
+    <disable_collisions link1="cursor" link2="upper_arm_link" reason="Never"/>
+    <disable_collisions link1="cursor" link2="upper_beam" reason="Never"/>
+    <disable_collisions link1="cursor" link2="virtual_wall_1" reason="Never"/>
+    <disable_collisions link1="cursor" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="cursor" link2="wall" reason="Never"/>
+    <disable_collisions link1="forearm_link" link2="upper_arm_link" reason="Adjacent"/>
+    <disable_collisions link1="forearm_link" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="forearm_link" link2="wrist_1_link" reason="Adjacent"/>
+    <disable_collisions link1="forearm_link" link2="wrist_2_link" reason="Default"/>
+    <disable_collisions link1="guide_fixed" link2="left_column" reason="Default"/>
+    <disable_collisions link1="guide_fixed" link2="lower_beam" reason="Never"/>
+    <disable_collisions link1="guide_fixed" link2="rail" reason="Never"/>
+    <disable_collisions link1="guide_fixed" link2="right_column" reason="Default"/>
+    <disable_collisions link1="guide_fixed" link2="screwdriver_holder" reason="Never"/>
+    <disable_collisions link1="guide_fixed" link2="shoulder_link" reason="Never"/>
+    <disable_collisions link1="guide_fixed" link2="table" reason="Never"/>
+    <disable_collisions link1="guide_fixed" link2="upper_arm_link" reason="Never"/>
+    <disable_collisions link1="guide_fixed" link2="upper_beam" reason="Adjacent"/>
+    <disable_collisions link1="guide_fixed" link2="virtual_wall_1" reason="Adjacent"/>
+    <disable_collisions link1="guide_fixed" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="guide_fixed" link2="wall" reason="Never"/>
+    <disable_collisions link1="left_column" link2="lower_beam" reason="Adjacent"/>
+    <disable_collisions link1="left_column" link2="rail" reason="Never"/>
+    <disable_collisions link1="left_column" link2="right_column" reason="Adjacent"/>
+    <disable_collisions link1="left_column" link2="screwdriver_holder" reason="Never"/>
+    <disable_collisions link1="left_column" link2="shoulder_link" reason="Never"/>
+    <disable_collisions link1="left_column" link2="table" reason="Adjacent"/>
+    <disable_collisions link1="left_column" link2="upper_arm_link" reason="Never"/>
+    <disable_collisions link1="left_column" link2="upper_beam" reason="Adjacent"/>
+    <disable_collisions link1="left_column" link2="virtual_wall_1" reason="Default"/>
+    <disable_collisions link1="left_column" link2="virtual_wall_2" reason="Adjacent"/>
+    <disable_collisions link1="left_column" link2="wall" reason="Adjacent"/>
+    <disable_collisions link1="lower_beam" link2="rail" reason="Never"/>
+    <disable_collisions link1="lower_beam" link2="right_column" reason="Adjacent"/>
+    <disable_collisions link1="lower_beam" link2="screwdriver_holder" reason="Never"/>
+    <disable_collisions link1="lower_beam" link2="shoulder_link" reason="Never"/>
+    <disable_collisions link1="lower_beam" link2="table" reason="Adjacent"/>
+    <disable_collisions link1="lower_beam" link2="upper_arm_link" reason="Never"/>
+    <disable_collisions link1="lower_beam" link2="upper_beam" reason="Adjacent"/>
+    <disable_collisions link1="lower_beam" link2="virtual_wall_1" reason="Never"/>
+    <disable_collisions link1="lower_beam" link2="virtual_wall_2" reason="Adjacent"/>
+    <disable_collisions link1="lower_beam" link2="wall" reason="Adjacent"/>
+    <disable_collisions link1="rail" link2="right_column" reason="Never"/>
+    <disable_collisions link1="rail" link2="screwdriver_holder" reason="Never"/>
+    <disable_collisions link1="rail" link2="shoulder_link" reason="Never"/>
+    <disable_collisions link1="rail" link2="table" reason="Adjacent"/>
+    <disable_collisions link1="rail" link2="upper_arm_link" reason="Never"/>
+    <disable_collisions link1="rail" link2="upper_beam" reason="Never"/>
+    <disable_collisions link1="rail" link2="virtual_wall_1" reason="Never"/>
+    <disable_collisions link1="rail" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="rail" link2="wall" reason="Never"/>
+    <disable_collisions link1="right_column" link2="screwdriver_holder" reason="Never"/>
+    <disable_collisions link1="right_column" link2="shoulder_link" reason="Never"/>
+    <disable_collisions link1="right_column" link2="table" reason="Adjacent"/>
+    <disable_collisions link1="right_column" link2="upper_arm_link" reason="Never"/>
+    <disable_collisions link1="right_column" link2="upper_beam" reason="Adjacent"/>
+    <disable_collisions link1="right_column" link2="virtual_wall_1" reason="Default"/>
+    <disable_collisions link1="right_column" link2="virtual_wall_2" reason="Adjacent"/>
+    <disable_collisions link1="right_column" link2="wall" reason="Adjacent"/>
+    <disable_collisions link1="robotiq_coupler" link2="robotiq_simplified" reason="Adjacent"/>
+    <disable_collisions link1="robotiq_coupler" link2="rq_connector" reason="Adjacent"/>
+    <disable_collisions link1="robotiq_coupler" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="robotiq_coupler" link2="wrist_1_link" reason="Never"/>
+    <disable_collisions link1="robotiq_coupler" link2="wrist_2_link" reason="Never"/>
+    <disable_collisions link1="robotiq_coupler" link2="wrist_3_link" reason="Adjacent"/>
+    <disable_collisions link1="robotiq_simplified" link2="rq_connector" reason="Never"/>
+    <disable_collisions link1="robotiq_simplified" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="robotiq_simplified" link2="wrist_1_link" reason="Never"/>
+    <disable_collisions link1="robotiq_simplified" link2="wrist_2_link" reason="Never"/>
+    <disable_collisions link1="robotiq_simplified" link2="wrist_3_link" reason="Never"/>
+    <disable_collisions link1="rq_connector" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="rq_connector" link2="wrist_1_link" reason="Never"/>
+    <disable_collisions link1="rq_connector" link2="wrist_2_link" reason="Never"/>
+    <disable_collisions link1="rq_connector" link2="wrist_3_link" reason="Default"/>
+    <disable_collisions link1="screwdriver_holder" link2="shoulder_link" reason="Never"/>
+    <disable_collisions link1="screwdriver_holder" link2="table" reason="Adjacent"/>
+    <disable_collisions link1="screwdriver_holder" link2="upper_arm_link" reason="Never"/>
+    <disable_collisions link1="screwdriver_holder" link2="upper_beam" reason="Never"/>
+    <disable_collisions link1="screwdriver_holder" link2="virtual_wall_1" reason="Never"/>
+    <disable_collisions link1="screwdriver_holder" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="screwdriver_holder" link2="wall" reason="Never"/>
+    <disable_collisions link1="shoulder_link" link2="table" reason="Never"/>
+    <disable_collisions link1="shoulder_link" link2="upper_arm_link" reason="Adjacent"/>
+    <disable_collisions link1="shoulder_link" link2="upper_beam" reason="Never"/>
+    <disable_collisions link1="shoulder_link" link2="virtual_wall_1" reason="Never"/>
+    <disable_collisions link1="shoulder_link" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="shoulder_link" link2="wall" reason="Never"/>
+    <disable_collisions link1="shoulder_link" link2="wrist_1_link" reason="Never"/>
+    <disable_collisions link1="table" link2="upper_arm_link" reason="Never"/>
+    <disable_collisions link1="table" link2="upper_beam" reason="Adjacent"/>
+    <disable_collisions link1="table" link2="virtual_wall_1" reason="Never"/>
+    <disable_collisions link1="table" link2="virtual_wall_2" reason="Adjacent"/>
+    <disable_collisions link1="table" link2="wall" reason="Adjacent"/>
+    <disable_collisions link1="upper_arm_link" link2="upper_beam" reason="Never"/>
+    <disable_collisions link1="upper_arm_link" link2="virtual_wall_1" reason="Never"/>
+    <disable_collisions link1="upper_arm_link" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="upper_beam" link2="virtual_wall_1" reason="Never"/>
+    <disable_collisions link1="upper_beam" link2="virtual_wall_2" reason="Adjacent"/>
+    <disable_collisions link1="upper_beam" link2="wall" reason="Adjacent"/>
+    <disable_collisions link1="virtual_wall_1" link2="virtual_wall_2" reason="Never"/>
+    <disable_collisions link1="virtual_wall_1" link2="wall" reason="Default"/>
+    <disable_collisions link1="virtual_wall_2" link2="wall" reason="Adjacent"/>
+    <disable_collisions link1="virtual_wall_2" link2="wrist_1_link" reason="Never"/>
+    <disable_collisions link1="virtual_wall_2" link2="wrist_2_link" reason="Never"/>
+    <disable_collisions link1="virtual_wall_2" link2="wrist_3_link" reason="Never"/>
+    <disable_collisions link1="wrist_1_link" link2="wrist_2_link" reason="Adjacent"/>
+    <disable_collisions link1="wrist_1_link" link2="wrist_3_link" reason="Default"/>
+    <disable_collisions link1="wrist_2_link" link2="wrist_3_link" reason="Adjacent"/>
+</robot>

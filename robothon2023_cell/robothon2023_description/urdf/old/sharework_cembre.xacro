@@ -1,0 +1,656 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="sharework" >
+
+<xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+<xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro" />
+
+<xacro:property name="column_size_x" value="0.580" />
+<xacro:property name="column_size_y" value="0.120" />
+<xacro:property name="column_size_z" value="3.000" />
+
+<xacro:property name="table_height" value="0.895" />
+<xacro:property name="table_size_x" value="0.600" />
+<xacro:property name="table_size_y" value="2.000" />
+<xacro:property name="table_size_z" value="0.040" />
+
+<xacro:property name="beam_size_x" value="${column_size_x}" />
+<xacro:property name="beam_size_y" value="${table_size_y}" />
+<xacro:property name="beam_size_z" value="${column_size_y}" />
+
+<xacro:property name="rail_size_x" value="0.36" />
+<xacro:property name="rail_size_y" value="3.224" />
+<xacro:property name="rail_size_z" value="0.17" />
+<xacro:property name="rail_distance" value="${0.162+0.5*rail_size_x}" />
+
+
+<xacro:property name="upper_beam_height" value="2.208" />
+
+<xacro:property name="cursor_size" value="0.280" />
+<xacro:property name="guide_size_x" value="${cursor_size}" />
+<xacro:property name="guide_size_y" value="${beam_size_y}" />
+<xacro:property name="guide_size_z" value="0.14" />
+<xacro:property name="guide_distance_x" value="0.185" />
+<xacro:property name="anti_crushing_distance" value="0.020" />
+
+<xacro:property name="guide_distance_y" value="${0.385+0.041}" />
+
+
+
+
+
+<xacro:property name="wall_size_x" value="0.1" />
+<xacro:property name="wall_size_y" value="${2+table_size_y+2*column_size_y}" />
+<xacro:property name="wall_size_z" value="${column_size_z}" />
+<xacro:property name="wall_distance" value="0.500" />
+
+<xacro:property name="floor_size_x" value="6" />
+<xacro:property name="floor_size_y" value="6" />
+<xacro:property name="floor_size_z" value="0.01" />
+
+
+<xacro:property name="virtual_wall_width" value="0.001" />
+<xacro:property name="virtual_wall2_gap" value="1.10" />
+
+
+<!-- electric plug cabinet -->
+<xacro:property name="ec_size_x" value="0.40" />
+<xacro:property name="ec_size_y" value="0.70" />
+<xacro:property name="ec_size_z" value="2.00" />
+
+<xacro:property name="grey" value="0.517647058823529	0.529411764705882	0.537254901960784 1" />
+<xacro:property name="beech" value="0.952941176470588	0.694117647058823	0.392156862745098 1" />
+<xacro:property name="floor" value="0.4 0.4 0.5 1" />
+<xacro:property name="virtual_wall" value="1 0.2 0.2 0.2" />
+
+
+
+
+<link name="world"/>
+
+
+  <joint name="base_to_right_leg" type="fixed">
+    <parent link="world"/>
+    <child link="portal"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+<!-- PORTAL -->
+<link name="portal"/>
+
+
+  <joint name="portal_to_right_column" type="fixed">
+    <parent link="world"/>
+    <child link="right_column"/>
+    <origin xyz="${-column_size_x} ${0.5*(beam_size_y)} 0"/>
+  </joint>
+
+  <joint name="portal_to_left_column" type="fixed">
+    <parent link="world"/>
+    <child link="left_column"/>
+    <origin xyz="${-column_size_x} ${-0.5*(beam_size_y)} 0"/>
+  </joint>
+
+<link name="right_column">
+   <visual>
+     <origin xyz="${0.5*column_size_x} ${0.5*column_size_y} ${0.5*column_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${column_size_x} ${column_size_y} ${column_size_z}" />
+     </geometry>
+     <material name="Grey">
+       <color rgba="${grey}"/>
+     </material>
+   </visual>
+
+   <collision>
+     <origin xyz="${0.5*column_size_x} ${0.5*column_size_y} ${0.5*column_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${column_size_x+2*anti_crushing_distance} ${column_size_y+2*anti_crushing_distance} ${column_size_z}" />
+     </geometry>
+     <material name="Grey">
+       <color rgba="${grey}"/>
+     </material>
+   </collision>
+</link>
+
+
+
+<link name="left_column">
+   <visual>
+     <origin xyz="${0.5*column_size_x} ${-0.5*column_size_y} ${0.5*column_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${column_size_x} ${column_size_y} ${column_size_z}" />
+     </geometry>
+     <material name="Grey">
+       <color rgba="${grey}"/>
+     </material>
+   </visual>
+
+   <collision>
+     <origin xyz="${0.5*column_size_x} ${-0.5*column_size_y} ${0.5*column_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${column_size_x+2*anti_crushing_distance} ${column_size_y+2*anti_crushing_distance} ${column_size_z}" />
+     </geometry>
+     <material name="Grey">
+       <color rgba="${grey}"/>
+     </material>
+   </collision>
+</link>
+
+
+  <joint name="portal_to_lower_beam" type="fixed">
+    <parent link="world"/>
+    <child link="lower_beam"/>
+    <origin xyz="${-column_size_x} 0 ${table_height}"/>
+  </joint>
+
+<link name="lower_beam">
+   <visual>
+     <origin xyz="${0.5*beam_size_x} 0 ${-0.5*beam_size_z+0.015}" rpy="0 0 0" />
+     <geometry>
+       <box size="${beam_size_x} ${beam_size_y} ${beam_size_z}" />
+     </geometry>
+     <material name="Grey">
+       <color rgba="${grey}"/>
+     </material>
+   </visual>
+
+   <collision>
+   <origin xyz="${0.5*beam_size_x} 0 ${-0.5*beam_size_z+0.015}" rpy="0 0 0" />
+   <geometry>
+     <box size="${beam_size_x} ${beam_size_y} ${beam_size_z}" />
+   </geometry>
+   <material name="Grey">
+     <color rgba="${grey}"/>
+   </material>
+   </collision>
+</link>
+
+
+
+  <joint name="portal_to_upper_beam" type="fixed">
+    <parent link="world"/>
+    <child link="upper_beam"/>
+    <origin xyz="${-column_size_x} 0 ${upper_beam_height}"/>
+  </joint>
+
+<link name="upper_beam">
+   <visual>
+     <origin xyz="${0.5*beam_size_x} 0 ${0.5*beam_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${beam_size_x} ${beam_size_y} ${beam_size_z}" />
+     </geometry>
+     <material name="Grey">
+       <color rgba="${grey}"/>
+     </material>
+   </visual>
+
+   <collision>
+   <origin xyz="${0.5*beam_size_x} 0 ${0.5*beam_size_z}" rpy="0 0 0" />
+   <geometry>
+     <box size="${beam_size_x} ${beam_size_y} ${beam_size_z}" />
+   </geometry>
+   <material name="Grey">
+     <color rgba="${grey}"/>
+   </material>
+   </collision>
+</link>
+
+<!-- guide -->
+  <joint name="upper_beam_guide" type="fixed">
+    <parent link="upper_beam"/>
+    <child link="guide_fixed"/>
+    <origin xyz="${guide_distance_x+0.5*guide_size_x} ${-0.5*beam_size_y} ${-guide_size_z}"/>
+  </joint>
+
+<link name="guide_fixed">
+   <visual>
+     <origin xyz="0 ${0.5*guide_size_y} ${+0.5*guide_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${guide_size_x} ${guide_size_y} ${guide_size_z}" />
+     </geometry>
+     <material name="Grey">
+       <color rgba="${grey}"/>
+     </material>
+   </visual>
+
+   <collision>
+   <origin xyz="0 ${0.5*guide_size_y} ${+0.5*guide_size_z}" rpy="0 0 0" />
+   <geometry>
+     <box size="${guide_size_x+0.3} ${guide_size_y} ${guide_size_z}" />
+   </geometry>
+   <material name="Grey">
+     <color rgba="${grey}"/>
+   </material>
+   </collision>
+</link>
+
+  <joint name="track_joint" type="fixed">
+    <parent link="guide_fixed"/>
+    <child link="cursor"/>
+    <origin xyz="0 ${guide_distance_y+0.5*cursor_size} -0.01"/>
+    <limit effort="1000.0" lower="0" upper="1.4" velocity="0.5"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+<link name="cursor">
+   <visual>
+     <origin xyz="0 0 0.005" rpy="0 0 0" />
+     <geometry>
+       <box size="${cursor_size} ${cursor_size} 0.01" />
+     </geometry>
+     <material name="DarkGrey">
+       <color rgba="0.1 0.1 0.1 1"/>
+     </material>
+   </visual>
+
+   <collision>
+   <origin xyz="0 0 0.005" rpy="0 0 0" />
+   <geometry>
+     <box size="${cursor_size} ${cursor_size} 0.01" />
+   </geometry>
+   <material name="DarkGrey">
+     <color rgba="0.1 0.1 0.1 1"/>
+   </material>
+   </collision>
+</link>
+
+
+
+<!-- TABLE -->
+
+  <joint name="portal_to_table" type="fixed">
+    <parent link="world"/>
+    <child link="table"/>
+    <origin xyz="0 ${-0.5*table_size_y} ${table_height}"/>
+  </joint>
+
+<link name="table">
+   <visual>
+     <origin xyz="${0.5*table_size_x} ${0.5*table_size_y} ${-0.5*table_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${table_size_x} ${table_size_y} ${table_size_z}" />
+     </geometry>
+     <material name="Beech">
+       <color rgba="${beech}"/>
+     </material>
+   </visual>
+
+   <collision>
+     <origin xyz="${0.5*table_size_x} ${0.5*table_size_y} ${-0.5*table_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${table_size_x} ${table_size_y} ${table_size_z}" />
+     </geometry>
+     <material name="Beech">
+       <color rgba="${beech}"/>
+     </material>
+   </collision>
+</link>
+
+  <joint name="table_to_rail" type="fixed">
+    <parent link="table"/>
+    <child link="rail"/>
+    <origin xyz="${rail_distance} ${-0.5*(rail_size_y-table_size_y)} ${rail_size_z}"/>
+  </joint>
+
+<link name="rail">
+   <visual>
+     <origin xyz="0 ${0.5*rail_size_y} ${-0.5*rail_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${rail_size_x} ${rail_size_y} ${rail_size_z}" />
+     </geometry>
+     <material name="Grey">
+       <color rgba="${grey}"/>
+     </material>
+   </visual>
+
+   <collision>
+     <origin xyz="0 ${0.5*rail_size_y} ${-0.5*rail_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${rail_size_x} ${rail_size_y} ${rail_size_z}" />
+     </geometry>
+     <material name="Grey">
+       <color rgba="${grey}"/>
+     </material>
+   </collision>
+</link>
+
+
+  <!-- ur10e -->
+  <xacro:include filename="$(find ur_simplified_description)/urdf/ur10e/ur10e_macro.xacro" />
+  <xacro:ur10e_robot prefix="" />
+  <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+
+  <!-- arm -->
+  <xacro:arg name="kinematics_config" default="$(find sharework_cembre_description)/config/cembre_ur10e.yaml"/>
+  <xacro:ur10e_robot prefix="" joint_limited="true"
+    shoulder_pan_lower_limit="${-2*pi}" shoulder_pan_upper_limit="${2*pi}"
+    shoulder_lift_lower_limit="${-2*pi}" shoulder_lift_upper_limit="${2*pi}"
+    elbow_joint_lower_limit="${-2*pi}" elbow_joint_upper_limit="${2*pi}"
+    wrist_1_lower_limit="${-2*pi}" wrist_1_upper_limit="${2*pi}"
+    wrist_2_lower_limit="${-2*pi}" wrist_2_upper_limit="${2*pi}"
+    wrist_3_lower_limit="${-2*pi}" wrist_3_upper_limit="${2*pi}"
+    transmission_hw_interface="$(arg transmission_hw_interface)"
+    kinematics_file="${load_yaml('$(arg kinematics_config)')}"
+    />
+
+  <joint name="cursor_to_base" type="fixed">
+    <parent link="cursor" />
+    <child link = "base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="${pi} 0.0 ${0.5*pi}" />
+  </joint>
+<!-- gripper -->
+<joint name="anti_clamping_joint" type="fixed">
+<parent link="forearm_link" />
+<child  link = "anti_clamping_obstacle" />
+<origin xyz="-0.45 0 0.03" rpy="0 0 0" />
+</joint>
+
+
+<link name="anti_clamping_obstacle">
+<visual>
+  <origin xyz="0 0 0.000" rpy="0 ${0.5*pi} 0" />
+   <geometry>
+    <cylinder radius="${0.10*0.5}" length="0.30"/>
+   </geometry>
+   <material name="RobotiqGrey">
+     <color rgba="0.1 0.1 0.1 0.5"/>
+   </material>
+</visual>
+<collision>
+<origin xyz="0 0 0.005" rpy="0 ${0.5*pi} 0" />
+ <geometry>
+  <cylinder radius="${0.10*0.5}" length="0.30"/>
+ </geometry>
+ <material name="RobotiqGrey">
+   <color rgba="0.1 0.1 0.1 0.5"/>
+ </material>
+</collision>
+</link>
+
+
+
+<joint name="anti_clamping_joint2" type="fixed">
+<parent link="tool0" />
+<child  link = "anti_clamping_obstacle2" />
+<origin xyz="0 0 -0.06" rpy="0 0 0" />
+</joint>
+<link name="anti_clamping_obstacle2">
+<visual>
+  <origin xyz="0 0 0.000" rpy="0 0 0" />
+   <geometry>
+    <cylinder radius="${0.10*0.5}" length="0.12"/>
+   </geometry>
+   <material name="RobotiqGrey">
+     <color rgba="0.1 0.1 0.1 0.5"/>
+   </material>
+</visual>
+<collision>
+<origin xyz="0 0 0.005" rpy="0 0 0" />
+ <geometry>
+  <cylinder radius="${0.10*0.5}" length="0.12"/>
+ </geometry>
+ <material name="RobotiqGrey">
+   <color rgba="0.1 0.1 0.1 0.5"/>
+ </material>
+</collision>
+</link>
+
+  <!-- gripper -->
+<joint name="rq_coupler_joint" type="fixed">
+  <parent link="tool0" />
+  <child  link = "robotiq_coupler" />
+  <origin xyz="0 0 0.01" rpy="0 0 ${0.5*pi}" />
+
+
+
+</joint>
+
+<link name="robotiq_coupler">
+<visual>
+    <origin xyz="0 0 0.005" rpy="0 0 0" />
+     <geometry>
+      <cylinder radius="${0.075*0.5}" length="0.01"/>
+     </geometry>
+     <material name="RobotiqGrey">
+       <color rgba="0.1 0.1 0.1 1"/>
+     </material>
+</visual>
+<collision>
+    <origin xyz="0 0 0.005" rpy="0 0 0" />
+     <geometry>
+      <cylinder radius="${0.075*0.5}" length="0.01"/>
+     </geometry>
+     <material name="RobotiqGrey">
+       <color rgba="0.1 0.1 0.1 1"/>
+     </material>
+</collision>
+
+<inertial>
+  <mass value="0.5"/>
+  <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.4"/>
+</inertial>
+</link>
+
+    <joint name="robotiq_joint" type="fixed">
+    <parent link="robotiq_coupler" />
+    <child link = "robotiq_arg2f_base_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 ${0.0*pi}" />
+  </joint>
+  <xacro:robotiq_arg2f_85 prefix=""/>
+
+<link name="open_tip" />
+<joint name="open_tip_joint" type="fixed">
+  <parent link="robotiq_coupler" />
+  <child  link = "open_tip" />
+  <origin xyz="0 0 0.149" rpy="0 0 ${0.5*pi}" />
+</joint>
+
+<link name="closed_tip" />
+<joint name="closed_tip_joint" type="fixed">
+  <parent link="robotiq_coupler" />
+  <child  link = "closed_tip" />
+  <origin xyz="0 0 0.163" rpy="0 0 ${0.5*pi}" />
+</joint>
+
+<joint name="rq_connector_joint" type="fixed">
+<parent link="robotiq_coupler" />
+<child  link = "rq_connector" />
+<origin xyz="-0.06 0 0" rpy="0 0 0" />
+</joint>
+
+<link name="rq_connector">
+   <visual>
+     <origin xyz="0 0 0" rpy="0 0 0" />
+     <geometry>
+       <box size="0.04 0.04 0.04" />
+     </geometry>
+     <material name="White">
+       <color rgba="1 1 1 1"/>
+     </material>
+   </visual>
+
+   <collision>
+   <origin xyz="0 0 0" rpy="0 0 0" />
+   <geometry>
+     <box size="0.04 0.04 0.04" />
+   </geometry>
+   <material name="White">
+     <color rgba="1 1 1 1"/>
+   </material>
+   </collision>
+</link>
+
+<!-- walls  -->
+<joint name="portal_to_wall" type="fixed">
+    <parent link="portal"/>
+    <child link="wall"/>
+    <origin xyz="${-column_size_x-wall_distance} 0 0"/>
+  </joint>
+
+<link name="wall">
+   <visual>
+     <origin xyz="${-0.5*wall_size_x} 0 ${0.5*wall_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${wall_size_x} ${wall_size_y} ${wall_size_z}" />
+     </geometry>
+     <material name="White">
+       <color rgba="1 1 1 1"/>
+     </material>
+   </visual>
+
+   <collision>
+     <origin xyz="${-0.5*wall_size_x} 0 ${0.5*wall_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${wall_size_x} ${wall_size_y} ${wall_size_z}" />
+     </geometry>
+     <material name="White">
+       <color rgba="1 1 1 1"/>
+     </material>
+   </collision>
+</link>
+
+
+<joint name="wall_to_ec" type="fixed">
+    <parent link="wall"/>
+    <child link="ec"/>
+    <origin xyz="0 ${table_size_x*0.5} 0"/>
+  </joint>
+
+<link name="ec">
+   <visual>
+     <origin xyz="${0.5*ec_size_x} ${0.5*ec_size_y} ${0.5*ec_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${ec_size_x} ${ec_size_y} ${ec_size_z}" />
+     </geometry>
+     <material name="White">
+       <color rgba="1 1 1 1"/>
+     </material>
+   </visual>
+
+   <collision>
+     <origin xyz="${0.5*ec_size_x} ${0.5*ec_size_y} ${0.5*ec_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${ec_size_x} ${ec_size_y} ${ec_size_z}" />
+     </geometry>
+     <material name="White">
+       <color rgba="1 1 1 1"/>
+     </material>
+   </collision>
+</link>
+
+<joint name="portal_to_floor" type="fixed">
+    <parent link="portal"/>
+    <child link="floor"/>
+    <origin xyz="${-column_size_x-wall_distance} 0 0"/>
+  </joint>
+
+<link name="floor">
+   <visual>
+     <origin xyz="${0.5*floor_size_x-column_size_x-wall_distance} 0 ${-0.5*floor_size_z}" rpy="0 0 0" />
+     <geometry>
+       <box size="${floor_size_x} ${floor_size_y} ${floor_size_z}" />
+     </geometry>
+     <material name="White">
+       <color rgba="1 1 1 1"/>
+     </material>
+   </visual>
+
+   <collision>
+   <origin xyz="${0.5*floor_size_x-column_size_x-wall_distance} 0 0.4" rpy="0 0 0" />
+   <geometry>
+     <box size="${floor_size_x} ${floor_size_y} ${.8}" />
+   </geometry>
+   <material name="White">
+     <color rgba="1 1 1 1"/>
+   </material>
+   </collision>
+</link>
+
+<!-- Screw driver -->
+<joint name="table_to_screwdriver_holder" type="fixed">
+    <parent link="table"/>
+    <child link="screwdriver_holder"/>
+    <origin xyz="0.2 -0.05 1.5"/>
+  </joint>
+
+<link name="screwdriver_holder">
+   <visual>
+     <origin xyz="0 0 0" rpy="0 0 0" />
+     <geometry>
+       <box size="0.4 0.2 1.5" />
+     </geometry>
+     <material name="White">
+       <color rgba="1 1 1 1"/>
+     </material>
+   </visual>
+
+   <collision>
+   <origin xyz="0 0 0" rpy="0 0 0" />
+   <geometry>
+     <box size="0.2 0.2 2" />
+   </geometry>
+   <material name="White">
+     <color rgba="1 1 1 1"/>
+   </material>
+   </collision>
+</link>
+
+
+<!-- Virtual Wall -->
+
+<joint name="virtual_wall_1_joint" type="fixed">
+    <parent link="guide_fixed"/>
+    <child link="virtual_wall_1"/>
+    <origin xyz="0 0 0.0"/>
+  </joint>
+<link name="virtual_wall_1">
+<collision>
+<origin xyz="-0.4 ${0.5*beam_size_y} ${+0.5*virtual_wall_width}" rpy="0 0 0" />
+<geometry>
+<box size="${1.0+column_size_x} ${beam_size_y+2*column_size_y} ${virtual_wall_width}" />
+</geometry>
+<material name="VirtualWallColor">
+  <color rgba="${virtual_wall}"/>
+</material>
+</collision>
+</link>
+
+
+
+
+
+<joint name="virtual_wall_2_joint" type="fixed">
+    <parent link="world"/>
+    <child link="virtual_wall_2"/>
+    <origin xyz="${table_size_x+virtual_wall2_gap} 0 0.0"/>
+  </joint>
+<link name="virtual_wall_2">
+
+<collision>
+<origin xyz="${0.5*virtual_wall_width} 0 1" rpy="0 0 0" />
+<geometry>
+  <box size="${virtual_wall_width} ${beam_size_y+2*column_size_y} 2" />
+</geometry>
+<material name="VirtualWallColor">
+  <color rgba="${virtual_wall}"/>
+</material>
+
+</collision>
+</link>
+
+<!-- CAMERA -->
+<joint name="upper_beam_to_realsense2" type="fixed">
+    <parent link="table"/>
+    <child link="realsense_holder1"/>
+    <origin xyz="0.578 2.040 1.742" rpy="0.008 0.662 -1.725"/>
+  </joint>
+
+
+<link name="realsense_holder1"/>
+
+ <xacro:sensor_d435 parent="realsense_holder1" use_nominal_extrinsics="false">
+   <origin xyz="0 0 0" rpy="0 0 0"/>
+ </xacro:sensor_d435>
+
+
+</robot>

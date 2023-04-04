@@ -1,0 +1,69 @@
+binary_logger:
+  num_worker_threads: 10
+  test_path: ""
+  
+  test_name: "test"
+ 
+  manager_name: 'binary_logger'
+
+  # list of nodelet (unrelated to binary_logger package) that the user do not want to stop
+  unstoppable_nodelets: []
+  
+  # Type of the topic that need to be logged (supported JointState, Imu, PoseStamped, WrenchStamped, Float64MultiArray)
+  topic_type: 
+    - 'JointState'
+    - 'Tf'
+    - 'WrenchStamped'
+  
+  # Topic type
+  JointState:
+    # List of the topic to be acquired 
+    topic_names:
+      - '/joint_states'
+    
+    # Acquisition time (to be specified for each topic)
+    duration:
+      - 120 #[s]
+
+    # Message decimation (to be specified for each topic)
+    decimation:
+      - 1 
+   
+
+   
+  # Topic type
+  WrenchStamped:
+    # Acquisition time
+    topic_names:
+      - '/wrench'
+    
+    # Acquisition time (to be specified for each topic)
+    duration:
+      - 120
+
+    # Message decimation (to be specified for each topic)
+    decimation:
+      - 1
+      - 1
+
+
+  # Topic type
+  Tf:
+    # List of the topic to be acquired
+    topic_names:
+      - 'tool'
+    
+
+    # Acquisition time (to be specified for each topic)
+    duration:
+      - 120
+      - 120
+
+    # Message decimation (to be specified for each topic)
+    decimation:
+      - 1
+      - 1
+
+tool:
+  base_frame: "world"
+  tool_frame: "tool0"

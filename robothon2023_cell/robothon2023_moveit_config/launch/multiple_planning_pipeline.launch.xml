@@ -1,0 +1,10 @@
+<launch>
+  <!-- define capabilites that are loaded on start (space seperated) -->
+  <arg name="capabilities" default=""/>
+  <!-- inhibit capabilites (space seperated) -->
+  <arg name="disable_capabilities" default=""/>
+  <include ns="planning_pipelines/ompl" file="$(find robothon2023_moveit_config)/launch/ompl_planning_pipeline.launch.xml" />
+  <include ns="planning_pipelines/dirrt" file="$(find robothon2023_moveit_config)/launch/dirrt_planning_pipeline.launch.xml" />
+
+
+</launch>

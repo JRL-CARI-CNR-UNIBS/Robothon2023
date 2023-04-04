@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="robothon2023_simplified" >
+
+  <!-- Sharework cell -->
+  <xacro:include filename="$(find robothon2023_description)/urdf/sharework_cell.urdf.xacro" />
+  <xacro:sharework_cell
+    simplified='true'
+  /> <!--DO NOT DELETE -->
+
+</robot>
+
+
+<!-- <xacro:macro name="robot_description" params=
+ "kinematics_config:=''$(find robothon2023_description)/config/cembre_ur10e.yaml'
+ transmission_hw_interface:=hardware_interface/PositionJointInterface "/>
+
+ kinematics_parameters_file="$(arg kinematics_config)"
+ transmission_hw_interface="$(arg transmission_hw_interface)" -->

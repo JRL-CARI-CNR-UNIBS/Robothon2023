@@ -1,0 +1,38 @@
+square:
+  action_type: "multiple_ move"
+
+  l1:
+    skill_type: "ur_linear_move_base"
+    MOVEX: 1.0
+    MOVEY: 0.0
+    MOVEZ: 0.0
+    DISTANCE: 0.10
+    VELOCITY: 1
+    ACCELERATION: 10
+
+  l2:
+    skill_type: "ur_linear_move_base"
+    MOVEX: 0.0
+    MOVEY: 1.0
+    MOVEZ: 0.0
+    DISTANCE: 0.1
+    VELOCITY: 1
+    ACCELERATION: 10
+
+  l3:
+    skill_type: "ur_linear_move_base"
+    MOVEX: -1.0
+    MOVEY: 0.0
+    MOVEZ: 0.0
+    DISTANCE: 0.1
+    VELOCITY: 1
+    ACCELERATION: 10
+
+  l4:
+    skill_type: "ur_linear_move_base"
+    MOVEX: 0.0
+    MOVEY: -1.0
+    MOVEZ: 0.0
+    DISTANCE: 0.1
+    VELOCITY: 1
+    ACCELERATION: 10

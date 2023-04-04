@@ -1,0 +1,27 @@
+ur10e_hw:
+  type: "cnr/control/FakeRobotHW"
+  appenders      : [file, screen]
+  levels         : [trace, debug]
+  pattern_layout : "[%5p][%d{HH:mm:ss,SSS}][%50M:%04L][%24c] %m%n"
+  file_name      : ur10e_hw
+  sampling_period: 0.002
+  diagnostic_period: 0.1
+  maximum_missing_cycles: 100
+  feedback_joint_state_timeout: 10
+
+  joint_names:
+  - shoulder_pan_joint
+  - shoulder_lift_joint
+  - elbow_joint
+  - wrist_1_joint
+  - wrist_2_joint
+  - wrist_3_joint
+
+  base_link: "base_link"
+  tool_link: "tool0"
+  robot_description_param: /robot_description
+  robot_description_planning_param: /robot_description_planning
+  kin_update_period: 0.002
+
+  initial_position: [1.5707963267949, -2.44346095279206, 2.44346095279206,-1.5707963267949, 1.5707963267949, 0]
+  #[1.5700, -1.5700, 1.5700, 0.0000, 1.5700, 0.0000]

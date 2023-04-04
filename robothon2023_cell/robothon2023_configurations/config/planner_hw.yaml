@@ -1,0 +1,42 @@
+planner_hw:
+  type           : "cnr/control/TopicsRobotHW"
+  appenders      : [file, screen]
+  levels         : [trace, info]
+  pattern_layout : "[%5p][%d{HH:mm:ss,SSS}][%50M:%04L][%24c] %m%n"
+  file_name      : "planner_hw"
+
+  resources: [ joint_resource, wrench_resource ]  # this TopicsRobotHW manages topic of type: joint
+  joint_resource:  # joint handles managed by planner_hw
+    joint_names:  # name of the joint handles
+    - shoulder_pan_joint
+    - shoulder_lift_joint
+    - elbow_joint
+    - wrist_1_joint
+    - wrist_2_joint
+    - wrist_3_joint
+    subscribed_topics:  # name of topics sensor_msgs/JointState which contains the state of the joint handle
+    - /ur10/joint_states
+    - /ur10/joint_states
+    - /ur10/joint_states
+    - /ur10/joint_states
+    - /ur10/joint_states
+    - /ur10/joint_states
+    published_topics: # name of the topic (type sensor_msgs/JointState) that planner_hw will publish (it has to be only one)
+    - /joint_target
+
+  wrench_resource:
+    sensor_name: wrench
+    frame_id: tool0
+    subscribed_topics:
+    - /ur10/wrench
+
+  sampling_period: 0.002
+  diagnostic_period: 0.1
+  feedback_joint_state_timeout: 20
+  maximum_missing_cycles: 1000
+  kin_update_period: 0.002
+  base_link: "world"
+  tool_link: "tool0"
+  robot_description_param: /robot_description
+  robot_description_planning_param: /robot_description_planning
+  kin_update_period: 0.002

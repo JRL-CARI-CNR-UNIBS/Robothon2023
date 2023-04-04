@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="pipeline" default="dirrt" />
+  <arg name="debug" default="false" />
+  <arg name="use_rviz" default="true" />
+  <arg name="rviz_config" default="$(find robothon2023_configurations)/launch/control.rviz"/>
+
+<node pkg="object_loader" name="context_manager_node" type="context_manager_node" respawn="true" output="screen"/>
+<include file="$(find robothon2023_moveit_config)/launch/move_group.launch">
+  <arg name="allow_trajectory_execution" value="true"/>
+  <arg name="fake_execution" value="false"/>
+  <arg name="info" value="true"/>
+  <arg name="debug" value="$(arg debug)"/>
+  <arg name="pipeline" value="$(arg pipeline)"/>
+</include>
+
+<include file="$(find robothon2023_moveit_config)/launch/moveit_rviz.launch" if="$(arg use_rviz)">
+  <arg name="rviz_config" value="$(arg rviz_config)"/>
+  <arg name="debug" value="$(arg debug)"/>
+</include>
+
+</launch>

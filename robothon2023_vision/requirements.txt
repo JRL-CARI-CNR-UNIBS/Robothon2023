@@ -1,9 +1,10 @@
 fastai==2.7.12
 matplotlib==3.1.2
-numpy==1.17.4
+numpy>=1.17.4 #1.20.3
 opencv_contrib_python==4.5.5.62
 Pillow==9.4.0
-rospy==1.15.14
+rospy>=1.15.14
 ruamel.base==1.0.0
 torch==1.12.1
 torchvision==0.13.1
+rospkg

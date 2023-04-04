@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<launch>
+<arg name="fake" default="true"/>
+<arg name="kinematics_config" default="$(find robothon2023_description)/config/cembre_ur10e.yaml" doc="Kinematics config file used for calibration correction. This will be used to verify the robot's calibration is matching the robot_description."/>
+<arg name="controllers_configurations" default="$(find robothon2023_configurations)/config/controllers_configurations.yaml" doc="Kinematics config file used for calibration correction. This will be used to verify the robot's calibration is matching the robot_description."/>
+<arg name="controllers_dispatches" default="$(find robothon2023_configurations)/config/controllers_dispatches.yaml"/>
+
+<!-- CNR_ROS_CONTROL CONFIGURATION -->
+<param name="debug_config" value="$(arg controllers_configurations)"/>
+<param name="debug_dispatches" value="$(arg controllers_dispatches)"/>
+<rosparam command="load" file="$(arg controllers_dispatches)" />
+<rosparam command="load" file="$(find robothon2023_configurations)/config/planner_hw.yaml" />
+<rosparam command="load" file="$(find robothon2023_configurations)/config/ur10e_controllers.yaml" />
+<rosparam command="load" file="$(find robothon2023_configurations)/config/planner_controllers.yaml" />
+<rosparam unless = "$(arg fake)" command="load" file="$(find robothon2023_configurations)/config/ur10e_hw.yaml" />
+<rosparam if     = "$(arg fake)" command="load" file="$(find robothon2023_configurations)/config/fake_ur10e_hw.yaml" />
+
+<!-- LOAD URSCRIPT FOR UR CONTROLLER -->
+<group ns="ur10e_hw">
+<param name="script_file" type="string" value="$(find robothon2023_configurations)/resources/ros_control.urscript" />
+<param name="output_recipe_file" type="string" value="$(find robothon2023_configurations)/resources/rtde_output_recipe.txt" />
+<param name="input_recipe_file" type="string" value="$(find robothon2023_configurations)/resources/rtde_input_recipe.txt" />
+</group>
+
+
+<include file="$(find robothon2023_description)/launch/upload.launch"/> <!-- Load URDF -->
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" /> <!-- Compute TF forward kin. -->
+
+<node pkg="cnr_configuration_manager"
+      type="cnr_configuration_manager_node"
+      name="configuration_manager" output="screen">
+
+  <rosparam>
+    appenders: [screen,file]
+    levels: [info,debug]
+    file_name: "configuration_manager"
+    append_to_file: true
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%04L][%c] %m%n"
+  </rosparam>
+
+  <rosparam command="load" file="$(arg controllers_configurations)" />
+  <param name="num_worker_threads" value="40" />
+
+</node>
+
+<node pkg="ur_direct_trj_server" type="fjt_as.py" name="fjt_as" output="screen" />
+
+<node pkg="cnr_configuration_manager" type="dispatcher" name="configuration_dispatcher" output="screen" >
+<rosparam>
+  appenders: [screen]
+  levels: [info]
+  file_name: "configuration_dispatcher"
+  pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%04L][%c] %m%n"
+</rosparam>
+  <remap from="~configuration_dispatches" to="/configuration_dispatches" />
+</node>
+
+</launch>

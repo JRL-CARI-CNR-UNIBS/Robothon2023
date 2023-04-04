@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find robothon2023_description)/launch/upload.launch"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robothon2023_description)/config/view_cell.rviz" required="true" />
+<!-- <node pkg="tf2_ros" type="static_transform_publisher" name="camera_to_camera" args="0 0 0 -0.500, 0.500, -0.500, 0.500 camera_link camera_depth_optical_frame" /> -->
+
+<node pkg="tf2_ros" type="static_transform_publisher" name="camera_to_camera_depth" args="0.011, 0.018, 0.013 -0.500, 0.500, -0.500, 0.500 camera_link camera_depth_optical_frame" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="camera2_to_camera2_depth" args="0.011, 0.018, 0.013 -0.500, 0.500, -0.500, 0.500 camera2_link camera2_depth_optical_frame" />
+
+<node pkg="tf2_ros" type="static_transform_publisher" name="camera_to_camera_color" args="0.011, 0.033, 0.013 -0.500, 0.500, -0.500, 0.500 camera_link camera_color_optical_frame" />
+<node pkg="tf2_ros" type="static_transform_publisher" name="camera2_to_camera2_color" args="0.011, 0.033, 0.013 -0.500, 0.500, -0.500, 0.500 camera2_link camera2_color_optical_frame" />
+
+</launch>

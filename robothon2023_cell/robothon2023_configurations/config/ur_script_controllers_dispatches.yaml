@@ -1,0 +1,2 @@
+configuration_dispatches:
+  - {name: watch, at: 1.0}

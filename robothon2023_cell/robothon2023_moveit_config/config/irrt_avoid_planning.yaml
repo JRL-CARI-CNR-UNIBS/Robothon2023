@@ -1,0 +1,71 @@
+group_names_map:
+  irrta:  manipulator
+  irrta2:  manipulator
+
+default_planner_config: irrta
+
+irrta:
+  type: IRRTAvoid
+  max_distance: 0.5 #1.0
+  max_refine_time: 600.0     # time for refine solution
+  utopia_tolerance: 0.003  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  # max_refine_time: 3.0   # time for refine solution
+  # utopia_tolerance: 0.05  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  rewire_radius: 15.0
+  extend: true
+  local_bias: 0.25
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  warp: false
+  warp_once: false
+  collision_distance: 0.05
+  grid_spacing: 0.05
+  display_bubbles: true
+  collision_thread: 16
+  use_kdtree: false
+  max_iterations: 0
+  fcl_collision_check: false
+  allow_goal_collision: true
+  minimum_distance: 0.25
+  reaction_time: 0.2
+  base_frame: world
+  tool_frame: open_tip
+  max_connection_cost: 60
+  workspace_lower_bounds_xyz: [-0.5,-1,0.5]
+  workspace_upper_bounds_xyz: [1.5,1,2.5]
+  use_iso15066: true
+  use_iptp: true
+  # minimum_distance: 0.25
+  # reaction_time: 0.2
+
+irrta2:
+  type: IRRTAvoid
+  max_distance: 0.5 #1.0
+  max_refine_time: 600.0     # time for refine solution
+  utopia_tolerance: 0.003  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  # max_refine_time: 3.0   # time for refine solution
+  # utopia_tolerance: 0.05  # exit condition for early stop (cost< (1+utopia_tolerance) * distance)
+  rewire_radius: 15.0
+  extend: true
+  local_bias: 0.25
+  forgetting_factor: 0.999
+  tube_radius: 0.02
+  warp: false
+  warp_once: false
+  collision_distance: 0.05
+  grid_spacing: 0.05
+  display_bubbles: true
+  collision_thread: 16
+  use_kdtree: false
+  max_iterations: 0
+  fcl_collision_check: false
+  allow_goal_collision: true
+  minimum_distance: 0.2
+  reaction_time: 0.15
+  base_frame: world
+  tool_frame: open_tip
+  max_connection_cost: 60
+  workspace_lower_bounds_xyz: [-0.5,-1,0.5]
+  workspace_upper_bounds_xyz: [1.5,1,2.5]
+  use_iso15066: true
+  use_iptp: false
