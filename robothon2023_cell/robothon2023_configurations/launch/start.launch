@@ -21,6 +21,6 @@
   </include>
 
   <include file="$(find robothon2023_configurations)/launch/rosdyn_node.launch"/>
-  <include file="$(find skills_util)/launch/skills_servers.launch"/>
+  <!-- <include file="$(find skills_util)/launch/skills_servers.launch"/> -->
   <include file="$(find skills_util)/launch/bt_server.launch"/>
 </launch>

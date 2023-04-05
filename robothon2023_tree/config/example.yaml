@@ -69,3 +69,15 @@ example:
     ROTZ: 0.0
     VELOCITY: 0.1
     ACCELERATION: 0.5
+
+  circle:
+    skill_type: "ur_circular_point"
+
+    skill_name: "open_door"
+    action_name: "example"
+
+  open_door:
+    skill_type: "ur_circular_move"
+
+    ACCELLERATION: 0.5
+    VELOCITY: 0.05
