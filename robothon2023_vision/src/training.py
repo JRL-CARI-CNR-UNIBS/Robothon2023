@@ -79,7 +79,31 @@ class ImagesKeypointManager:
         yaml.preserve_quotes = True
         with open(file, 'wb') as f:
             yaml.dump(keyp, f)
-
+    def create_txt2(self,folder_path,img_name):
+        folder_path+="prova/"
+        keyp = self.get_image_label(img_name)
+        dim = {"red_button":[20,20],
+                 "blue_button":[20,20],
+                 "red_plug":[30,30],
+                 "door_handle":[40,40],
+                 "slider":[5,13]}
+        file = Path(folder_path+img_name.split(".")[0]+".txt")
+        str = ""
+        for id,keypoint in enumerate(self.image_labels[img_name]):
+            print(keypoint)
+            print(id)
+            # print(dim[keypoint][1])
+            # print(self.image_labels[keypoint][0])
+            center_x=keypoint[0]/1280.0
+            center_y=keypoint[1]/720.0
+            width=dim[self.known_keypoints[id]][0]/1280.0
+            height=dim[self.known_keypoints[id]][1]/720.0
+            str += f"{id} {center_x} {center_y} {width} {height} \n"
+            #
+            # yaml = ruamel.yaml.YAML(typ='rt')
+            # yaml.preserve_quotes = True
+        with open(file, 'w') as f:
+            f.write(str)
 
 
 def get_y(fname):
@@ -116,8 +140,9 @@ def main():
     for image in image_label:
         imgs_keyp.add_image_label(image, image_label[image])
         imgs_keyp.create_txt(labels_path,image)
+        imgs_keyp.create_txt2(labels_path,image)
 
-
+    return 0
     dataset_folder_path = Path(dataset_path)
     imgs = get_image_files(dataset_folder_path)
     # print(imgs)
@@ -148,7 +173,11 @@ def main():
 
     learn = vision_learner(dls, resnet18, loss_func=MSELossFlat())
     learn.freeze()
-    learn.fit_flat_cos(2, 1e-2)
+    learn.fit_flat_cos(50, 1e-2)
+    learn.unfreeze()
+    learn.lr_find()
+    learn.fit_flat_cos(5, 1e-4)
+
     learn.summary()
     # learn.model()
     #learn.lr_find()
