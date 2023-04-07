@@ -6,5 +6,5 @@
       transmission_hw_interface:=$(arg transmission_hw_interface)
       kinematics_config:=$(arg kinematics_config)"
   />
-    <include file="$(find robothon2023_description)/launch/cameras.launch"/>
+    <!-- <include file="$(find robothon2023_description)/launch/cameras.launch"/> -->
 </launch>

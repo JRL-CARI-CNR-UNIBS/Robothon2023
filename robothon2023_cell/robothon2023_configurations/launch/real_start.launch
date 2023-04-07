@@ -42,7 +42,7 @@
 -->
 
 <launch>
-<arg name="pipeline" default="dirrt"/>
+<arg name="pipeline" default="ompl"/>
 <arg name="run_moveit" default="true"/>
 <arg name="run_control" default="true"/>
 <include file="$(find robothon2023_configurations)/launch/start.launch">

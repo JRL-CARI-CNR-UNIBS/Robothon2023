@@ -4,12 +4,13 @@ example:
   movel_test:
     skill_type: "ur_movel"
 
-    reference_frame: "world"
-    tool_frame: "open_tip"
-    traslation: [0,0,0.1]
-    rotation: [0.707,0,0,0.707]
-    velocity: 0.01
-    acceleration: 0.1
+    reference_frame: "tool_end"
+    tool_frame: "tool_end"
+    traslation: [0,0,0]
+    rotation: [-0.707,0,0,0.707]
+    velocity: 0.1
+    acceleration: 1
+    n_point: 100
 
   move_gripper:
     skill_type: "robotiq_gripper_move"

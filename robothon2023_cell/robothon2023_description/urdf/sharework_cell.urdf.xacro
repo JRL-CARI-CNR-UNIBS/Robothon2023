@@ -328,6 +328,22 @@
   />
 </xacro:if>
 
+<joint name="flage_to_real_tool" type="fixed">
+  <parent link="tool0" />
+  <child link = "real_tool" />
+  <origin xyz="0.0 0.0 0.149" rpy="0 0 0" />
+</joint>
+
+<link name="real_tool"/>
+
+<joint name="flage_to_tool_end" type="fixed">
+  <parent link="tool0" />
+  <child link = "tool_end" />
+  <origin xyz="0.0 0.0 0.149" rpy="0 0 0" />
+</joint>
+
+<link name="tool_end"/>
+
 <joint name="cursor_to_base" type="fixed">
   <parent link="cursor" />
   <child link = "base_link" />
