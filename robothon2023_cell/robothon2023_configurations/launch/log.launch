@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <rosparam command="load" file="$(find robothon2023_configurations)/config/log.yaml" />
+  <node pkg="nodelet" type="nodelet" name="binary_logger"  args="manager" output="screen"/>
+  <node pkg="binary_logger" type="automatic_logger_node" name="automatic_logger_node" output="screen"/>
+</launch>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<launch>
+<arg name="pipeline" default="dirrt"/>
+<arg name="fake" default="false"/>
+<arg name="rviz_config" default="$(find robothon2023_configurations)/launch/control.rviz"/>
+<arg name="controllers_configurations" default="$(find robothon2023_configurations)/config/controllers_configurations.yaml" doc="Kinematics config file used for calibration correction. This will be used to verify the robot's calibration is matching the robot_description."/>
+<arg name="controllers_dispatches" default="$(find robothon2023_configurations)/config/ur_script_controllers_dispatches.yaml"/>
+
+<include file="$(find robothon2023_configurations)/launch/robot_control.launch">
+  <arg name="fake" value="$(arg fake)"/>
+  <arg name="controllers_configurations" value="$(arg controllers_configurations)"/>
+  <arg name="controllers_dispatches" value="$(arg controllers_dispatches)"/>
+</include>
+
+<include file="$(find robothon2023_configurations)/launch/moveit.launch">
+  <arg name="pipeline" value="$(arg pipeline)"/>
+  <arg name="rviz_config" value="$(arg rviz_config)"/>
+</include>
+</launch>

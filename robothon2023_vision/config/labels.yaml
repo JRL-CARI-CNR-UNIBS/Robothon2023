@@ -1,7 +1,7 @@
 known_keypoints:
   - "red_button"
   - "blue_button"
-  - "red_plug"
+  # - "red_plug"
   # - "black_plug"
   # - "screw_1"
   # - "screw_2"
@@ -18,4 +18,4 @@ known_keypoints:
   # - "door_screw_left"
   # - "door_screw_right"
   - "door_handle"
-  - "slider"
+  # - "slider"

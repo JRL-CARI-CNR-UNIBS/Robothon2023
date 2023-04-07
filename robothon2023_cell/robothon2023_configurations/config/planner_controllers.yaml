@@ -1,0 +1,255 @@
+planner_hw:
+  remap_source_args:
+  - "/planner_hw/js_pub/joint_states"
+  - "/planner_hw/microinterpolator/follow_joint_trajectory/cancel"
+  - "/planner_hw/microinterpolator/follow_joint_trajectory/feedback"
+  - "/planner_hw/microinterpolator/follow_joint_trajectory/goal"
+  - "/planner_hw/microinterpolator/follow_joint_trajectory/result"
+  - "/planner_hw/microinterpolator/follow_joint_trajectory/status"
+  - "/planner_hw/microinterpolator/unscaled_joint_target"
+  - "/planner_hw/microinterpolator/execution_ratio"
+
+  - "/planner_hw/microinterpolator_impedance/follow_joint_trajectory/cancel"
+  - "/planner_hw/microinterpolator_impedance/follow_joint_trajectory/feedback"
+  - "/planner_hw/microinterpolator_impedance/follow_joint_trajectory/goal"
+  - "/planner_hw/microinterpolator_impedance/follow_joint_trajectory/result"
+  - "/planner_hw/microinterpolator_impedance/follow_joint_trajectory/status"
+  - "/planner_hw/microinterpolator_impedance/unscaled_joint_target"
+  - "/planner_hw/microinterpolator_impedance/execution_ratio"
+
+  - "/planner_hw/microinterpolator_elastoplastic/follow_joint_trajectory/cancel"
+  - "/planner_hw/microinterpolator_elastoplastic/follow_joint_trajectory/feedback"
+  - "/planner_hw/microinterpolator_elastoplastic/follow_joint_trajectory/goal"
+  - "/planner_hw/microinterpolator_elastoplastic/follow_joint_trajectory/result"
+  - "/planner_hw/microinterpolator_elastoplastic/follow_joint_trajectory/status"
+  - "/planner_hw/microinterpolator_elastoplastic/unscaled_joint_target"
+  - "/planner_hw/microinterpolator_elastoplastic/execution_ratio"
+
+  - "/planner_hw/simple_touch/simple_touch/cancel"
+  - "/planner_hw/simple_touch/simple_touch/feedback"
+  - "/planner_hw/simple_touch/simple_touch/goal"
+  - "/planner_hw/simple_touch/simple_touch/result"
+  - "/planner_hw/simple_touch/simple_touch/status"
+  - "/planner_hw/replanner/follow_joint_trajectory/cancel"
+  - "/planner_hw/replanner/follow_joint_trajectory/feedback"
+  - "/planner_hw/replanner/follow_joint_trajectory/goal"
+  - "/planner_hw/replanner/follow_joint_trajectory/result"
+  - "/planner_hw/replanner/follow_joint_trajectory/status"
+  - "/planner_hw/replanner/unscaled_joint_target"
+
+
+  remap_target_args:
+  - "/joint_states"
+  - "/manipulator/follow_joint_trajectory/cancel"
+  - "/manipulator/follow_joint_trajectory/feedback"
+  - "/manipulator/follow_joint_trajectory/goal"
+  - "/manipulator/follow_joint_trajectory/result"
+  - "/manipulator/follow_joint_trajectory/status"
+  - "/unscaled_joint_target"
+  - "/execution_ratio"
+
+  - "/manipulator/follow_joint_trajectory/cancel"
+  - "/manipulator/follow_joint_trajectory/feedback"
+  - "/manipulator/follow_joint_trajectory/goal"
+  - "/manipulator/follow_joint_trajectory/result"
+  - "/manipulator/follow_joint_trajectory/status"
+  - "/unscaled_joint_target"
+  - "/execution_ratio"
+
+  - "/manipulator/follow_joint_trajectory/cancel"
+  - "/manipulator/follow_joint_trajectory/feedback"
+  - "/manipulator/follow_joint_trajectory/goal"
+  - "/manipulator/follow_joint_trajectory/result"
+  - "/manipulator/follow_joint_trajectory/status"
+  - "/unscaled_joint_target"
+  - "/execution_ratio"
+
+  - "/simple_touch/cancel"
+  - "/simple_touch/feedback"
+  - "/simple_touch/goal"
+  - "/simple_touch/result"
+  - "/simple_touch/status"
+  - "/manipulator/follow_joint_trajectory/cancel"
+  - "/manipulator/follow_joint_trajectory/feedback"
+  - "/manipulator/follow_joint_trajectory/goal"
+  - "/manipulator/follow_joint_trajectory/result"
+  - "/manipulator/follow_joint_trajectory/status"
+  - "/unscaled_joint_target"
+
+  js_pub:
+    # type:         ros/control/JointStatePublisher
+    type:         cnr/control/JointStatePublisher
+    controlled_joint: all
+    base_link: "world"
+    tool_link: "tool0"
+    robot_description_param: /robot_description
+    robot_description_planning_param: /robot_description_planning
+
+  microinterpolator:
+    type: "cnr/control/ScaledFJTPosVelEffController"
+    controlled_joints: all
+    continuity_order: 1
+    goal_tolerance: 0.0001
+    path_tolerance: 0.001
+    check_tolerance: true
+    pub_log_target: true
+    clik_gain: 0.0
+
+  microinterpolator_impedance:  # we need it to restart the planner when we switch to and from the impedance mode
+    type: "cnr/control/ScaledFJTPosController"
+    controlled_joints: all
+    continuity_order: 1
+
+
+  microinterpolator_elastoplastic:  # we need it to restart the planner when we switch to and from the impedance mode
+    type: "cnr/control/ScaledFJTPosController"
+    controlled_joints: all
+    continuity_order: 1
+
+
+  freq_est:
+    type:        cnr/control/MultisineIdentificationController
+    controlled_joints: all
+    base_link  : "world"
+    tool_link  : "tool0"
+    kin_update_period: 0.002
+    appenders: [file, screen]
+    levels: [trace, info]
+    pattern_layout: "[%5p][%d{HH:mm:ss,SSS}][%M:%L][%c] %m%n"
+    file_name: "freq_est"
+    # REQUIRED:
+    active_joint: "shoulder_pan_joint"
+
+    # multisine parameters:
+    rampup_time: 10.0  # [seconds] transient time before and after the multisine signal.
+
+    carrier:
+      angular_frequency: 0.1       # [rad/s]            angular frequency
+      amplitude: 0.1               # [rad or m]         amplitude of the carrier
+      periods:   2.0               # [-]                number of repetitions of the carriers (round using std::ceil)
+
+    input:
+      max_pos: 0.1                 # [rad     or m]     maximum amplitude of the signal in position (deflection from the starting point)
+      max_vel: 2.0                 # [rad/s   or m/s]   maximum velocity of the signal
+      max_acc: 5.0                 # [rad/s^2 or m/s^2] maximum acceleration of the signal
+
+      min_angular_frequency: 1.0   # [rad/s]            must be high than carrier/angular_frequency
+      max_angular_frequency: 100.0 # [rad/s]            must be high than input/min_angular_frequency
+      harmonics_number: 40         # [-]                number of harmonics in the multisine signal
+
+
+  simple_touch:
+    type: cnr/control/SimpleTouchController
+    sensor_name : "wrench"
+    base_link   : "world"
+    tool_link   : "tool0"
+    sensor_frame: "tool0"
+    output_twist_ns: "/target_cart_twist"
+
+  replanner:
+    appenders      : [file, screen]
+    levels         : [trace, info]
+    pattern_layout : "[%5p][%d{HH:mm:ss,SSS}][%50M:%04L][%24c] %m%n"
+    file_name      : "replanner_controller"
+    type: "cnr/control/ReplannerFJTPosVelEffController"
+    controlled_joints: all
+    n_paths: 2
+    opt_paths: true
+    max_solver_time: 5
+    max_distance: 1
+    checker_resolution: 0.05
+    group_name: "manipulator"
+    trj_execution_thread_frequency: 500
+    collision_checker_thread_frequency: 30
+    dt_replan: 0.200
+    parallel_checker_n_threads: 20
+    read_safe_scaling: true
+    overrides: ["/my_speed_ovr"]  #["/my_speed_ovr","/safe_ovr_1"]
+    unscaled_joint_target_topic: "/unscaled_joint_target"
+    scaling: 0.3
+    MARS:
+      dt_replan_relaxed: 0.200
+      reverse_start_nodes: true
+      full_net_search: false
+      verbosity_level: 0
+
+
+
+  # joint_teleop:
+  #   type: "itia/control/JointTeleopController"
+  #   setpoint_topic_name: "/manipulator/target_joint_state"
+  #   controlled_joints:
+  #   - shoulder_pan_joint
+  #   - shoulder_lift_joint
+  #   - elbow_joint
+  #   - wrist_1_joint
+  #   - wrist_2_joint
+  #   - wrist_3_joint
+
+  # cart_teleop:
+  #   type: "itia/control/CartTeleopController"
+  #   setpoint_topic_name: "/manipulator/target_twisted_stamped"
+  #   base_link: "world"
+  #   tool_link: "tool0"
+  #   controlled_joints:
+  #   - shoulder_pan_joint
+  #   - shoulder_lift_joint
+  #   - elbow_joint
+  #   - wrist_1_joint
+  #   - wrist_2_joint
+  #   - wrist_3_joint
+
+  # manual_guidance:
+  #    # REQUIRED:
+  #    type                  : "itia/control/CartImpedanceController"
+  #    inertia               : [ 10, 10, 10, 10, 10, 10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+  #    stiffness             : [ 00, 00, 00, 120,120,120]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+  #    damping               : [ 80, 80, 80, 120,120,120]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+  #    joint_target_topic    : "/joint_impedance_pos_target"  # setpoint joint topic name
+  #    base_frame            : "world"                      # name of the base link
+  #    tool_frame            : "tool0"                          # name of the tool link
+  #    sensor_frame          : "tool0"                # name of the sensor link (has to be integral with tool_frame)
+  #
+  #    # OPTIONAL:
+  #    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+  #    wrench_deadband       : [1, 1, 1, 0.1, 0.1, 0.1] # deadband on the wrench topic [DEFAULT: zero]
+  #    external_wrench_topic : "/ur10e_hw/wrench"      # wrench setpoitn topic name [DEFAULT: ~/external_wrench]
+  #
+  # cartesian_linear_impedance:
+  #    # REQUIRED:
+  #    type                  : "itia/control/CartImpedanceController"
+  #    inertia               : [  10,  10,  10,  10,  10,  10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+  #    stiffness             : [ 100, 100, 100, 120, 120, 120]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+  #    damping_ratio         : [ ]  1,   1,   1,   2,   2,   2]
+  #    #damping               : [  60,  60,  60,  60,   60, 60]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+  #    joint_target_topic    : "/joint_impedance_pos_target"  # setpoint joint topic name
+  #    base_frame            : "world"                      # name of the base link
+  #    tool_frame            : "tool0"                          # name of the tool link
+  #    sensor_frame          : "tool0"                # name of the sensor link (has to be integral with tool_frame)
+  #
+  #    # OPTIONAL:
+  #    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+  #    wrench_deadband       : [1, 1, 1, 0.1, 0.1, 0.1] # deadband on the wrench topic [DEFAULT: zero]
+  #    external_wrench_topic : "/ur10e_hw/wrench"      # wrench setpoitn topic name [DEFAULT: ~/external_wrench]
+  #
+  # elastoplastic_control:
+  #    # REQUIRED:
+  #    type                  : "phri/control/CartImpedanceLuGreController"
+  #    inertia               : [  10,  10,  10,  10,  10,  10]      # in [kg, kg, kg, kg*m^2, kg*m^2, kg*m^2]
+  #    stiffness             : [ 100, 100, 100, 120, 120, 120]   # in [N/m, N/m, N/m, Nm/rad, Nm/rad, Nm/rad]
+  #    damping_ratio         : [   1,   1,   1,   2,   2,   2]
+  #    #damping               : [  60,  60,  60,  60,   60, 60]     # in [N/(m/s), N/(m/s), N/(m/s), Nm/(rad/s), Nm/rad/s), Nm/rad/s)]
+  #    joint_target_topic    : "/joint_impedance_pos_target"  # setpoint joint topic name
+  #    base_frame            : "world"                      # name of the base link
+  #    tool_frame            : "tool0"                          # name of the tool link
+  #    sensor_frame          : "tool0"                # name of the sensor link (has to be integral with tool_frame)
+  #    sigma0: 100
+  #    sigma1: 60
+  #    c0: 20
+  #    z_ss: 0.05
+  #    z_ba: 0.05
+  #    mu_k: 0.78
+  #    # OPTIONAL:]
+  #    base_is_reference     : true                          # true: impedance in base_frame, false: impedance in tool_frame [DEFAULT: true]
+  #    wrench_deadband       : [1, 1, 1, 0.1, 0.1, 0.1] # deadband on the wrench topic [DEFAULT: zero]
+  #    external_wrench_topic : "/ur10e_hw/wrench"      # wrench setpoitn topic name [DEFAULT: ~/external_wrench]

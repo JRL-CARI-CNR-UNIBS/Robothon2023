@@ -1,0 +1,41 @@
+press_blue_button:
+  action_type: "press_button"
+
+  move_to_blue_button:
+    skill_type: "joint_move_to"
+    target_frame: "blue_button"
+    acceleration_scaling: 1
+    velocity_scaling: 1
+    relative_position: [0.0,0.0,-0.1]
+    relative_orientation: [0.0,0.0,0.0,1.0]
+
+  press_button:
+    skill_type: "ur_simple_touch_tool"
+    MOVEX: 0.0
+    MOVEY: 0.0
+    MOVEZ: 1.0
+    MAX_DISTANCE: 1
+    RETURN_DISTANCE: 0.01
+    VELOCITY: 0.05
+    ACCELERATION: 0.5
+
+press_red_button:
+  action_type: "press_button"
+
+  move_to_red_button:
+    skill_type: "joint_move_to"
+    target_frame: "red_button"
+    acceleration_scaling: 1
+    velocity_scaling: 1
+    relative_position: [0.0,0.0,-0.1]
+    relative_orientation: [0.0,0.0,0.0,1.0]
+
+  press_button:
+    skill_type: "ur_simple_touch_tool"
+    MOVEX: 0.0
+    MOVEY: 0.0
+    MOVEZ: 1.0
+    MAX_DISTANCE: 1
+    RETURN_DISTANCE: 0.01
+    VELOCITY: 0.05
+    ACCELERATION: 0.5

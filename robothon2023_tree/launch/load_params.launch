@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+  <group ns="RL_params">
+    <rosparam command="load" file="$(find robothon2023_tree)/config/example.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/square.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/press_button.yaml"/>
+  </group>
+  <rosparam command="load" file="$(find robothon2023_tree)/config/TF_params.yaml"/>
+</launch>
