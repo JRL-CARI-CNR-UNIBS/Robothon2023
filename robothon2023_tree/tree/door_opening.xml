@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="door_opening">
+    <Sequence name="door_opening">
+      <SkillExecutionNode    name="door_opening/move_to_door"/>
+      <SkillExecutionNode    name="door_opening/door_gripper_position"/>
+      <SkillExecutionNode    name="door_opening/down_to_door"/>
+      <SkillExecutionNode    name="door_opening/pick_door_gripper_position"/>
+      <SkillExecutionNode    name="door_opening/door_opening"/>
+      <SkillExecutionNode    name="door_opening/push_door_after_opening"/>
+      <!-- DA QUI -->
+      <SkillExecutionNode    name="door_opening/door_gripper_position"/>
+      <!-- <SkillExecutionNode    name="door_opening/up_after_push_door"/> -->
+      <!-- ## -->
+      <SkillExecutionNode    name="door_opening/up_from_door"/>
+      <SkillExecutionNode    name="door_opening/move_in_front_of_door"/>
+      <!-- <SkillExecutionNode    name="door_opening/down_in_front_of_door"/>
+      <SkillExecutionNode    name="door_opening/push_door"/>
+      <SkillExecutionNode    name="door_opening/up_after_push"/> -->
+      <SkillExecutionNode    name="init/home_configuration"/>
+    </Sequence>
+  </BehaviorTree>
+</root>

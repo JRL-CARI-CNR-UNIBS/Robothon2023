@@ -1,7 +1,7 @@
 
 controller_list:
   - name: manipulator
-    action_ns: follow_joint_trajectory_direct
+    action_ns: follow_joint_trajectory
     default: True
     type: FollowJointTrajectory
     joints:

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="ident_test">
+    <Sequence name="ident_test">
+      <!-- <SkillExecutionNode    name="identification_test/close_gripper"/> -->
+      <SkillExecutionNode    name="identification_test/move_to_blue_button"/>
+      <SkillExecutionNode    name="identification_test/touch"/>
+      <SkillExecutionNode    name="identification_test/move_to_red_button"/>
+      <SkillExecutionNode    name="identification_test/touch"/>
+      <SkillExecutionNode    name="identification_test/move_to_slider"/>
+      <SkillExecutionNode    name="identification_test/touch"/>
+      <SkillExecutionNode    name="identification_test/move_to_door"/>
+      <SkillExecutionNode    name="identification_test/touch"/>
+      <SkillExecutionNode    name="identification_test/move_to_cable_removal"/>
+      <SkillExecutionNode    name="identification_test/touch"/>
+      <!-- <SkillExecutionNode    name="identification_test/move_to_cable_picking"/> -->
+      <!-- <SkillExecutionNode    name="identification_test/touch"/> -->
+      <SkillExecutionNode    name="identification_test/move_to_probe"/>
+      <SkillExecutionNode    name="identification_test/touch"/>
+      <SkillExecutionNode    name="identification_test/move_to_camera_pose"/>
+    </Sequence>
+  </BehaviorTree>
+</root>

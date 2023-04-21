@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="root">
+    <Sequence name="root_sequence">
+      <SubTree ID='ident_test'/>
+    </Sequence>
+  </BehaviorTree>
+</root>

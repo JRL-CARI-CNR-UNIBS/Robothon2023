@@ -2,8 +2,10 @@
 <root BTCPP_format="4">
   <BehaviorTree ID="press_red_button">
     <Sequence name="press_red_button">
+      <SkillExecutionNode    name="press_red_button/close_gripper"/>
       <SkillExecutionNode    name="press_red_button/move_to_red_button"/>
       <SkillExecutionNode    name="press_red_button/press_button"/>
+      <SkillExecutionNode    name="init/home_configuration"/>
     </Sequence>
   </BehaviorTree>
 </root>

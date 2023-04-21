@@ -36,7 +36,7 @@ control_configurations:
   - {hardware_interface: "planner_hw", controller: "microinterpolator", description: ""}
 
 - name: "trajectory_tracking"
-  depends: ["ctrl"]
+  depends: ["watch"]
   components:
   - {hardware_interface: "planner_hw", controller: "microinterpolator", description: ""}
 

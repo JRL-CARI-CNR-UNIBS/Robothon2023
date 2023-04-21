@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="cable_winding">
+    <Sequence name="cable_winding">
+      <SkillExecutionNode    name="cable_winding/move_to_cable_picking"/>
+      <SkillExecutionNode    name="cable_winding/gripper_position_1"/>
+      <SkillExecutionNode    name="cable_winding/down_to_cable"/>
+      <SkillExecutionNode    name="cable_winding/close_gripper"/>
+      <SkillExecutionNode    name="cable_winding/move_after_picking"/>
+      <SkillExecutionNode    name="cable_winding/up_after_picking"/>
+      <SkillExecutionNode    name="cable_winding/move_to_winding"/>
+      <SkillExecutionNode    name="cable_winding/move_winding_pose_1"/>
+      <SkillExecutionNode    name="cable_winding/winding_down_1"/>
+      <SkillExecutionNode    name="cable_winding/winding_move_1"/>
+      <SkillExecutionNode    name="cable_winding/winding_up_1"/>
+      <SkillExecutionNode    name="cable_winding/winding_move_pose_2"/>
+      <SkillExecutionNode    name="cable_winding/winding_move_2"/>
+      <SkillExecutionNode    name="cable_winding/winding_down_2"/>
+      <SkillExecutionNode    name="cable_winding/winding_move_3"/>
+      <SkillExecutionNode    name="cable_winding/winding_up_3"/>
+      <SkillExecutionNode    name="cable_winding/winding_move_pose_2"/>
+      <SkillExecutionNode    name="cable_winding/winding_move_2"/>
+      <SkillExecutionNode    name="cable_winding/winding_down_2"/>
+      <SkillExecutionNode    name="cable_winding/winding_move_4"/>
+      <SkillExecutionNode    name="cable_winding/push_out"/>
+      <SkillExecutionNode    name="cable_winding/rotation_1"/>
+
+      <SkillExecutionNode    name="cable_winding/move_winding_pose_3"/>
+
+      <SkillExecutionNode    name="cable_winding/touch_floor"/>
+      <SkillExecutionNode    name="cable_winding/gripper_pose_1"/>
+      <SkillExecutionNode    name="cable_winding/pick_probe_move"/>
+
+      <SkillExecutionNode    name="cable_winding/close_gripper"/>
+      <SkillExecutionNode    name="cable_winding/move_to_probe_before_insertion"/>
+      <SkillExecutionNode    name="cable_winding/move_to_probe_insertion"/>
+      <!-- <SkillExecutionNode    name="cable_winding/touch_board"/>
+      <SkillExecutionNode    name="cable_winding/up_to_hole"/> -->
+      <SkillExecutionNode    name="cable_winding/push_2"/>
+      <SkillExecutionNode    name="cable_winding/open_gripper"/>
+      <SkillExecutionNode    name="cable_winding/move_to_probe_approach"/>
+      <SkillExecutionNode    name="init/home_configuration"/>
+    </Sequence>
+  </BehaviorTree>
+</root>

@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 
 <launch>
-  <node  name="board_identification" type="BoardLocalization.py" pkg="robothon2022_vision" output="screen"/>
+  <arg name="test" default="true"/>
+  <arg name="images_path" default=""/>
+
+  <node name="board_identification" type="BoardLocalization.py" pkg="robothon2023_vision" output="screen">
+          <param name="test" value="$(arg test)" />
+          <param name="images_path" type="string" value="$(find robothon2023_vision)/file/" />
+  </node>
 </launch>

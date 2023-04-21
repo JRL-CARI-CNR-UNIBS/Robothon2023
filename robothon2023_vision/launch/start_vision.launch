@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+  <include file="$(find robothon2023_vision)/launch/start_camera.launch"/>
+  <!-- <include file="$(find robothon2023_vision)/launch/board_location_service.launch"/> -->
+  <include file="$(find robothon2023_vision)/launch/board_location_service_advanced.launch"/>
+  <include file="$(find robothon2023_vision)/launch/calib_on_robot.launch"/>
+</launch>

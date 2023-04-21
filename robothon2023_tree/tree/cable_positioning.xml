@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="cable_positioning">
+    <Sequence name="cable_positioning">
+      <SkillExecutionNode    name="cable_positioning/move_to_cable_removal"/>
+      <SkillExecutionNode    name="cable_positioning/cable_gripper_position"/>
+      <SkillExecutionNode    name="cable_positioning/down_to_removal"/>
+      <SkillExecutionNode    name="cable_positioning/close_gripper"/>
+      <SkillExecutionNode    name="cable_positioning/up_from_removal"/>
+      <SkillExecutionNode    name="cable_positioning/move_to_cable_insertion"/>
+      <SkillExecutionNode    name="cable_positioning/down_to_insertion"/>
+      <SkillExecutionNode    name="cable_positioning/insertion"/>
+      <SkillExecutionNode    name="cable_positioning/push"/>
+      <SkillExecutionNode    name="cable_positioning/gripper_position_1"/>
+      <SkillExecutionNode    name="cable_positioning/rotation"/>
+      <SkillExecutionNode    name="cable_positioning/gripper_position_2"/>
+      <SkillExecutionNode    name="cable_positioning/up_from_insertion"/>
+      <SkillExecutionNode    name="init/home_configuration"/>
+    </Sequence>
+  </BehaviorTree>
+</root>

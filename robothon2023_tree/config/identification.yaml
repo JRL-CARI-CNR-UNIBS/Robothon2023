@@ -1,0 +1,9 @@
+identification:
+  action_type: "identification"
+
+  move_to_camera_pose:
+    skill_type: "ur_move_to"
+    goal_frame: "camera_pose"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3

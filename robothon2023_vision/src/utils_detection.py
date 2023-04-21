@@ -81,7 +81,7 @@ def getScreen(a_col_in, contours_in):
         passed_imgs += 1
         mask = np.zeros(a_col_in.shape[:2], np.uint8)
         cv2.drawContours(mask, [cnt], 0, (255, 255, 255), -1)
-        cv2.imshow(f"screen", mask)
+        # cv2.imshow(f"screen", mask)
 
         ROI = cv2.bitwise_and(a_col_in, a_col_in, mask=mask)
         dst = cv2.inRange(ROI, 150, 255)
@@ -135,7 +135,7 @@ def getLittleScrew(value_th, contours_in,img):
         cv2.drawContours(img, [cnt], 0, (255, 0, 0), -1)
         # cv2.imshow(f"little_screw", mask)
         # cv2.imshow(f"little_screw", value_th)
-        cv2.imshow(f"little_screw", img)
+        # cv2.imshow(f"little_screw", img)
 
         cv2.waitKey(-1)
 
@@ -392,7 +392,7 @@ def getRedBlueButtonsNewVersion2(value_in_gray, b_col_in, contours_in, new_img, 
 
         # Find edges
         edges = cv2.Canny(butt_image_gray, 100, 200)
-        cv2.imshow("edges", edges)
+        # cv2.imshow("edges", edges)
         # Detect two radii
         hough_radii = np.arange(5, 30, 1)  # Looking for that radius 5,6,7,..12
         hough_res = hough_circle(edges, hough_radii)
@@ -423,8 +423,8 @@ def getRedBlueButtonsNewVersion2(value_in_gray, b_col_in, contours_in, new_img, 
                                        radii[k],
                                        color=(255, 255),
                                        thickness=2)
-            cv2.imshow("circles", b_col_in2)
-            cv2.waitKey(-1)
+            # cv2.imshow("circles", b_col_in2)
+            # cv2.waitKey(-1)
 
             circles = [center for center in zip(cx, cy)]
 

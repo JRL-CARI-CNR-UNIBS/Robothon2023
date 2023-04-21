@@ -1,0 +1,124 @@
+slider:
+  action_type: "slider"
+
+  screen_target:
+    skill_type: "display_localization"
+
+  screen_target_init:
+    skill_type: "display_localization_init"
+
+  move_to_slider_pose:
+    skill_type: "ur_move_to"
+    goal_frame: "slider_approach"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3
+
+  open_gripper:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_85_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+
+  down_to_slider:
+    skill_type: "ur_linear_move"
+    reference_frame: "reference"
+    tool_frame: "tool_end"
+    traslation: [0,0,0.067]
+    rotation: [0,0,0,1]
+    velocity: 0.3
+    acceleration: 5
+    n_point: 1
+
+  pick_slider_gripper_pose_approach:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_50_force_100_vel_100"
+
+  pick_slider_gripper_pose:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_12_force_0_vel_0"
+
+  match_first_triangle:
+      skill_type: "ur_linear_move"
+      reference_frame: "reference"
+      tool_frame: "tool_end"
+      traslation: [0,-0.0032,0.0]
+      rotation: [0,0,0,1]
+      velocity: 0.1
+      acceleration: 0.5
+      n_point: 1
+
+  match_second_triangle_approach:
+      skill_type: "ur_linear_move"
+      reference_frame: "reference"
+      tool_frame: "tool_end"
+      rotation: [0,0,0,1]
+      velocity: 0.06
+      acceleration: 0.2
+      n_point: 1
+
+  match_second_triangle:
+      skill_type: "ur_linear_move"
+      reference_frame: "reference"
+      tool_frame: "tool_end"
+      rotation: [0,0,0,1]
+      velocity: 0.005
+      acceleration: 0.15
+      # velocity: 0.5
+      # acceleration: 1
+      n_point: 1
+  match_second_triangle_return:
+      skill_type: "ur_linear_move"
+      reference_frame: "reference"
+      tool_frame: "tool_end"
+      rotation: [0,0,0,1]
+      velocity: 0.005
+      acceleration: 0.15
+      # velocity: 0.5
+      # acceleration: 1
+      n_point: 1
+
+  move_one_side:
+      skill_type: "ur_linear_move"
+      reference_frame: "reference"
+      tool_frame: "tool_end"
+      traslation: [0,-0.0003,0.0]
+      rotation: [0,0,0,1]
+      velocity: 0.5
+      acceleration: 0.5
+      n_point: 1
+  move_opposite_side:
+      skill_type: "ur_linear_move"
+      reference_frame: "reference"
+      tool_frame: "tool_end"
+      traslation: [0,+0.0006,0.0]
+      rotation: [0,0,0,1]
+      velocity: 0.5
+      acceleration: 0.5
+      n_point: 1
+  move_center:
+      skill_type: "ur_linear_move"
+      reference_frame: "reference"
+      tool_frame: "tool_end"
+      traslation: [0,-0.0003,0.0]
+      rotation: [0,0,0,1]
+      velocity: 0.5
+      acceleration: 0.5
+      n_point: 1
+
+
+  move_to_min:
+    skill_type: "ur_simple_touch_tool"
+    MOVEX: 1.0
+    MOVEY: 0.0
+    MOVEZ: 0.0
+    VELOCITY: 0.05
+    ACCELERATION: 0.5
+    FORCE: 10
+
+  move_to_max:
+    skill_type: "ur_simple_touch_tool"
+    MOVEX: -1.0
+    MOVEY: 0.0
+    MOVEZ: 0.0
+    VELOCITY: 0.05
+    ACCELERATION: 0.5
+    FORCE: 10

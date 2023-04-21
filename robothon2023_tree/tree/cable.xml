@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="cable">
+    <Sequence name="cable">
+      <SubTree ID='cable_positioning'/>
+      <SubTree ID='door_opening'/>
+      <SubTree ID='probe_testing'/>
+      <SubTree ID='cable_winding'/>
+    </Sequence>
+  </BehaviorTree>
+</root>

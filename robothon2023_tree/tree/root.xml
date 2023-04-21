@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <root BTCPP_format="4">
+  <include path="cable_winding.xml"/>
   <BehaviorTree ID="root">
     <Sequence name="root_sequence">
-      <SubTree ID='press_blue_button'/>
-      <SubTree ID='press_red_button'/>
+      <SubTree ID='cable_winding'/>
     </Sequence>
   </BehaviorTree>
 </root>

@@ -2,9 +2,18 @@
 
 <launch>
   <group ns="RL_params">
-    <rosparam command="load" file="$(find robothon2023_tree)/config/example.yaml"/>
-    <rosparam command="load" file="$(find robothon2023_tree)/config/square.yaml"/>
+    <!-- <rosparam command="load" file="$(find robothon2023_tree)/config/example.yaml"/> -->
+    <rosparam command="load" file="$(find robothon2023_tree)/config/identification_test.yaml"/>
+    <!-- <rosparam command="load" file="$(find robothon2023_tree)/config/square.yaml"/> -->
+    <rosparam command="load" file="$(find robothon2023_tree)/config/identification.yaml"/>
     <rosparam command="load" file="$(find robothon2023_tree)/config/press_button.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/cable_positioning.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/door_opening.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/probe_testing.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/cable_winding.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/slider.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/init.yaml"/>
+
   </group>
   <rosparam command="load" file="$(find robothon2023_tree)/config/TF_params.yaml"/>
 </launch>

@@ -20,7 +20,6 @@ class Color(Enum):
     UNDERLINE = '\033[4m'
     END = '\033[0m'
 
-
 class UserMessages(Enum):
     """
         Utility Enum class with color constant definition

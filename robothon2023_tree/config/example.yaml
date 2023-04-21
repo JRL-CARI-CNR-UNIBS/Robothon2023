@@ -4,17 +4,25 @@ example:
   movel_test:
     skill_type: "ur_movel"
 
-    reference_frame: "tool_end"
-    tool_frame: "tool_end"
+    reference_frame: "door"
+    tool_frame: "door"
     traslation: [0,0,0]
     rotation: [-0.707,0,0,0.707]
-    velocity: 0.1
-    acceleration: 1
-    n_point: 100
+    velocity: 0.5
+    acceleration: 5
+    n_point: 1
 
   move_gripper:
     skill_type: "robotiq_gripper_move"
     property_id: "open" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+
+  move_to_test:
+    skill_type: "joint_move_to"
+    target_frame: "test"
+    acceleration_scaling: 0.1
+    velocity_scaling: 0.1
+    relative_position: [0.0,0.0,0.0]
+    relative_orientation: [0.0,0.0,0.0,1.0]
 
   move_to_one:
     skill_type: "joint_move_to"

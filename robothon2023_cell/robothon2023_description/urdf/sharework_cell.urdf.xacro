@@ -336,10 +336,18 @@
 
 <link name="real_tool"/>
 
+<joint name="real_tool_to_door" type="fixed">
+  <parent link="tool_end" />
+  <child link = "door" />
+  <origin xyz="0.0 0.04 0.04" rpy="0 0 0" />
+</joint>
+
+<link name="door"/>
+
 <joint name="flage_to_tool_end" type="fixed">
   <parent link="tool0" />
   <child link = "tool_end" />
-  <origin xyz="0.0 0.0 0.149" rpy="0 0 0" />
+  <origin xyz="0.0 0.0 0.180" rpy="0 0 0" />
 </joint>
 
 <link name="tool_end"/>

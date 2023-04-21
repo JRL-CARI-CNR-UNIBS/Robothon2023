@@ -1,0 +1,114 @@
+door_opening:
+  action_type: "cable"
+
+  move_to_door:
+    skill_type: "ur_move_to"
+    goal_frame: "door_approach"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3
+
+  door_gripper_position:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_40_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+
+  down_to_door:
+    skill_type: "ur_linear_move"
+    reference_frame: "reference"
+    tool_frame: "tool_end"
+    traslation: [0,0.002,0.0625]
+    rotation: [0.3826834,0,0,0.9238795]
+    velocity: 0.5
+    acceleration: 5
+    n_point: 1
+
+  pick_door_gripper_position:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_22_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+
+  door_opening:
+    skill_type: "ur_linear_move"
+    reference_frame: "door"
+    tool_frame: "door"
+    traslation: [0,0,0]
+    # rotation: [0.5735764,0,0,0.819152]
+    rotation: [0.8660254,0, 0, 0.5]
+    velocity: 1
+    acceleration: 5
+    n_point: 100
+
+# HERE
+# ----------------------------------------
+  push_door_after_opening:
+    skill_type: "ur_linear_move"
+    reference_frame: "reference"
+    tool_frame: "real_tool"
+    traslation: [0,-0.025,0.005]
+    rotation: [0, 0, 0, 1]
+    velocity: 0.8
+    acceleration: 1
+    n_point: 1
+
+
+
+  up_after_push_door:
+    skill_type: "ur_linear_move"
+    reference_frame: "real_tool"
+    tool_frame: "real_tool"
+    traslation: [0,0,-0.1]
+    rotation: [0, 0, 0, 1]
+    velocity: 1
+    acceleration: 2
+    n_point: 1
+
+# --------------------------------------
+
+  up_from_door:
+    skill_type: "ur_linear_move"
+    reference_frame: "reference"
+    tool_frame: "real_tool"
+    traslation: [0,0,-0.08]
+    rotation: [0.6087614, 0, 0, 0.7933533]
+    velocity: 0.8
+    acceleration: 4
+    n_point: 1
+
+  move_in_front_of_door:
+    skill_type: "ur_linear_move"
+    reference_frame: "reference"
+    tool_frame: "real_tool"
+    traslation: [0,0.08,0]
+    rotation: [0,0,0,1]
+    velocity: 0.8
+    acceleration: 4
+    n_point: 1
+
+  down_in_front_of_door:
+    skill_type: "ur_linear_move"
+    reference_frame: "reference"
+    tool_frame: "real_tool"
+    traslation: [0,0,0.05]
+    rotation: [0,0,0,1]
+    velocity: 0.8
+    acceleration: 4
+    n_point: 1
+
+  push_door:
+    skill_type: "ur_linear_move"
+    reference_frame: "reference"
+    tool_frame: "real_tool"
+    traslation: [0,-0.10,0]
+    rotation: [0,0,0,1]
+    velocity: 0.8
+    acceleration: 4
+    n_point: 1
+
+  up_after_push:
+    skill_type: "ur_linear_move"
+    reference_frame: "reference"
+    tool_frame: "real_tool"
+    traslation: [0,0,-0.01]
+    rotation: [0,0,0,1]
+    velocity: 0.8
+    acceleration: 4
+    n_point: 1
