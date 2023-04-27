@@ -1,4 +1,4 @@
-# Robothon® 2023 The Grand-Challenge: bisCARI Team Report
+# Robothon® 2023 The Grand-Challenge: <br> bisCARI Team Report
 <p align="center">
 Authors: Michele Delledonne, Roberto Fausti, Michele Ferrari, Samuele Sandrini 
 </p>
