@@ -12,10 +12,8 @@
       <SkillExecutionNode    name="probe_testing/probe_test"/>
       <SkillExecutionNode    name="probe_testing/up_from_test"/>
       <SkillExecutionNode    name="probe_testing/move_to_probe_release"/>
-      <SkillExecutionNode    name="probe_testing/down_to_release"/>
       <SkillExecutionNode    name="probe_testing/open_gripper"/>
-      <SkillExecutionNode    name="probe_testing/move_to_probe_release"/>
-      <!-- <SkillExecutionNode    name="probe_testing/open_gripper"/> -->
+      <SkillExecutionNode    name="probe_testing/up_from_release"/>
       <SkillExecutionNode    name="init/home_configuration"/>
     </Sequence>
   </BehaviorTree>

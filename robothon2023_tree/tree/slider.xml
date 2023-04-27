@@ -2,17 +2,29 @@
 <root BTCPP_format="4">
   <BehaviorTree ID="slider">
     <Sequence name="slider">
-      <SkillExecutionNode    name="slider/move_to_slider_pose"/>
       <SkillExecutionNode    name="slider/open_gripper"/>
-      <SkillExecutionNode    name="slider/down_to_slider"/>
+      <SkillExecutionNode    name="slider/move_to_slider_pose"/>
+      <!-- <SkillExecutionNode    name="slider/down_to_slider"/> -->
+      <!-- <SkillExecutionNode    name="slider/display_alignment"/> -->
+      <!-- <SkillExecutionNode    name="slider/align_slider"/> -->
+
       <SkillExecutionNode    name="slider/pick_slider_gripper_pose"/>
       <SkillExecutionNode    name="slider/match_first_triangle"/>
-      <RetryUntilSuccessful num_attempts="2">
-        <SkillExecutionNode    name="slider/screen_target"/>
+      <RetryUntilSuccessful num_attempts="-1">
+        <Fallback>
+        <Sequence name="acquire">
+          <SkillExecutionNode    name="slider/screen_target"/>
+        </Sequence>
+        <ForceFailure>
+          <Sequence name="move">
+            <SkillExecutionNode    name="slider/match_second_triangle_approach"/>
+            <SkillExecutionNode    name="slider/match_second_triangle"/>
+            <SkillExecutionNode    name="slider/match_second_triangle_return"/>
+          </Sequence>
+        </ForceFailure>
+      </Fallback>
       </RetryUntilSuccessful>
-      <SkillExecutionNode    name="slider/match_second_triangle_approach"/>
-      <SkillExecutionNode    name="slider/match_second_triangle"/>
-      <SkillExecutionNode    name="slider/match_second_triangle_return"/>
+
 
       <SkillExecutionNode    name="slider/open_gripper"/>
       <SkillExecutionNode    name="slider/move_to_slider_pose"/>

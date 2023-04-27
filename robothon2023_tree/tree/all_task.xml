@@ -4,6 +4,7 @@
     <Sequence name="all_task">
       <SubTree ID='init'/>
       <SubTree ID='press_blue_button'/>
+      <SubTree ID='slider'/>
       <SubTree ID='cable_positioning'/>
       <SubTree ID='door_opening'/>
       <SubTree ID='probe_testing'/>

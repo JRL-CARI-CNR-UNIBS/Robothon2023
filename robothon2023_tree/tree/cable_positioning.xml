@@ -15,7 +15,7 @@
       <SkillExecutionNode    name="cable_positioning/rotation"/>
       <SkillExecutionNode    name="cable_positioning/gripper_position_2"/>
       <SkillExecutionNode    name="cable_positioning/up_from_insertion"/>
-      <SkillExecutionNode    name="init/home_configuration"/>
+      <!-- <SkillExecutionNode    name="init/home_configuration"/> -->
     </Sequence>
   </BehaviorTree>
 </root>

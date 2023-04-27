@@ -4,7 +4,9 @@
     <Sequence name="press_red_button">
       <SkillExecutionNode    name="press_red_button/close_gripper"/>
       <SkillExecutionNode    name="press_red_button/move_to_red_button"/>
+      <!-- <SkillExecutionNode    name="press_red_button/down_to_button"/> -->
       <SkillExecutionNode    name="press_red_button/press_button"/>
+      <SkillExecutionNode    name="press_red_button/up_from_button"/>
       <SkillExecutionNode    name="init/home_configuration"/>
     </Sequence>
   </BehaviorTree>

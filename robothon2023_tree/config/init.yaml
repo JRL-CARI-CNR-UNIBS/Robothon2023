@@ -8,15 +8,15 @@ init:
     skill_type: "ur_move_to"
     goal_frame: "camera_pose"
     tool_frame: "open_tip"
-    acceleration: 10
-    velocity: 3
+    acceleration: 15
+    velocity: 10
 
   move_to_camera_pose_near:
     skill_type: "ur_move_to"
     goal_frame: "camera_pose_near"
     tool_frame: "open_tip"
-    acceleration: 10
-    velocity: 3
+    acceleration: 15
+    velocity: 10
 
   home_configuration:
     skill_type: "ur_movej"

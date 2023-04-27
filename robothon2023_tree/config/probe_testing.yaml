@@ -24,7 +24,7 @@ probe_testing:
 
   close_gripper:
     skill_type: "robotiq_gripper_move"
-    property_id: "close"
+    property_id: "pos_0_force_100_vel_100"
 
   probe_extraction:
     skill_type: "ur_linear_move"
@@ -76,12 +76,12 @@ probe_testing:
     skill_type: "ur_move_to"
     goal_frame: "probe_release"
     tool_frame: "open_tip"
-    acceleration: 10
-    velocity: 3
+    acceleration: 5
+    velocity: 1
 
   open_gripper:
     skill_type: "robotiq_gripper_move"
-    property_id: "open"
+    property_id: "pos_80_force_100_vel_100"
 
 # Da Qui
   down_to_release:
@@ -89,6 +89,16 @@ probe_testing:
     reference_frame: "reference"
     tool_frame: "real_tool"
     traslation: [0,0,0.14]
+    rotation: [0,0,0,1]
+    velocity: 0.5
+    acceleration: 5
+    n_point: 1
+
+  up_from_release:
+    skill_type: "ur_linear_move"
+    reference_frame: "reference"
+    tool_frame: "real_tool"
+    traslation: [0,0,-0.14]
     rotation: [0,0,0,1]
     velocity: 0.5
     acceleration: 5

@@ -24,7 +24,7 @@ door_opening:
 
   pick_door_gripper_position:
     skill_type: "robotiq_gripper_move"
-    property_id: "pos_22_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+    property_id: "pos_17_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
 
   door_opening:
     skill_type: "ur_linear_move"

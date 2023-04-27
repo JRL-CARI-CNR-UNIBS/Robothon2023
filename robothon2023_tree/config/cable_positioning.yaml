@@ -24,7 +24,7 @@ cable_positioning:
 
   close_gripper:
     skill_type: "robotiq_gripper_move"
-    property_id: "close"
+    property_id: "pos_0_force_100_vel_100"
 
   up_from_removal:
     skill_type: "ur_linear_move"
@@ -45,7 +45,7 @@ cable_positioning:
     skill_type: "ur_linear_move"
     reference_frame: "reference"
     tool_frame: "real_tool"
-    traslation: [0,-0.024,0]
+    traslation: [-0.0005,-0.025,0]
     rotation: [0,0,0,1]
     velocity: 0.3
     acceleration: 0.5
