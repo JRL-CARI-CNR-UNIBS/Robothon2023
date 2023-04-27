@@ -38,9 +38,6 @@ The online procedure aims to:
 ### Task execution management
 The automatic execution of the tasks is managed by a Behavior Tree Executor. Each Robothon’s task corresponds to a SubTree. BTs are a very efficient way of creating complex systems that are both modular and flexible. This makes it easy to manage the ability to change the order in which tasks are executed, thus creating a flexible application.
 
-### Planning and execution
-
-
 ## Repository of software modules
 - [Cell Configuration (Geometric configuration and controllers)](https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/tree/master/robothon2023_cell)
 - [Vision System](https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/tree/master/robothon2023_vision)
