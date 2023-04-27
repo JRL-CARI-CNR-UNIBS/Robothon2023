@@ -3,7 +3,8 @@
   <BehaviorTree ID="slider">
     <Sequence name="slider">
       <SkillExecutionNode    name="slider/open_gripper"/>
-      <SkillExecutionNode    name="slider/move_to_slider_pose"/>
+      <SkillExecutionNode    name="slider/move_to_slider_approach"/>
+      <SkillExecutionNode    name="slider/move_to_slider"/>
       <!-- <SkillExecutionNode    name="slider/down_to_slider"/> -->
       <!-- <SkillExecutionNode    name="slider/display_alignment"/> -->
       <!-- <SkillExecutionNode    name="slider/align_slider"/> -->

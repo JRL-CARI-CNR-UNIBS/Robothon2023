@@ -10,9 +10,16 @@ slider:
   screen_target_init:
     skill_type: "display_localization_init"
 
-  move_to_slider_pose:
+  move_to_slider_approach":
     skill_type: "ur_move_to"
     goal_frame: "slider_approach"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3
+
+  move_to_slider:
+    skill_type: "ur_move_to"
+    goal_frame: "slider"
     tool_frame: "open_tip"
     acceleration: 10
     velocity: 3

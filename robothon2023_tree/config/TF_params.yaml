@@ -5,10 +5,11 @@ tf_params:
   - {name: "red_button_approach",    frame: "reference",      position: [0.029, 0.076, -0.025],  quaternion: [0.000, 0.000, 0.707, 0.707]}
   # - {name: "red_button_approach",    frame: "reference",      position: [0.029, 0.076, -0.068],  quaternion: [0.000, 0.000, 0.707, 0.707]}
 
-  # - {name: "slider_approach",        frame: "reference",      position: [0.068, 0.0195, 0.01],  quaternion: [0.000, 0.000, 0.707, 0.707]}
-  - {name: "slider_approach",        frame: "reference",      position: [0.0655, 0.022, 0.0002],  quaternion: [0.000, 0.000, 0.707, 0.707]}
+  - {name: "slider_approach",        frame: "reference",      position: [0.0655, 0.022, -0.05],   quaternion: [0.000, 0.000, 0.707, 0.707]}
+  - {name: "slider",                 frame: "reference",      position: [0.0655, 0.022, 0.0002],  quaternion: [0.000, 0.000, 0.707, 0.707]}
 
   - {name: "door_approach",          frame: "reference",      position: [0.175, 0.086, -0.068],  quaternion: [0.000, 0.000, 0.000, 1.000]}
+  # - {name: "door",                   frame: "reference",      position: [0.175, 0.088, -0.0055],  quaternion: [0.000, 0.000, 0.000, 1.000]}
   - {name: "cable_removal",          frame: "reference",      position: [0.0885, 0.106, -0.068],  quaternion: [0.000, 0.000, 0.000, 1.000]}
   - {name: "cable_insertion",        frame: "cable_removal",  position: [0.004, -0.026, 0.040],  quaternion: [-0.000, -0.000, -0.383, 0.924]}
   - {name: "cable_picking",          frame: "reference",      position: [0.126, 0.111, -0.068],  quaternion: [0.000, -0.000, -0.348, 0.937]}
