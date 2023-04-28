@@ -12,7 +12,7 @@ A **6-DoF collaborative robot**, a Universal Robot **UR10e**, is used for object
 
 The robot is equipped with a classic **two-finger gripper** for pick-place (the **Hand-E Robotiq** model) with **custom fingers** for the e-waste manipulation application that are designed and 3D-printed by the team. 
 
-The setup is equipped with a **Vision System** that consists of an RGB-D Camera. The stereo-camera **Realsense-D435** was used, and it is rigidly mounted to the robot. Also, the camera support was designed and 3d printed by the team.
+The setup is equipped with a **Vision System** that consists of an RGB-D Camera. The stereo-camera **Realsense-D435** was used, and it is rigidly mounted to the robot. Also, the camera support was designed and 3D-printed by the team.
 
 In summary, the hardware setup consists of a hardware solution kept as **general purpose** as possible and low cost to facilitate transferability to the e-waste industrial world from the specific task-board application.
 
