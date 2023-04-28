@@ -11,8 +11,10 @@ Panels:
         - /TF1/Frames1
         - /Camera1
         - /DepthCloud1/Auto Size1
+        - /Image4
+        - /DepthCloud2/Auto Size1
       Splitter Ratio: 0.6619718074798584
-    Tree Height: 494
+    Tree Height: 892
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -30,6 +32,7 @@ Panels:
         - /MotionPlanning1
         - /MotionPlanning1/Planning Request1
         - /DepthCloud1/Auto Size1
+        - /DepthCloud2/Auto Size1
       Splitter Ratio: 0.5
     Tree Height: 371
   - Class: configuration_gui/ConfigurationManager
@@ -578,548 +581,10 @@ Visualization Manager:
       Unreliable: false
       Value: true
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base:
-          Value: false
-        base_link:
-          Value: false
-        base_link_inertia:
-          Value: false
-        blue_button:
-          Value: false
-        blue_button_approach:
-          Value: false
-        board:
-          Value: true
-        board_area:
-          Value: false
-        cable:
-          Value: true
-        cable_insertion:
-          Value: true
-        cable_picking:
-          Value: false
-        cable_removal:
-          Value: false
-        cable_winding_first:
-          Value: false
-        camera_aligned_depth_to_color_frame:
-          Value: false
-        camera_color_frame:
-          Value: false
-        camera_color_optical_frame:
-          Value: false
-        camera_depth_frame:
-          Value: false
-        camera_depth_optical_frame:
-          Value: false
-        camera_link:
-          Value: false
-        camera_pose:
-          Value: false
-        camera_pose_near:
-          Value: true
-        closed_tip:
-          Value: false
-        cursor:
-          Value: false
-        door:
-          Value: false
-        door_approach:
-          Value: false
-        door_handle:
-          Value: true
-        flange:
-          Value: false
-        floor:
-          Value: false
-        forearm_link:
-          Value: false
-        guide_fixed:
-          Value: false
-        left_column:
-          Value: false
-        lower_beam:
-          Value: false
-        open_tip:
-          Value: false
-        portal:
-          Value: false
-        probe_approach:
-          Value: false
-        probe_before_insertion:
-          Value: false
-        probe_insertion:
-          Value: false
-        probe_release:
-          Value: false
-        probe_testing:
-          Value: false
-        rail:
-          Value: false
-        real_tool:
-          Value: true
-        real_tool_n_0:
-          Value: true
-        real_tool_n_1:
-          Value: true
-        real_tool_n_10:
-          Value: true
-        real_tool_n_11:
-          Value: true
-        real_tool_n_12:
-          Value: true
-        real_tool_n_13:
-          Value: true
-        real_tool_n_14:
-          Value: true
-        real_tool_n_15:
-          Value: true
-        real_tool_n_16:
-          Value: true
-        real_tool_n_17:
-          Value: true
-        real_tool_n_18:
-          Value: true
-        real_tool_n_19:
-          Value: true
-        real_tool_n_2:
-          Value: true
-        real_tool_n_20:
-          Value: true
-        real_tool_n_21:
-          Value: true
-        real_tool_n_22:
-          Value: true
-        real_tool_n_23:
-          Value: true
-        real_tool_n_24:
-          Value: true
-        real_tool_n_25:
-          Value: true
-        real_tool_n_26:
-          Value: true
-        real_tool_n_27:
-          Value: true
-        real_tool_n_28:
-          Value: true
-        real_tool_n_29:
-          Value: true
-        real_tool_n_3:
-          Value: true
-        real_tool_n_30:
-          Value: true
-        real_tool_n_31:
-          Value: true
-        real_tool_n_32:
-          Value: true
-        real_tool_n_33:
-          Value: true
-        real_tool_n_34:
-          Value: true
-        real_tool_n_35:
-          Value: true
-        real_tool_n_36:
-          Value: true
-        real_tool_n_37:
-          Value: true
-        real_tool_n_38:
-          Value: true
-        real_tool_n_39:
-          Value: true
-        real_tool_n_4:
-          Value: true
-        real_tool_n_40:
-          Value: true
-        real_tool_n_41:
-          Value: true
-        real_tool_n_42:
-          Value: true
-        real_tool_n_43:
-          Value: true
-        real_tool_n_44:
-          Value: true
-        real_tool_n_45:
-          Value: true
-        real_tool_n_46:
-          Value: true
-        real_tool_n_47:
-          Value: true
-        real_tool_n_48:
-          Value: true
-        real_tool_n_49:
-          Value: true
-        real_tool_n_5:
-          Value: true
-        real_tool_n_50:
-          Value: true
-        real_tool_n_51:
-          Value: true
-        real_tool_n_52:
-          Value: true
-        real_tool_n_53:
-          Value: true
-        real_tool_n_54:
-          Value: true
-        real_tool_n_55:
-          Value: true
-        real_tool_n_56:
-          Value: true
-        real_tool_n_57:
-          Value: true
-        real_tool_n_58:
-          Value: true
-        real_tool_n_59:
-          Value: true
-        real_tool_n_6:
-          Value: true
-        real_tool_n_60:
-          Value: true
-        real_tool_n_61:
-          Value: true
-        real_tool_n_62:
-          Value: true
-        real_tool_n_63:
-          Value: true
-        real_tool_n_64:
-          Value: true
-        real_tool_n_65:
-          Value: true
-        real_tool_n_66:
-          Value: true
-        real_tool_n_67:
-          Value: true
-        real_tool_n_68:
-          Value: true
-        real_tool_n_69:
-          Value: true
-        real_tool_n_7:
-          Value: true
-        real_tool_n_70:
-          Value: true
-        real_tool_n_71:
-          Value: true
-        real_tool_n_72:
-          Value: true
-        real_tool_n_73:
-          Value: true
-        real_tool_n_74:
-          Value: true
-        real_tool_n_75:
-          Value: true
-        real_tool_n_76:
-          Value: true
-        real_tool_n_77:
-          Value: true
-        real_tool_n_78:
-          Value: true
-        real_tool_n_79:
-          Value: true
-        real_tool_n_8:
-          Value: true
-        real_tool_n_80:
-          Value: true
-        real_tool_n_81:
-          Value: true
-        real_tool_n_82:
-          Value: true
-        real_tool_n_83:
-          Value: true
-        real_tool_n_84:
-          Value: true
-        real_tool_n_85:
-          Value: true
-        real_tool_n_86:
-          Value: true
-        real_tool_n_87:
-          Value: true
-        real_tool_n_88:
-          Value: true
-        real_tool_n_89:
-          Value: true
-        real_tool_n_9:
-          Value: true
-        real_tool_n_90:
-          Value: true
-        real_tool_n_91:
-          Value: true
-        real_tool_n_92:
-          Value: true
-        real_tool_n_93:
-          Value: true
-        real_tool_n_94:
-          Value: true
-        real_tool_n_95:
-          Value: true
-        real_tool_n_96:
-          Value: true
-        real_tool_n_97:
-          Value: true
-        real_tool_n_98:
-          Value: true
-        real_tool_n_99:
-          Value: true
-        red:
-          Value: false
-        red_button:
-          Value: true
-        red_button_approach:
-          Value: false
-        reference:
-          Value: true
-        right_column:
-          Value: false
-        robotiq_coupler:
-          Value: false
-        robotiq_simplified:
-          Value: false
-        rq_connector:
-          Value: false
-        screwdriver_holder:
-          Value: false
-        shoulder_link:
-          Value: false
-        slider:
-          Value: true
-        slider_approach:
-          Value: false
-        standard_probe:
-          Value: false
-        table:
-          Value: false
-        tool0:
-          Value: false
-        tool0_controller:
-          Value: false
-        tool_end:
-          Value: false
-        tool_n_0:
-          Value: true
-        tool_n_1:
-          Value: true
-        tool_n_10:
-          Value: true
-        tool_n_11:
-          Value: true
-        tool_n_12:
-          Value: true
-        tool_n_13:
-          Value: true
-        tool_n_14:
-          Value: true
-        tool_n_15:
-          Value: true
-        tool_n_16:
-          Value: true
-        tool_n_17:
-          Value: true
-        tool_n_18:
-          Value: true
-        tool_n_19:
-          Value: true
-        tool_n_2:
-          Value: true
-        tool_n_20:
-          Value: true
-        tool_n_21:
-          Value: true
-        tool_n_22:
-          Value: true
-        tool_n_23:
-          Value: true
-        tool_n_24:
-          Value: true
-        tool_n_25:
-          Value: true
-        tool_n_26:
-          Value: true
-        tool_n_27:
-          Value: true
-        tool_n_28:
-          Value: true
-        tool_n_29:
-          Value: true
-        tool_n_3:
-          Value: true
-        tool_n_30:
-          Value: true
-        tool_n_31:
-          Value: true
-        tool_n_32:
-          Value: true
-        tool_n_33:
-          Value: true
-        tool_n_34:
-          Value: true
-        tool_n_35:
-          Value: true
-        tool_n_36:
-          Value: true
-        tool_n_37:
-          Value: true
-        tool_n_38:
-          Value: true
-        tool_n_39:
-          Value: true
-        tool_n_4:
-          Value: true
-        tool_n_40:
-          Value: true
-        tool_n_41:
-          Value: true
-        tool_n_42:
-          Value: true
-        tool_n_43:
-          Value: true
-        tool_n_44:
-          Value: true
-        tool_n_45:
-          Value: true
-        tool_n_46:
-          Value: true
-        tool_n_47:
-          Value: true
-        tool_n_48:
-          Value: true
-        tool_n_49:
-          Value: true
-        tool_n_5:
-          Value: true
-        tool_n_50:
-          Value: true
-        tool_n_51:
-          Value: true
-        tool_n_52:
-          Value: true
-        tool_n_53:
-          Value: true
-        tool_n_54:
-          Value: true
-        tool_n_55:
-          Value: true
-        tool_n_56:
-          Value: true
-        tool_n_57:
-          Value: true
-        tool_n_58:
-          Value: true
-        tool_n_59:
-          Value: true
-        tool_n_6:
-          Value: true
-        tool_n_60:
-          Value: true
-        tool_n_61:
-          Value: true
-        tool_n_62:
-          Value: true
-        tool_n_63:
-          Value: true
-        tool_n_64:
-          Value: true
-        tool_n_65:
-          Value: true
-        tool_n_66:
-          Value: true
-        tool_n_67:
-          Value: true
-        tool_n_68:
-          Value: true
-        tool_n_69:
-          Value: true
-        tool_n_7:
-          Value: true
-        tool_n_70:
-          Value: true
-        tool_n_71:
-          Value: true
-        tool_n_72:
-          Value: true
-        tool_n_73:
-          Value: true
-        tool_n_74:
-          Value: true
-        tool_n_75:
-          Value: true
-        tool_n_76:
-          Value: true
-        tool_n_77:
-          Value: true
-        tool_n_78:
-          Value: true
-        tool_n_79:
-          Value: true
-        tool_n_8:
-          Value: true
-        tool_n_80:
-          Value: true
-        tool_n_81:
-          Value: true
-        tool_n_82:
-          Value: true
-        tool_n_83:
-          Value: true
-        tool_n_84:
-          Value: true
-        tool_n_85:
-          Value: true
-        tool_n_86:
-          Value: true
-        tool_n_87:
-          Value: true
-        tool_n_88:
-          Value: true
-        tool_n_89:
-          Value: true
-        tool_n_9:
-          Value: true
-        tool_n_90:
-          Value: true
-        tool_n_91:
-          Value: true
-        tool_n_92:
-          Value: true
-        tool_n_93:
-          Value: true
-        tool_n_94:
-          Value: true
-        tool_n_95:
-          Value: true
-        tool_n_96:
-          Value: true
-        tool_n_97:
-          Value: true
-        tool_n_98:
-          Value: true
-        tool_n_99:
-          Value: true
-        upper_arm_link:
-          Value: false
-        upper_beam:
-          Value: false
-        virtual_wall_1:
-          Value: false
-        virtual_wall_2:
-          Value: false
-        wall:
-          Value: false
-        winding_pose_1:
-          Value: false
-        winding_pose_2:
-          Value: false
-        winding_pose_3:
-          Value: false
-        world:
-          Value: false
-        wrist_1_link:
-          Value: false
-        wrist_2_link:
-          Value: false
-        wrist_3_link:
-          Value: false
       Marker Alpha: 1
       Marker Scale: 0.30000001192092896
       Name: TF
@@ -1127,519 +592,9 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        world:
-          left_column:
-            {}
-          lower_beam:
-            {}
-          portal:
-            floor:
-              {}
-            wall:
-              {}
-          right_column:
-            {}
-          table:
-            board_area:
-              {}
-            rail:
-              {}
-            screwdriver_holder:
-              {}
-          upper_beam:
-            guide_fixed:
-              cursor:
-                base_link:
-                  base:
-                    camera_pose:
-                      {}
-                    real_tool_n_0:
-                      {}
-                    real_tool_n_1:
-                      {}
-                    real_tool_n_10:
-                      {}
-                    real_tool_n_11:
-                      {}
-                    real_tool_n_12:
-                      {}
-                    real_tool_n_13:
-                      {}
-                    real_tool_n_14:
-                      {}
-                    real_tool_n_15:
-                      {}
-                    real_tool_n_16:
-                      {}
-                    real_tool_n_17:
-                      {}
-                    real_tool_n_18:
-                      {}
-                    real_tool_n_19:
-                      {}
-                    real_tool_n_2:
-                      {}
-                    real_tool_n_20:
-                      {}
-                    real_tool_n_21:
-                      {}
-                    real_tool_n_22:
-                      {}
-                    real_tool_n_23:
-                      {}
-                    real_tool_n_24:
-                      {}
-                    real_tool_n_25:
-                      {}
-                    real_tool_n_26:
-                      {}
-                    real_tool_n_27:
-                      {}
-                    real_tool_n_28:
-                      {}
-                    real_tool_n_29:
-                      {}
-                    real_tool_n_3:
-                      {}
-                    real_tool_n_30:
-                      {}
-                    real_tool_n_31:
-                      {}
-                    real_tool_n_32:
-                      {}
-                    real_tool_n_33:
-                      {}
-                    real_tool_n_34:
-                      {}
-                    real_tool_n_35:
-                      {}
-                    real_tool_n_36:
-                      {}
-                    real_tool_n_37:
-                      {}
-                    real_tool_n_38:
-                      {}
-                    real_tool_n_39:
-                      {}
-                    real_tool_n_4:
-                      {}
-                    real_tool_n_40:
-                      {}
-                    real_tool_n_41:
-                      {}
-                    real_tool_n_42:
-                      {}
-                    real_tool_n_43:
-                      {}
-                    real_tool_n_44:
-                      {}
-                    real_tool_n_45:
-                      {}
-                    real_tool_n_46:
-                      {}
-                    real_tool_n_47:
-                      {}
-                    real_tool_n_48:
-                      {}
-                    real_tool_n_49:
-                      {}
-                    real_tool_n_5:
-                      {}
-                    real_tool_n_50:
-                      {}
-                    real_tool_n_51:
-                      {}
-                    real_tool_n_52:
-                      {}
-                    real_tool_n_53:
-                      {}
-                    real_tool_n_54:
-                      {}
-                    real_tool_n_55:
-                      {}
-                    real_tool_n_56:
-                      {}
-                    real_tool_n_57:
-                      {}
-                    real_tool_n_58:
-                      {}
-                    real_tool_n_59:
-                      {}
-                    real_tool_n_6:
-                      {}
-                    real_tool_n_60:
-                      {}
-                    real_tool_n_61:
-                      {}
-                    real_tool_n_62:
-                      {}
-                    real_tool_n_63:
-                      {}
-                    real_tool_n_64:
-                      {}
-                    real_tool_n_65:
-                      {}
-                    real_tool_n_66:
-                      {}
-                    real_tool_n_67:
-                      {}
-                    real_tool_n_68:
-                      {}
-                    real_tool_n_69:
-                      {}
-                    real_tool_n_7:
-                      {}
-                    real_tool_n_70:
-                      {}
-                    real_tool_n_71:
-                      {}
-                    real_tool_n_72:
-                      {}
-                    real_tool_n_73:
-                      {}
-                    real_tool_n_74:
-                      {}
-                    real_tool_n_75:
-                      {}
-                    real_tool_n_76:
-                      {}
-                    real_tool_n_77:
-                      {}
-                    real_tool_n_78:
-                      {}
-                    real_tool_n_79:
-                      {}
-                    real_tool_n_8:
-                      {}
-                    real_tool_n_80:
-                      {}
-                    real_tool_n_81:
-                      {}
-                    real_tool_n_82:
-                      {}
-                    real_tool_n_83:
-                      {}
-                    real_tool_n_84:
-                      {}
-                    real_tool_n_85:
-                      {}
-                    real_tool_n_86:
-                      {}
-                    real_tool_n_87:
-                      {}
-                    real_tool_n_88:
-                      {}
-                    real_tool_n_89:
-                      {}
-                    real_tool_n_9:
-                      {}
-                    real_tool_n_90:
-                      {}
-                    real_tool_n_91:
-                      {}
-                    real_tool_n_92:
-                      {}
-                    real_tool_n_93:
-                      {}
-                    real_tool_n_94:
-                      {}
-                    real_tool_n_95:
-                      {}
-                    real_tool_n_96:
-                      {}
-                    real_tool_n_97:
-                      {}
-                    real_tool_n_98:
-                      {}
-                    real_tool_n_99:
-                      {}
-                    tool0_controller:
-                      {}
-                    tool_n_0:
-                      {}
-                    tool_n_1:
-                      {}
-                    tool_n_10:
-                      {}
-                    tool_n_11:
-                      {}
-                    tool_n_12:
-                      {}
-                    tool_n_13:
-                      {}
-                    tool_n_14:
-                      {}
-                    tool_n_15:
-                      {}
-                    tool_n_16:
-                      {}
-                    tool_n_17:
-                      {}
-                    tool_n_18:
-                      {}
-                    tool_n_19:
-                      {}
-                    tool_n_2:
-                      {}
-                    tool_n_20:
-                      {}
-                    tool_n_21:
-                      {}
-                    tool_n_22:
-                      {}
-                    tool_n_23:
-                      {}
-                    tool_n_24:
-                      {}
-                    tool_n_25:
-                      {}
-                    tool_n_26:
-                      {}
-                    tool_n_27:
-                      {}
-                    tool_n_28:
-                      {}
-                    tool_n_29:
-                      {}
-                    tool_n_3:
-                      {}
-                    tool_n_30:
-                      {}
-                    tool_n_31:
-                      {}
-                    tool_n_32:
-                      {}
-                    tool_n_33:
-                      {}
-                    tool_n_34:
-                      {}
-                    tool_n_35:
-                      {}
-                    tool_n_36:
-                      {}
-                    tool_n_37:
-                      {}
-                    tool_n_38:
-                      {}
-                    tool_n_39:
-                      {}
-                    tool_n_4:
-                      {}
-                    tool_n_40:
-                      {}
-                    tool_n_41:
-                      {}
-                    tool_n_42:
-                      {}
-                    tool_n_43:
-                      {}
-                    tool_n_44:
-                      {}
-                    tool_n_45:
-                      {}
-                    tool_n_46:
-                      {}
-                    tool_n_47:
-                      {}
-                    tool_n_48:
-                      {}
-                    tool_n_49:
-                      {}
-                    tool_n_5:
-                      {}
-                    tool_n_50:
-                      {}
-                    tool_n_51:
-                      {}
-                    tool_n_52:
-                      {}
-                    tool_n_53:
-                      {}
-                    tool_n_54:
-                      {}
-                    tool_n_55:
-                      {}
-                    tool_n_56:
-                      {}
-                    tool_n_57:
-                      {}
-                    tool_n_58:
-                      {}
-                    tool_n_59:
-                      {}
-                    tool_n_6:
-                      {}
-                    tool_n_60:
-                      {}
-                    tool_n_61:
-                      {}
-                    tool_n_62:
-                      {}
-                    tool_n_63:
-                      {}
-                    tool_n_64:
-                      {}
-                    tool_n_65:
-                      {}
-                    tool_n_66:
-                      {}
-                    tool_n_67:
-                      {}
-                    tool_n_68:
-                      {}
-                    tool_n_69:
-                      {}
-                    tool_n_7:
-                      {}
-                    tool_n_70:
-                      {}
-                    tool_n_71:
-                      {}
-                    tool_n_72:
-                      {}
-                    tool_n_73:
-                      {}
-                    tool_n_74:
-                      {}
-                    tool_n_75:
-                      {}
-                    tool_n_76:
-                      {}
-                    tool_n_77:
-                      {}
-                    tool_n_78:
-                      {}
-                    tool_n_79:
-                      {}
-                    tool_n_8:
-                      {}
-                    tool_n_80:
-                      {}
-                    tool_n_81:
-                      {}
-                    tool_n_82:
-                      {}
-                    tool_n_83:
-                      {}
-                    tool_n_84:
-                      {}
-                    tool_n_85:
-                      {}
-                    tool_n_86:
-                      {}
-                    tool_n_87:
-                      {}
-                    tool_n_88:
-                      {}
-                    tool_n_89:
-                      {}
-                    tool_n_9:
-                      {}
-                    tool_n_90:
-                      {}
-                    tool_n_91:
-                      {}
-                    tool_n_92:
-                      {}
-                    tool_n_93:
-                      {}
-                    tool_n_94:
-                      {}
-                    tool_n_95:
-                      {}
-                    tool_n_96:
-                      {}
-                    tool_n_97:
-                      {}
-                    tool_n_98:
-                      {}
-                    tool_n_99:
-                      {}
-                  base_link_inertia:
-                    shoulder_link:
-                      upper_arm_link:
-                        forearm_link:
-                          wrist_1_link:
-                            wrist_2_link:
-                              wrist_3_link:
-                                flange:
-                                  tool0:
-                                    camera_link:
-                                      camera_aligned_depth_to_color_frame:
-                                        camera_color_optical_frame:
-                                          door_handle:
-                                            {}
-                                          red:
-                                            {}
-                                      camera_color_frame:
-                                        {}
-                                      camera_depth_frame:
-                                        camera_depth_optical_frame:
-                                          {}
-                                    real_tool:
-                                      {}
-                                    robotiq_coupler:
-                                      closed_tip:
-                                        {}
-                                      open_tip:
-                                        {}
-                                      robotiq_simplified:
-                                        {}
-                                      rq_connector:
-                                        {}
-                                    tool_end:
-                                      door:
-                                        {}
-                  board:
-                    reference:
-                      blue_button:
-                        {}
-                      blue_button_approach:
-                        {}
-                      cable:
-                        {}
-                      cable_picking:
-                        {}
-                      cable_removal:
-                        cable_insertion:
-                          {}
-                      cable_winding_first:
-                        {}
-                      camera_pose_near:
-                        {}
-                      door_approach:
-                        {}
-                      probe_before_insertion:
-                        {}
-                      probe_insertion:
-                        {}
-                      probe_release:
-                        {}
-                      probe_testing:
-                        {}
-                      red_button:
-                        {}
-                      red_button_approach:
-                        {}
-                      slider:
-                        {}
-                      slider_approach:
-                        {}
-                      standard_probe:
-                        probe_approach:
-                          {}
-                      winding_pose_1:
-                        {}
-                      winding_pose_2:
-                        {}
-                      winding_pose_3:
-                        {}
-              virtual_wall_1:
-                {}
-          virtual_wall_2:
-            {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
     - Class: rviz/Camera
       Enabled: false
       Image Rendering: background and overlay
@@ -1796,6 +751,90 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /detected_image
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /detected_image
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /camera/color/image_raw
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Auto Size:
+        Auto Size Factor: 1
+        Value: true
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/DepthCloud
+      Color: 255; 255; 255
+      Color Image Topic: ""
+      Color Transformer: ""
+      Color Transport Hint: raw
+      Decay Time: 0
+      Depth Map Topic: /camera/color/image_raw
+      Depth Map Transport Hint: raw
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 0; 0; 0
+      Name: DepthCloud
+      Occlusion Compensation:
+        Occlusion Time-Out: 30
+        Value: false
+      Position Transformer: ""
+      Queue Size: 5
+      Selectable: true
+      Size (Pixels): 3
+      Style: Flat Squares
+      Topic Filter: true
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Class: rviz/Image
+      Enabled: false
+      Image Topic: /camera/color/image_raw
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -1812,7 +851,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.542269229888916
+      Distance: 3.1890225410461426
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -1828,9 +867,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.504796028137207
+      Pitch: 0.47479599714279175
       Target Frame: table
-      Yaw: 0.828613817691803
+      Yaw: 0.8036136031150818
     Saved:
       - Class: rviz/XYOrbit
         Distance: 5
@@ -1862,15 +901,15 @@ Window Geometry:
   Height: 1043
   Help:
     collapsed: false
-  Hide Left Dock: false
-  Hide Right Dock: false
+  Hide Left Dock: true
+  Hide Right Dock: true
   Image:
     collapsed: false
   MotionPlanning:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000300000000000001f3000003b9fc020000000cfb000000100044006900730070006c006100790073010000003d0000022b000000c900fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e0067010000026e000001880000017d00fffffffb000000100044006900730070006c006100790073000000003d000000fb000000c900fffffffb0000000800480065006c00700000000191000000bb0000006e00fffffffb0000000a005600690065007700730000000144000000b7000000a400fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000001600000016fc0000003d0000039e0000000000fffffffa000000020100000005fb0000000a0049006d0061006700650000000000ffffffff0000005e00fffffffb0000000c00430061006d0065007200610000000000ffffffff0000006900fffffffb0000000c00430061006d0065007200610100000000ffffffff0000000000000000fb0000000c00430061006d0065007200610100000000ffffffff0000000000000000fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000000c00430061006d0065007200610200000000000000000000078000000438fb0000000c00430061006d006500720061010000018d000002720000000000000000fb0000000a0049006d006100670065000000003d0000039e0000000000000000fb0000000a0049006d0061006700650000000206000001d500000000000000000000000100000117000003b9fc0200000003fc0000003d000003b90000025300fffffffa000000020100000003fb0000002600480061006e0064004500790065002000430061006c006900620072006100740069006f006e0000000000ffffffff0000000000000000fb0000000c00430061006d0065007200610100000000ffffffff0000000000000000fb000000280043006f006e00660069006700750072006100740069006f006e004d0061006e006100670065007201000005e90000014f0000011700fffffffb000000280043006f006e00660069006700750072006100740069006f006e004d0061006e0061006700650072000000003d0000039e0000025300fffffffb000000280043006f006e00660069006700750072006100740069006f006e004d0061006e0061006700650072000000003d0000039e0000025300ffffff00000002000007380000023afc0100000001fb0000000c00430061006d0065007200610100000290000004ad000000000000000000000422000003b900000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000300000000000001f3000003b9fc0200000010fb0000000a0049006d006100670065030000017b0000054600000487000002f0fb000000100044006900730070006c006100790073000000003d000003b9000000c900fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e0067000000026e000001880000017d00fffffffb000000100044006900730070006c006100790073000000003d000000fb000000c900fffffffb0000000800480065006c00700000000191000000bb0000006e00fffffffb0000000a005600690065007700730000000144000000b7000000a400fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000001600000016fc0000003d0000039e0000000000fffffffa000000020100000005fb0000000a0049006d0061006700650000000000ffffffff0000005e00fffffffb0000000c00430061006d0065007200610000000000ffffffff0000006900fffffffb0000000c00430061006d0065007200610100000000ffffffff0000000000000000fb0000000c00430061006d0065007200610100000000ffffffff0000000000000000fb0000000a0049006d0061006700650000000000ffffffff0000005e00fffffffb0000000c00430061006d0065007200610200000000000000000000078000000438fb0000000c00430061006d006500720061010000018d000002720000000000000000fb0000000a0049006d006100670065000000003d0000039e0000001600fffffffb0000000a0049006d0061006700650000000206000001d50000001600fffffffb0000000a0049006d006100670065010000032a000000cc0000000000000000fb0000000a0049006d006100670065010000032a000000cc0000000000000000fb0000000a0049006d006100670065010000032a000000cc00000000000000000000000100000117000003b9fc0200000003fc0000003d000003b90000000000fffffffa000000000100000003fb0000002600480061006e0064004500790065002000430061006c006900620072006100740069006f006e0000000000ffffffff0000000000000000fb0000000c00430061006d0065007200610100000000ffffffff0000000000000000fb000000280043006f006e00660069006700750072006100740069006f006e004d0061006e006100670065007200000005e90000014f0000011700fffffffb000000280043006f006e00660069006700750072006100740069006f006e004d0061006e0061006700650072000000003d0000039e0000025300fffffffb000000280043006f006e00660069006700750072006100740069006f006e004d0061006e0061006700650072000000003d0000039e0000025300ffffff00000002000007380000023afc0100000001fb0000000c00430061006d0065007200610100000290000004ad000000000000000000000738000003b900000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
   Width: 1848

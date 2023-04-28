@@ -5,10 +5,10 @@ init:
     skill_type: "board_localization"
 
   move_to_camera_pose:
-    skill_type: "ur_move_to"
-    goal_frame: "camera_pose"
-    tool_frame: "open_tip"
-    acceleration: 15
+
+    skill_type: "ur_movej"
+    joint_target: [-1.7556942144977015, -1.7889677486815394, -2.339104652404785, -0.5843127530864258, -1.5721924940692347, 0.18749475479125977]
+    acceleration: 30
     velocity: 10
 
   move_to_camera_pose_near:
@@ -17,9 +17,18 @@ init:
     tool_frame: "open_tip"
     acceleration: 15
     velocity: 10
+    ik: true
 
   home_configuration:
     skill_type: "ur_movej"
     joint_target: [-1.78, -1.48, -2.12, -1.10, -1.57, 0.0]
     acceleration: 30
     velocity: 10
+
+  move_to_camera_pose_transferability:
+    skill_type: "ur_move_to"
+    goal_frame: "camera_pose_transf"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true

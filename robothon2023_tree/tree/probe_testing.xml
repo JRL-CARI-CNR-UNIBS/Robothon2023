@@ -2,8 +2,8 @@
 <root BTCPP_format="4">
   <BehaviorTree ID="probe_testing">
     <Sequence name="probe_testing">
-      <SkillExecutionNode    name="probe_testing/move_to_probe"/>
       <SkillExecutionNode    name="probe_testing/probe_gripper_position"/>
+      <SkillExecutionNode    name="probe_testing/move_to_probe"/>
       <SkillExecutionNode    name="probe_testing/down_to_probe"/>
       <SkillExecutionNode    name="probe_testing/close_gripper"/>
       <SkillExecutionNode    name="probe_testing/probe_extraction"/>
@@ -14,7 +14,7 @@
       <SkillExecutionNode    name="probe_testing/move_to_probe_release"/>
       <SkillExecutionNode    name="probe_testing/open_gripper"/>
       <SkillExecutionNode    name="probe_testing/up_from_release"/>
-      <SkillExecutionNode    name="init/home_configuration"/>
+      <!-- <SkillExecutionNode    name="init/home_configuration"/> -->
     </Sequence>
   </BehaviorTree>
 </root>

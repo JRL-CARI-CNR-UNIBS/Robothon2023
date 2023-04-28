@@ -11,25 +11,26 @@ press_blue_button:
     goal_frame: "blue_button_approach"
     tool_frame: "open_tip"
     acceleration: 10
-    velocity: 3
+    velocity: 6
+    ik: true
 
-  down_to_button:
-    skill_type: "ur_linear_move"
-    reference_frame: "reference"
-    tool_frame: "real_tool"
-    traslation: [0,0,0.06]
-    rotation: [0,0,0,1]
-    velocity: 0.5
-    acceleration: 1
-    n_point: 1
+  # down_to_button:
+  #   skill_type: "ur_linear_move"
+  #   reference_frame: "reference"
+  #   tool_frame: "real_tool"
+  #   traslation: [0,0,0.06]
+  #   rotation: [0,0,0,1]
+  #   velocity: 2
+  #   acceleration: 1
+  #   n_point: 1
 
   press_button:
     skill_type: "ur_simple_touch_tool"
     MOVEX: 0.0
     MOVEY: 0.0
     MOVEZ: 1.0
-    FORCE: 25
-    VELOCITY: 0.05
+    FORCE: 30
+    VELOCITY: 0.02
     ACCELERATION: 0.5
 
 press_red_button:
@@ -46,25 +47,26 @@ press_red_button:
     tool_frame: "open_tip"
     acceleration: 10
     velocity: 3
+    ik: true
 
   press_button:
     skill_type: "ur_simple_touch_tool"
     MOVEX: 0.0
     MOVEY: 0.0
     MOVEZ: 1.0
-    FORCE: 25
-    VELOCITY: 0.05
+    FORCE: 30
+    VELOCITY: 0.02
     ACCELERATION: 0.5
 
-  down_to_button:
-    skill_type: "ur_linear_move"
-    reference_frame: "reference"
-    tool_frame: "real_tool"
-    traslation: [0,0,0.06]
-    rotation: [0,0,0,1]
-    velocity: 0.5
-    acceleration: 1
-    n_point: 1
+  # down_to_button:
+  #   skill_type: "ur_linear_move"
+  #   reference_frame: "reference"
+  #   tool_frame: "real_tool"
+  #   traslation: [0,0,0.06]
+  #   rotation: [0,0,0,1]
+  #   velocity: 0.5
+  #   acceleration: 1
+  #   n_point: 1
 
   up_from_button:
     skill_type: "ur_linear_move"

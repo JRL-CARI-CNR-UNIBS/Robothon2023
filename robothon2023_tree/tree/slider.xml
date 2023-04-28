@@ -11,7 +11,7 @@
 
       <SkillExecutionNode    name="slider/pick_slider_gripper_pose"/>
       <SkillExecutionNode    name="slider/match_first_triangle"/>
-      <RetryUntilSuccessful num_attempts="-1">
+      <RetryUntilSuccessful num_attempts="10">
         <Fallback>
         <Sequence name="acquire">
           <SkillExecutionNode    name="slider/screen_target"/>
@@ -27,8 +27,8 @@
       </RetryUntilSuccessful>
 
 
-      <SkillExecutionNode    name="slider/open_gripper"/>
-      <SkillExecutionNode    name="slider/move_to_slider_pose"/>
+      <SkillExecutionNode    name="slider/open_gripper_2"/>
+      <SkillExecutionNode    name="slider/move_to_slider_approach"/>
 
       <!-- <RetryUntilSuccessful num_attempts="50">
         <Sequence name="loop">

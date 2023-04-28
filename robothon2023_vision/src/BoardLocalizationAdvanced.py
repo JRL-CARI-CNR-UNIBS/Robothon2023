@@ -31,11 +31,14 @@ from yolov6.utils.nms import non_max_suppression
 from yolov6.core.inferer import Inferer
 import numpy as np
 import os, requests, math
-from sensor_msgs.msg import CameraInfo, Image
+# from sensor_msgs.msg import CameraInfo, Image
+import sensor_msgs.msg
 from cv_bridge import CvBridge, CvBridgeError
-# from PIL import Image
-import PIL
+from PIL import Image
+# import PIL
 import cv2
+from slider_detect_triangles import *
+from identification_function import *
 
 # from segment_anything import sam_model_registry, SamAutomaticMaskGenerator, SamPredictor
 # import supervision as sv
@@ -56,9 +59,10 @@ NOT_SUCCESSFUL = "Not Successfully executed"
 SERVICE_NAME_BOARD = "/robothon2023/board_localization"
 SERVICE_NAME_SCREEN_TARGET_1 = "/robothon2023/screen_target_init"
 SERVICE_NAME_SCREEN_TARGET_2 = "/robothon2023/screen_target"
+ALIGNMENT_SCREEN_TOPIC = "/robothon2023/align_screen"
 
 SLIDER_TRAVEL_MM = 9.1  # 8.5 #29.0
-SLIDER_TRAVEL_PX = 56  # 49 #256.0
+SLIDER_TRAVEL_PX = 56  # 56  # 49 #256.0
 
 MODEL_TYPE = "vit_b"
 
@@ -106,7 +110,7 @@ class BoardLocalization:
         # YOLO
         device = "gpu"
         cuda = device != 'cpu' and torch.cuda.is_available()
-        self.device = torch.device('cuda:1' if cuda else 'cpu')
+        self.device = torch.device('cuda:0' if cuda else 'cpu')
         print(self.weight_path)
         self.model = DetectBackend(self.weight_path, device=self.device)
         self.stride = self.model.stride
@@ -124,8 +128,9 @@ class BoardLocalization:
 
         self.direction = 1
         self.k = 0
-        self.image_publisher = rospy.Publisher("detected_image", Image, queue_size=50)
+        self.image_publisher = rospy.Publisher("detected_image", sensor_msgs.msg.Image, queue_size=50)
         self.bridge = CvBridge()
+        self.first_identification = True
         #
         # self.sam = sam_model_registry[MODEL_TYPE](checkpoint=self.weight_path_ssm).to(device=self.device)
         # self.mask_generator = SamAutomaticMaskGenerator(self.sam)
@@ -204,7 +209,8 @@ class BoardLocalization:
         self.door_handle_camera = None
         n_red = 0
         n_door = 0
-        for k in range(0, 5):
+        max_trial = 5
+        for k in range(0, max_trial):
             # Acquire the rgb-frame
             self.realsense.acquireOnceBoth()
             rgb_frame = self.realsense.getColorFrame()
@@ -245,19 +251,11 @@ class BoardLocalization:
                         features[self.class_names[class_num]] = [center_x, center_y]
 
                     img_ori = cv2.circle(img_ori, (center_x, center_y), 2, color=(255, 0, 0), thickness=2)
-            # cv2.destroyAllWindows()
-            # cv2.imshow("Identification", img_ori)
-            # cv2.waitKey(-1)
-            # cv2.destroyAllWindows()
+
             depth_frame = self.realsense.getDistanceFrame()
 
             print(f"Shape depth: {depth_frame.shape}")
-            # print(features)
-            # for feature in features:
-            #     if not features[feature]:   #Not filled
-            #         return TriggerResponse(False, NOT_SUCCESSFUL)
 
-            # print(f"Distanza: {depth_frame[features['red_button'][1], features['red_button'][1]]}")
             red_button_camera = None
             door_handle_camera = None
             if features['red_button']:
@@ -287,17 +285,16 @@ class BoardLocalization:
                 else:
                     self.door_handle_camera = door_handle_camera
                 print(f"Diff door: {door_handle_camera - self.door_handle_camera}")
+            if self.first_identification is True and n_red >= 1 and n_door >= 1:
+                self.first_identification = False
+                break
+            if k >= max_trial-1:
+                self.first_identification = True
 
-            # if self.red_button_camera is not None:
-            #     print(f"N frame {self.n_frame}")
-            #     print(f"Diff red: {red_button_camera - self.red_button_camera}")
-            #     print(f"Diff door: {door_handle_camera - self.door_handle_camera}")
         print(self.red_button_camera)
         print(self.door_handle_camera)
 
         if (self.red_button_camera is None) or (self.door_handle_camera is None):
-            # for feature in features:
-            #     if not features[feature]:   #Not filled
             print(RED + "Something not identified" + END)
             return TriggerResponse(False, NOT_SUCCESSFUL)
 
@@ -312,7 +309,7 @@ class BoardLocalization:
                 print("Retrieved camera_color_optical_frame -> base_link")
             except (tf.LookupException, tf.ConnectivityException):
                 rospy.loginfo(YELLOW + "Unable to retrieve tf-t between: camera_color_optical_frame -> base_link" + END)
-                rospy.sleep(0.5)
+                rospy.sleep(0.1)
 
         rospy.loginfo(YELLOW + "Trasformata camera_link -> base_link \n :{}".format(trans) + RED)
         rospy.loginfo(YELLOW + "Trasformata camera_link -> base_link \n :{}".format(rot) + RED)
@@ -327,9 +324,9 @@ class BoardLocalization:
         print(f"Red button (in base_link) before set z: {red_button_world}")
         red_button_world_backup = red_button_world[0:-1]
         red_button_world = red_button_world[0:-1]
-        red_button_world[-1] = 0.923  # 1.5
+        red_button_world[-1] = 0.933  # 0.923
         door_handle_world = door_handle_world[0:-1]
-        door_handle_world[-1] = 0.923  # red_button_world[-1]
+        door_handle_world[-1] = 0.933  # 0.923
         z_axis = np.array([0.0, 0.0, -1.0])
 
         print(f"Red button (in base_link) after set z: {red_button_world}")
@@ -347,7 +344,7 @@ class BoardLocalization:
 
         M_camera_board_only_tra = tf.transformations.identity_matrix()
         M_camera_board_only_tra[0:3, -1] = np.array(
-            [red_button_world_backup[0], red_button_world_backup[1], red_button_world_backup[2]])
+            [red_button_world_backup[0], red_button_world_backup[1], 0.933])
 
         M_camera_board = np.dot(M_camera_board_only_tra, M_camera_board_only_rot)
 
@@ -368,86 +365,10 @@ class BoardLocalization:
 
         rospy.loginfo(GREEN + "Published tf" + END)
 
-        # static_transformStamped_reference = self.getStaticTrasformStamped("board", "reference",
-        #                                                                   [0.137, 0.094, -0.155],
-        #                                                                   [0.0, 0.0, 0.959, -0.284])
-
-        # roi_red_plug = rgb_frame.copy()
-        # red = np.array([features['red_button'][0], features['red_button'][1]])
-        # door = np.array([features['door_handle'][0], features['door_handle'][1]])
-        # test = (door - red) / (np.linalg.norm(door - red))
-        # orto = np.array([-test[1] / test[0], 1])
-        # shift_start = 100
-        # shift_end = 160
-        # y_roi_plug_start_lin = int(features['red_button'][0] + test[0] * shift_start)
-        # x_roi_plug_star_lin = int(features['red_button'][1] + test[1] * shift_start)
-        # y_roi_plug_end_lin = int(features['red_button'][0] + test[0] * shift_end)
-        # x_roi_plug_end_lin = int(features['red_button'][1] + test[1] * shift_end)
-        # shift_start_orto = -70
-        # shift_end_orto = 70
-        # y_roi_plug_start_orto = int(int((y_roi_plug_start_lin + y_roi_plug_end_lin) / 2) + orto[0] * shift_start_orto)
-        # y_roi_plug_end_orto = int(int((y_roi_plug_start_lin + y_roi_plug_end_lin) / 2) + orto[0] * shift_end_orto)
-        # x_roi_plug_star_orto = int(int((x_roi_plug_star_lin + x_roi_plug_end_lin) / 2) + orto[1] * shift_start_orto)
-        # x_roi_plug_end_orto = int(int((x_roi_plug_star_lin + x_roi_plug_end_lin) / 2) + orto[1] * shift_end_orto)
-        #
-        # x_min = min([x_roi_plug_star_lin, x_roi_plug_end_lin, x_roi_plug_star_orto, x_roi_plug_end_orto])
-        # x_max = max([x_roi_plug_star_lin, x_roi_plug_end_lin, x_roi_plug_star_orto, x_roi_plug_end_orto])
-        #
-        # y_min = min([y_roi_plug_start_lin, y_roi_plug_end_lin, y_roi_plug_start_orto, y_roi_plug_end_orto])
-        # y_max = max([y_roi_plug_start_lin, y_roi_plug_end_lin, y_roi_plug_start_orto, y_roi_plug_end_orto])
-        # roi_red_plug[:, :, :] = 0
-        #
-        # roi_red_plug[x_min:x_max, y_min:y_max] = rgb_frame[x_min:x_max, y_min:y_max]
-        #
-        # det = self.make_inference(roi_red_plug, 0.2)
-        # # cv2.imshow("imgpart", roi_red_plug)
-        #
-        # img_ori = rgb_frame.copy()
-        # if det is not None:
-        #     for *xyxy, conf, cls in reversed(det):
-        #         class_num = int(cls)
-        #
-        #         print(f"Category: {self.class_names[class_num]}")
-        #         label = None if hide_labels else (
-        #             self.class_names[class_num] if hide_conf else f'{self.class_names[class_num]} {conf:.2f}')
-        #
-        #         print((xyxy[0].cpu().data.numpy(), xyxy[1].cpu().data.numpy()))
-        #
-        #         center_x = int((int(xyxy[0].cpu().data.numpy()) + int(xyxy[2].cpu().data.numpy())) / 2)
-        #         center_y = int((int(xyxy[1].cpu().data.numpy()) + int(xyxy[3].cpu().data.numpy())) / 2)
-        #         # if self.class_names[class_num] in features:
-        #         #     features[self.class_names[class_num]] = [center_x, center_y]
-        #
-        #         img_ori = cv2.circle(img_ori, (center_x, center_y), 2, color=(255, 0, 0), thickness=2)
-        #         # img_ori = cv2.circle(img_ori, (int(xyxy[0].cpu().data.numpy()), int(xyxy[1].cpu().data.numpy())), 5, color=(255, 0, 0), thickness=2)
-        #         # img_ori = cv2.circle(img_ori, (int(xyxy[2].cpu().data.numpy()), int(xyxy[3].cpu().data.numpy())), 5, color=(255, 0, 0), thickness=2)
-        #
-        #         Inferer.plot_box_and_label(img_ori, max(round(sum(img_ori.shape) / 2 * 0.003), 2), xyxy, label,
-        #                                    color=Inferer.generate_colors(class_num, True))
-
-        # for t in range(-70, 70):
-        #
-        #     y_roi_plug = int(y_roi_plug_start + orto[0] * t)
-        #     x_roi_plug = int(x_roi_plug_star + orto[1] * t)
-        #     rgb_frame = cv2.circle(rgb_frame, (y_roi_plug, x_roi_plug), 5, color=(255, 0, 0), thickness=2)
-        #
-        #     print(y_roi_plug)
-        #     print(x_roi_plug)
-        #
-        # rgb_frame = cv2.circle(rgb_frame, (y_min,x_min), 5, color=(255, 0, 0), thickness=2)
-        # rgb_frame = cv2.circle(rgb_frame, (y_max, x_max), 5, color=(255, 0, 0), thickness=2)
-
-        # rgb_frame = cv2.circle(rgb_frame, (features['red_button'][0], features['red_button'][1]), 5, color=(255, 0, 0), thickness=2)
-
-        # cv2.imshow("img", img_ori)
-        # cv2.waitKey(-1)
-        # cv2.destroyAllWindows()
-        print(x_axis)
-
         self.broadcaster.sendTransform(
             [static_transformStamped_board, static_transform_red,
              static_transform_door])
-        # self.broadcastTF(Quaternion(0,0,0.959,-0.284), Vector3(0.137,0.094,-0.155), "reference","board")
+
         return TriggerResponse(True, SUCCESSFUL)
 
     def get4Vector(self, vect):
@@ -507,15 +428,7 @@ class BoardLocalization:
             print(f"Centro triangolo sopra: (cx,cy) {cX, cY}")
             cv2.circle(screen, (cX, cY), 3, (0, 0, 255), -1)
             centri.append([cX, cY])
-        # upper = None
-        # lower = None
-        # if len(centri) == 2:
-        #     if centri[0][1]> centri[1][1]:
-        #         upper = centri[1]
-        #         lower = centri[0]
-        #     else:
-        #         upper = centri[0]
-        #         lower = centri[1]
+
         self.realsense.saveAquiredImage(f"{self.folder_path}screen_{now}_init.png")
         if len(centri) == 1:
             self.start_triangle_pos = centri[0]
@@ -578,10 +491,6 @@ class BoardLocalization:
             # print((cX,cY))
             cv2.circle(screen_with_centers, (cX, cY), 3, (0, 0, 255), -1)
             centri.append([cX, cY])
-        # self.start_triangle_pos = (92, 25)
-        # if (self.start_triangle_pos is None) and len(centri) != 2:
-        #     rospy.loginfo(RED + "start_triangle_pos is none and len centers diff to 2" + END)
-        #     return TriggerResponse(False, NOT_SUCCESSFUL)
 
         print(GREEN + f"Identified triangles in: {centri}" + END)
         target_mm = 0
@@ -973,42 +882,6 @@ class BoardLocalization:
                     print(target_mm)
                 else:
                     return TriggerResponse(False, NOT_SUCCESSFUL)
-
-                # self.triangle_mask[:, 135:] = 255
-            # self.triangle_mask[:, :20] = 255
-            #
-            # max = float('-inf')
-            # opt_shift = None
-            # iou_to_match = cv2.subtract(self.triangle_mask, thresh)
-            # # cv2.imshow("iou_to_match", iou_to_match)
-            # # contours_to_match, hierarchy = cv2.findContours(iou_to_match, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-            # # contours_mask, hierarchy = cv2.findContours(self.triangle_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-            #
-            # for k in range(-50, 50):
-            #     t_x = k
-            #     M = np.array([[1, 0, t_x], [0, 1, 0]], dtype=np.float32)
-            #     shifted_mask = cv2.warpAffine(self.triangle_mask, M, (self.triangle_mask.shape[1], self.triangle_mask.shape[0]))
-            #     iou = cv2.subtract(iou_to_match, shifted_mask)
-            #     # cv2.imshow("iou_to_match"+str(k), iou)
-            #
-            #     if k < 0:
-            #         iou[:, k:] = 0  # Remove
-            #     else:
-            #         iou[:, :k] = 0
-            #     iou_val = iou.sum()
-            #     print(iou_val)
-            #     if iou_val > max:
-            #         max = iou_val
-            #         opt_shift = t_x
-            #         print(opt_shift)
-            # print(f"Optimum shift: {opt_shift}")
-            # target_center = self.start_triangle_pos.copy()
-            # print(target_center)
-            # target_center[0] += opt_shift
-            # print(target_center)
-            # cv2.circle(rgb_frame, (target_center[0], target_center[1]), 3, (0, 0, 255), -1)
-            # print(f"Center distance: {self.start_triangle_pos[0] - target_center[0]}")
-            # target_mm = SLIDER_TRAVEL_MM / SLIDER_TRAVEL_PX * (self.start_triangle_pos[0] - target_center[0])
         else:
             target_mm = 0.0
             rospy.loginfo(YELLOW + "Target reached automatically. No triangles detected" + END)
@@ -1116,18 +989,16 @@ class BoardLocalization:
         rospy.loginfo(SERVICE_CALLBACK.format("----- arrivata la richiesta -----"))
         # rospy.sleep(5)
         for k in range(5):
-            frame = rospy.wait_for_message(COLOR_FRAME_TOPIC, Image, timeout=None)
+            frame = rospy.wait_for_message(COLOR_FRAME_TOPIC, sensor_msgs.msg.Image, timeout=None)
             img = self.bridge.imgmsg_to_cv2(frame, desired_encoding="bgr8")
         rospy.sleep(0.5)
         for k in range(5):
-            frame = rospy.wait_for_message(COLOR_FRAME_TOPIC, Image, timeout=None)
+            frame = rospy.wait_for_message(COLOR_FRAME_TOPIC, sensor_msgs.msg.Image, timeout=None)
             img = self.bridge.imgmsg_to_cv2(frame, desired_encoding="bgr8")
 
             # img = self.realsense.getColorFrame()
             img_time = frame.header.stamp.secs + 1e-9 * frame.header.stamp.nsecs
             time_now = rospy.Time.now().to_sec()
-            # print(f"Img time: {img_time}")
-            # print(f"Time now: {time_now}")
 
         img = img[330:460, 630:870]
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -1138,7 +1009,7 @@ class BoardLocalization:
         b, g, r = cv2.split(img)
 
         _, r_thresh = cv2.threshold(r, 150, 255, cv2.THRESH_TOZERO)
-        _, g_thresh_0 = cv2.threshold(g, 180, 255, cv2.THRESH_TOZERO)
+        _, g_thresh_0 = cv2.threshold(g, 150, 255, cv2.THRESH_TOZERO)
 
         # cv2.imshow("r_thread", r_thresh)
         # cv2.imshow("g_thresh_0", g_thresh_0)
@@ -1151,11 +1022,13 @@ class BoardLocalization:
         right_cnt_distance_center = []
         right_centers_h = []
         img_center = list(reversed(np.array(img.shape[:2]) / 2.0))
+
+        no_red_triangle = False
         # print(img_center)
         # Lower triangle identification
         for cnt in contours:
             print(f"Area: {cv2.contourArea(cnt)}")
-            if cv2.contourArea(cnt) > 120 and cv2.contourArea(cnt) < 350:  # 200
+            if cv2.contourArea(cnt) > 100 and cv2.contourArea(cnt) < 350:  # 200
                 # cv2.drawContours(r_thresh, [cnt], 0, (255, 0, 0), -1)
                 x, y, w, h = cv2.boundingRect(cnt)
                 aspect_ratio = float(w) / h
@@ -1186,28 +1059,23 @@ class BoardLocalization:
             # cv2.drawContours(img, [lower_triangle_cnt], 0, (255, 0, 0), 3)
         elif len(right_cnt_distance_center) == 0:
             print("No lower red triangle detected")
-            return TriggerResponse(False, NOT_SUCCESSFUL)
+            no_red_triangle = True
+            # return TriggerResponse(False, NOT_SUCCESSFUL)
         else:
             print("More than one red triangle detected")
             return TriggerResponse(False, NOT_SUCCESSFUL)
-        # cv2.imshow("img", img)
-        # cv2.imshow("sat", saturation)
-        # cv2.imshow("value", value)
-        # cv2.imshow("b", b)
-        # cv2.imshow("g", g)
-        # cv2.imshow("r", r)
-        # cv2.imshow("r_thresh", r_thresh)
-        #
-        # cv2.imshow("r-g", img_sub)
-        # cv2.waitKey(-1)
-        # cv2.destroyAllWindows()
 
         #################################################
         # Upper triangle identification
         print("-----")
         print("Upper triangles identification")
         # cv2.imshow("r_prev", r)
-        r_thresh[round(lower_triangle_center[1] - lower_triangle_h / 2.0 * 0.8):, :] = 0
+        if no_red_triangle:
+            print("Default crop for upper triangle identification")
+            r_thresh[round(img_center[1]):, :] = 0
+            self.image_publisher.publish(self.bridge.cv2_to_imgmsg(r_thresh))
+        else:
+            r_thresh[round(lower_triangle_center[1] - lower_triangle_h / 2.0 * 0.8):, :] = 0
 
         contours, hierarchy = cv2.findContours(r_thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         right_cnt_upper = []
@@ -1253,6 +1121,28 @@ class BoardLocalization:
         if center_blob is None:
             center_blob = img_center
 
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(img))
+        rospy.sleep(0.5)
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(g))
+        rospy.sleep(0.5)
+        # input("Avanti ...")
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(r))
+        rospy.sleep(0.5)
+        # input("Avanti ...")
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(r_thresh))
+        rospy.sleep(0.5)
+        # input("Avanti ...")
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(g_thresh_0))
+        rospy.sleep(0.5)
+        # input("Avanti ...")
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(img_sub))
+        rospy.sleep(0.5)
+
+
+        if no_red_triangle and len(right_cnt_centers_upper) >= 1:
+            print("Rosso non identificato, Giallo/Verde si. Errore")
+            return TriggerResponse(False, NOT_SUCCESSFUL)
+
         goal = 0.0
         if len(right_cnt_centers_upper) == 1 and aspect_ratio < 1.3:
             center_1 = right_cnt_centers_upper[0]
@@ -1287,8 +1177,15 @@ class BoardLocalization:
             print("Più di due triangoli sopra identificati")
             # TODO: più di due triangoli
         else:
-            print("Nessun triangolo identificato. Fine")
-            return TriggerResponse(True, SUCCESSFUL)
+            if no_red_triangle:
+                print("Nessun triangolo identificato. Fine")
+                rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, 0.0, 0.0])
+                rospy.set_param("/RL_params/slider/match_second_triangle/traslation", [0.0, 0.0, 0.0])
+                rospy.set_param("/RL_params/slider/match_second_triangle_return/traslation", [0.0, 0.0, 0.0])
+                return TriggerResponse(True, SUCCESSFUL)
+            else:
+                print("Rosso identificato, Giallo/Verde no. Errore")
+                return TriggerResponse(False, NOT_SUCCESSFUL)
             # TODO: Fine ì
         print(GREEN + f"Goal: {goal}" + END)
         target_mm = SLIDER_TRAVEL_MM / SLIDER_TRAVEL_PX * goal  # + 0.1 * float(np.sign(diff))
@@ -1298,52 +1195,366 @@ class BoardLocalization:
         # target_min = max([target_m - float(np.sign(target_m)) * 1e-3, ])
         # target_max = min([target_m + 2 *float(np.sign(target_m)) * 1e-3, ])
         rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, target_m, 0.0])
-
-        # rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, target_m - float(np.sign(target_m)) * 1e-3, 0.0])
         rospy.set_param("/RL_params/slider/match_second_triangle/traslation",
                         [0.0, 2 * float(np.sign(target_m)) * 1e-3, 0.0])
         rospy.set_param("/RL_params/slider/match_second_triangle_return/traslation",
                         [0.0, -2 * float(np.sign(target_m)) * 1e-3, 0.0])
 
-        # cv2.imshow("screen", screen)
-        # cv2.waitKey(-1)
-        # cv2.destroyAllWindows()
-        # edges = cv2.Canny(g_thresh, 50, 150)
-        # cv2.imshow("edges", edges)
-        # lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 40, minLineLength=30, maxLineGap=30)
-        # i = 0
-        # print(lines)
-        # for x1, y1, x2, y2 in lines[2]:
-        #     i += 1
-        #     cv2.line(img, (x1, y1), (x2, y2), (255, 0, 0), 1)
-        # # print
-        # # i
-        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(img))
-        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(saturation))
-        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(value))
-        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(b))
-        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(g))
-        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(r))
-        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(r_thresh))
-        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(g_thresh))
-        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(img_sub))
-
-        # cv2.imshow("res", img)
-        # if len(right_cnt_centers_upper) == 2:
-        #     more_distance = 2
-        # cv2.imshow("img", img)
-        # cv2.imshow("sat", saturation)
-        # cv2.imshow("value", value)
-        # cv2.imshow("b", b)
-        # cv2.imshow("g", g)
-        # cv2.imshow("r", r)
-        # cv2.imshow("r_thresh", r_thresh)
-        # cv2.imshow("g_thresh", g_thresh)
-        #
-        # cv2.imshow("r-g", img_sub)
-        # cv2.waitKey(-1)
-        # cv2.destroyAllWindows()
         return TriggerResponse(True, SUCCESSFUL)
+
+    def old_triangle_identification(self, image):
+        img = image.copy()
+        rospy.loginfo(SERVICE_CALLBACK.format("----- arrivata la richiesta -----"))
+        reference_triangle_center = None
+        target_triangle_center = None
+        red_triangle_center = None
+        red_triangle_2_center = None
+
+        # img = img[330:460, 630:870]
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        lab = cv2.cvtColor(img, cv2.COLOR_BGR2Lab)
+        bw = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        hue, saturation, value = cv2.split(hsv)
+        l_col, a_col, b_col = cv2.split(lab)
+        b, g, r = cv2.split(img)
+
+        _, r_thresh = cv2.threshold(r, 150, 255, cv2.THRESH_TOZERO)
+        _, g_thresh_0 = cv2.threshold(g, 150, 255, cv2.THRESH_TOZERO)
+
+        # cv2.imshow("r_thread", r_thresh)
+        # cv2.imshow("g_thresh_0", g_thresh_0)
+
+        img_sub = cv2.subtract(r_thresh, g_thresh_0)
+
+        contours, hierarchy = cv2.findContours(img_sub, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        right_cnt = []
+        right_cnt_centers = []
+        right_cnt_distance_center = []
+        right_centers_h = []
+        img_center = list(reversed(np.array(img.shape[:2]) / 2.0))
+
+        no_red_triangle = False
+        # print(img_center)
+        # Lower triangle identification
+        for cnt in contours:
+            # print(f"Area: {cv2.contourArea(cnt)}")
+            if cv2.contourArea(cnt) > 100 and cv2.contourArea(cnt) < 350:  # 200
+                # cv2.drawContours(r_thresh, [cnt], 0, (255, 0, 0), -1)
+                x, y, w, h = cv2.boundingRect(cnt)
+                aspect_ratio = float(w) / h
+                M = cv2.moments(cnt)
+                center, eccentricity = self.get_q(M)
+                perimeter = cv2.arcLength(cnt, True)
+                area = cv2.contourArea(cnt)
+                normalized_distance = np.linalg.norm(np.array(center) - np.array(img_center)) / img.shape[1]
+                # print(f"fArea : {area}")
+                # # print(f"Perimeter : {perimeter}")
+                # # print(f"Ration: {perimeter / area}")
+                # print(f"Center: {center}")
+                # print(f"Aspect ratio: {aspect_ratio}")
+                # print(f"Normalized distance: {normalized_distance}")
+                if aspect_ratio > 0.7 and aspect_ratio < 1.5 and normalized_distance < 0.45:
+                    right_cnt.append(cnt)
+                    right_cnt_centers.append(center)
+                    right_cnt_distance_center.append(np.linalg.norm(center - np.array(center)))
+                    right_centers_h.append(h)
+        if len(right_cnt_distance_center) == 1:
+            # print("One red triangle detected")
+            id_lower_triangle = 0
+            lower_triangle_cnt = right_cnt[id_lower_triangle]
+            lower_triangle_center = right_cnt_centers[id_lower_triangle]
+            lower_triangle_h = right_centers_h[0]
+            cv2.circle(img, lower_triangle_center, 3, (0, 0, 255), -1)
+            red_triangle = lower_triangle_center
+            reference_triangle_center = red_triangle
+            # cv2.drawContours(img, [lower_triangle_cnt], 0, (255, 0, 0), 3)
+        elif len(right_cnt_distance_center) == 0:
+            # print("No lower red triangle detected")
+            no_red_triangle = True
+            # return TriggerResponse(False, NOT_SUCCESSFUL)
+        else:
+            print("More than one red triangle detected")
+            red_triangle_center = -1
+            red_triangle_2_center = -1
+            return red_triangle_center, red_triangle_2_center, reference_triangle_center, target_triangle_center
+            # return TriggerResponse(False, NOT_SUCCESSFUL)
+
+        #################################################
+        # Upper triangle identification
+        print("-----")
+        print("Upper triangles identification")
+        # cv2.imshow("r_prev", r)
+        if no_red_triangle:
+            # print("Default crop for upper triangle identification")
+            r_thresh[round(img_center[1]):, :] = 0
+            self.image_publisher.publish(self.bridge.cv2_to_imgmsg(r_thresh))
+        else:
+            r_thresh[round(lower_triangle_center[1] - lower_triangle_h / 2.0 * 0.8):, :] = 0
+
+        contours, hierarchy = cv2.findContours(r_thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        right_cnt_upper = []
+        right_cnt_centers_upper = []
+        right_cnt_distance_center_upper = []
+        right_cnt_upper_w = []
+
+        for cnt in contours:
+            if 100 < cv2.contourArea(cnt) < 700:  # 200
+                x, y, w, h = cv2.boundingRect(cnt)
+                aspect_ratio = float(w) / h
+                M = cv2.moments(cnt)
+                center, eccentricity = self.get_q(M)
+                perimeter = cv2.arcLength(cnt, True)
+                area = cv2.contourArea(cnt)
+                normalized_distance = np.linalg.norm(np.array(center) - np.array(img_center)) / img.shape[1]
+                print(f"fArea : {area}")
+                print(f"Center: {center}")
+                print(f"Aspect ratio: {aspect_ratio}")
+                print(f"Normalized distance: {normalized_distance}")
+                if 0.7 < aspect_ratio < 2.5 and normalized_distance < 0.45:
+                    right_cnt_upper.append(cnt)
+                    right_cnt_centers_upper.append(center)
+                    right_cnt_distance_center_upper.append(np.linalg.norm(center - np.array(center)))
+                    right_cnt_upper_w.append(w)
+                    # cv2.circle(img, center, 3, (0, 0, 255), -1)
+
+        _, g_thresh = cv2.threshold(g, 150, 255, cv2.THRESH_BINARY)
+        g_thresh[:40, :] = 0
+
+        g_thresh[52:, :] = 0
+        screen_blob, hierarchy = cv2.findContours(g_thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        center_blob = None
+        for cnt in screen_blob:
+            area_blob = cv2.contourArea(cnt)
+            if area_blob < 2000:
+                continue
+            print(f"Blob: {area_blob}")
+            M_blob = cv2.moments(cnt)
+            center_blob, _ = self.get_q(M_blob)
+            print(center_blob)
+            cv2.circle(img, center_blob, 3, (0, 0, 255), -1)
+        if center_blob is None:
+            center_blob = img_center
+
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(img))
+        rospy.sleep(0.5)
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(g))
+        rospy.sleep(0.5)
+        # input("Avanti ...")
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(r))
+        rospy.sleep(0.5)
+        # input("Avanti ...")
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(r_thresh))
+        rospy.sleep(0.5)
+        # input("Avanti ...")
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(g_thresh_0))
+        rospy.sleep(0.5)
+        # input("Avanti ...")
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(img_sub))
+        rospy.sleep(0.5)
+
+
+        if no_red_triangle and len(right_cnt_centers_upper) >= 1:
+            red_triangle = None
+        else:
+            goal = 0.0
+            if len(right_cnt_centers_upper) == 1 and aspect_ratio < 1.3:
+                center_1 = right_cnt_centers_upper[0]
+                cv2.circle(img, center_1, 3, (255, 0, 0), -1)
+                goal = red_triangle[0] - center_1[0]
+                target_triangle_center = center_1
+                reference_triangle_center = red_triangle
+                # TODO: Caso iniziale
+            elif len(right_cnt_centers_upper) == 1 and aspect_ratio >= 1.3:
+                fake_center = right_cnt_centers_upper[0]
+                w = right_cnt_upper_w[0]
+                center_1 = (round(fake_center[0] - w / 2 + 8), fake_center[1])
+                center_2 = (round(fake_center[0] + w / 2 - 8), fake_center[1])
+                centers = [center_1, center_2]
+                reference_triangle_id = np.argmin(np.linalg.norm(np.array(centers) - center_blob, axis=1))
+                reference_triangle_center = centers[reference_triangle_id]
+                centers.pop(reference_triangle_id)
+                target_center = centers[0]
+                cv2.circle(img, reference_triangle_center, 3, (255, 0, 0), -1)
+                cv2.circle(img, target_center, 3, (0, 0, 255), -1)
+                goal = reference_triangle_center[0] - target_center[0]
+                target_triangle_center = target_center
+
+                # pass
+            elif len(right_cnt_centers_upper) == 2:
+                reference_triangle_id = np.argmin(np.linalg.norm(np.array(right_cnt_centers_upper) - center_blob, axis=1))
+                reference_triangle_center = right_cnt_centers_upper[reference_triangle_id]
+                right_cnt_centers_upper.pop(reference_triangle_id)
+                target_center = right_cnt_centers_upper[0]
+                cv2.circle(img, reference_triangle_center, 3, (255, 0, 0), -1)
+                cv2.circle(img, target_center, 3, (0, 0, 255), -1)
+                goal = reference_triangle_center[0] - target_center[0]
+                target_triangle_center = target_center
+                reference_triangle_center = reference_triangle_center
+                # TODO: Calcola target
+            elif len(right_cnt_centers_upper) > 2:
+                print("Più di due triangoli sopra identificati")
+                # TODO: più di due triangoli
+
+        return red_triangle_center, red_triangle_2_center, reference_triangle_center, target_triangle_center
+
+    def triangle_identification(self, request):
+        rospy.loginfo(SERVICE_CALLBACK.format("----- arrivata la richiesta -----"))
+
+        time_now = rospy.Time.now().to_sec()
+        # print(f"Now: {time_now}")
+        img_time = 0.0
+        while img_time < time_now + 1:
+            frame = rospy.wait_for_message(COLOR_FRAME_TOPIC, sensor_msgs.msg.Image, timeout=None)
+            img = self.bridge.imgmsg_to_cv2(frame, desired_encoding="bgr8")
+            img_time = frame.header.stamp.secs + 1e-9 * frame.header.stamp.nsecs
+            # print(f"Image time: {img_time}")
+        if self.test:
+            now = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
+        # cv2.imwrite(f"{self.folder_path}new_screen_{now}.png", img)
+
+        # red_triangle_center, red_triangle_2_center, reference_triangle_center, target_triangle_center = self.old_triangle_identification(img)
+        # print(f"Old identification, red 1: {red_triangle_center}")
+        # print(f"Old identification, red 2: {red_triangle_2_center}")
+        # print(f"Old identification, ref 1: {reference_triangle_center}")
+        # print(f"Old identification, tar 1: {target_triangle_center}")
+
+        print(type(img))
+        mask = img.copy()
+        mask[:,:,:] = 0
+        mask[300:550, 600:1000,:] = img[300:550, 600:1000,:]
+        # cv2.imwrite(f"{self.folder_path}new_screen_{now}.png", mask)
+        # Preprocess image
+        lb_color = [0, 230, 245]
+        ub_color = [180, 255, 255]
+
+        dist_percent = 20
+        h_triangle = 20
+        w_triangle = 18
+        # print(type(mask))
+        img = cv2.cvtColor(mask, cv2.COLOR_BGR2RGB)
+        img = Image.fromarray(img)
+        # red = []
+        # yellow = []
+        # green = []
+        # try:
+        #     identification(img, red, yellow, green, self.folder_path)
+        # except Exception:
+        #     rospy.info(YELLOW + "Function identifiction failed" + END)
+        # print(type(img))
+        numpy_image = np.array(img)
+        opencv_image = cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(opencv_image))
+
+        img = np.asarray(img)
+        # img = PIL.Image.fromarray(img)
+        screen_mask, edges, bounds, failed = preprocess_image_auto(img, lb_color, ub_color)
+        # rospy.sleep(1)
+        # cv2.imwrite(f"{self.folder_path}new_screen_mask_{now}.png", screen_mask)
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(screen_mask))
+        # rospy.sleep(1)
+        if failed:
+            print("No screen detected")
+            # TODO: Check
+
+        # Find centroids
+        img_final, red_triangle_center, red_triangle_2_center, reference_triangle_center, target_triangle_center = find_centroids_independent(edges, dist_percent,
+                                                                                       h_triangle, w_triangle)
+        print(f"Red triangle 1: {red_triangle_center}")
+        print(f"Red triangle 2: {red_triangle_2_center}")
+        print(f"Yellow triangle: {reference_triangle_center}")
+        print(f"Green triangle: {target_triangle_center}")
+
+        # Overlay centroids on original image
+        if reference_triangle_center:
+            h_target_1 = reference_triangle_center[1] + bounds[1]
+            w_target_1 = reference_triangle_center[0] + bounds[0]
+            cv.drawMarker(img, (h_target_1, w_target_1), (0, 200, 0), cv.MARKER_TRIANGLE_DOWN, 6, 3)
+
+        if target_triangle_center:
+            h_target_2 = target_triangle_center[1] + bounds[1]
+            w_target_2 = target_triangle_center[0] + bounds[0]
+            cv.drawMarker(img, (h_target_2, w_target_2), (100, 100, 0), cv.MARKER_TRIANGLE_DOWN, 6, 3)
+
+        if red_triangle_center:
+            h_actual_1 = red_triangle_center[1] + bounds[1]
+            w_actual_1 = red_triangle_center[0] + bounds[0]
+            cv.drawMarker(img, (h_actual_1, w_actual_1), (0, 0, 0), cv.MARKER_TRIANGLE_UP, 6, 3)
+
+        if red_triangle_2_center:
+            h_actual_2 = red_triangle_2_center[1] + bounds[1]
+            w_actual_2 = red_triangle_2_center[0] + bounds[0]
+            cv.drawMarker(img, (h_actual_2, w_actual_2), (0, 100, 100), cv.MARKER_TRIANGLE_UP, 6, 3)
+        numpy_image = np.array(img)
+        opencv_image = cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
+        self.image_publisher.publish(self.bridge.cv2_to_imgmsg(opencv_image))
+
+        if red_triangle_center and red_triangle_2_center:
+            print("More than one red triangle detected")
+            rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, 0, 0.0])
+            rospy.set_param("/RL_params/slider/match_second_triangle/traslation",[0.0, 0, 0.0])
+            rospy.set_param("/RL_params/slider/match_second_triangle_return/traslation", [0.0, 0, 0.0])
+            return TriggerResponse(False, NOT_SUCCESSFUL)
+        elif red_triangle_center and target_triangle_center:
+            print("Red triangle and target triangle detected")
+            goal = red_triangle_center[1] - target_triangle_center[1]
+        elif red_triangle_center and reference_triangle_center and (target_triangle_center is None):
+            print("Red triangle and reference triangle detected")
+            goal = red_triangle_center[1] - reference_triangle_center[1]
+        elif red_triangle_center and (reference_triangle_center is None) and (target_triangle_center is None):
+            print("Only red triangle detected")
+            rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, 0, 0.0])
+            rospy.set_param("/RL_params/slider/match_second_triangle/traslation",[0.0, 0, 0.0])
+            rospy.set_param("/RL_params/slider/match_second_triangle_return/traslation", [0.0, 0, 0.0])
+            return TriggerResponse(False, NOT_SUCCESSFUL)
+        elif (red_triangle_center is None) and (reference_triangle_center is None) and (target_triangle_center is None):
+            print("Triangle already matched")
+            rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, 0, 0.0])
+            rospy.set_param("/RL_params/slider/match_second_triangle/traslation",[0.0, 0, 0.0])
+            rospy.set_param("/RL_params/slider/match_second_triangle_return/traslation", [0.0, 0, 0.0])
+            return TriggerResponse(True, SUCCESSFUL)
+
+        elif red_triangle_center is None:
+            print("Red triangle not detected")
+            return TriggerResponse(False, NOT_SUCCESSFUL)
+
+        print(GREEN + f"Goal: {goal}" + END)
+        target_mm = SLIDER_TRAVEL_MM / SLIDER_TRAVEL_PX * goal  # + 0.1 * float(np.sign(diff))
+        target_m = target_mm / 1000
+        rospy.loginfo(GREEN + f"Target 1: {target_m - float(np.sign(target_m)) * 1e-3}" + END)
+        rospy.loginfo(GREEN + f"Target 2: {target_m + 2 * float(np.sign(target_m)) * 1e-3}" + END)
+        rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, target_m, 0.0])
+        rospy.set_param("/RL_params/slider/match_second_triangle/traslation",
+                        [0.0, 2 * float(np.sign(target_m)) * 1e-3, 0.0])
+        rospy.set_param("/RL_params/slider/match_second_triangle_return/traslation",
+                        [0.0, -2 * float(np.sign(target_m)) * 1e-3, 0.0])
+        return TriggerResponse(False, NOT_SUCCESSFUL)
+
+    def align_screen(self, req):
+        found = False
+        while not found:
+            try:
+                (trans, rot) = self.listener.lookupTransform('reference', 'open_tip', rospy.Time(0))
+                found = True
+                print("Retrieved open_tip -> base_link")
+            except (tf.LookupException, tf.ConnectivityException):
+                rospy.loginfo(YELLOW + "Unable to retrieve tf-t between: Retrieved open_tip -> base_link" + END)
+                rospy.sleep(0.1)
+        translation_b_op = tf.transformations.translation_matrix(trans)
+        rotation_b_op = tf.transformations.quaternion_matrix(rot)
+        rospy.loginfo(GREEN + f"Translation open_tip -> base_link: {trans}" + END)
+        rospy.loginfo(GREEN + f"Orientation open_tip -> base_link: {rot}" + END)
+
+        rospy.loginfo(GREEN + f"Translation open_tip -> base_link: {translation_b_op}" + END)
+        rospy.loginfo(GREEN + f"Orientation open_tip -> base_link: {rotation_b_op}" + END)
+        mismatched_angle = (np.arctan2(rotation_b_op[1,0],rotation_b_op[0,0]) - np.pi/2)
+        rospy.loginfo(GREEN + f"Mismatched angle: {mismatched_angle*180.0/np.pi}" + END)
+
+        mismatched_angle_as_quat = [0.0, 0.0, sin(-mismatched_angle/2.0), cos(-mismatched_angle/2.0)]
+        rospy.set_param("/RL_params/slider/align_slider/rotation",
+                        mismatched_angle_as_quat)
+        rospy.loginfo(GREEN + f"Mismatched angle quat: {mismatched_angle_as_quat}" + END)
+        return TriggerResponse(True, NOT_SUCCESSFUL)
+
 
 
 def main():
@@ -1381,8 +1592,10 @@ def main():
     vision_system = BoardLocalization(test, images_path, weight_path, weight_path_ssm, labels_path)
 
     rospy.Service(SERVICE_NAME_BOARD, Trigger, vision_system.board_localization)
-    rospy.Service(SERVICE_NAME_SCREEN_TARGET_1, Trigger, vision_system.last_trial)
-    rospy.Service(SERVICE_NAME_SCREEN_TARGET_2, Trigger, vision_system.last_trial)
+    rospy.Service(SERVICE_NAME_SCREEN_TARGET_1, Trigger, vision_system.triangle_identification)
+    rospy.Service(SERVICE_NAME_SCREEN_TARGET_2, Trigger, vision_system.triangle_identification)
+    rospy.Service(ALIGNMENT_SCREEN_TOPIC, Trigger, vision_system.align_screen)
+
     rospy.spin()
 
 

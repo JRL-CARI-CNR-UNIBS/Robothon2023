@@ -1,8 +1,8 @@
 tf_params:
   - {name: "reference",              frame: "board",          position: [-0.033, 0.085, 0.013], quaternion: [1.000, 0.011, 0.000, 0.000]}
   # - {name: "blue_button_approach",   frame: "reference",      position: [0.025, 0.110, -0.068],  quaternion: [0.000, 0.000, 0.707, 0.707]}
-  - {name: "blue_button_approach",   frame: "reference",      position: [0.026, 0.107, -0.025],  quaternion: [0.000, 0.000, 0.867, 0.498]}
-  - {name: "red_button_approach",    frame: "reference",      position: [0.029, 0.076, -0.025],  quaternion: [0.000, 0.000, 0.707, 0.707]}
+  - {name: "blue_button_approach",   frame: "reference",      position: [0.026, 0.107, -0.005],  quaternion: [0, 0, -0.5, 0.8660254]}
+  - {name: "red_button_approach",    frame: "reference",      position: [0.029, 0.076, -0.01],  quaternion: [0.000, 0.000, -0.707, 0.707]}
   # - {name: "red_button_approach",    frame: "reference",      position: [0.029, 0.076, -0.068],  quaternion: [0.000, 0.000, 0.707, 0.707]}
 
   - {name: "slider_approach",        frame: "reference",      position: [0.0655, 0.022, -0.05],   quaternion: [0.000, 0.000, 0.707, 0.707]}
@@ -11,20 +11,34 @@ tf_params:
   - {name: "door_approach",          frame: "reference",      position: [0.175, 0.086, -0.068],  quaternion: [0.000, 0.000, 0.000, 1.000]}
   # - {name: "door",                   frame: "reference",      position: [0.175, 0.088, -0.0055],  quaternion: [0.000, 0.000, 0.000, 1.000]}
   - {name: "cable_removal",          frame: "reference",      position: [0.0885, 0.106, -0.068],  quaternion: [0.000, 0.000, 0.000, 1.000]}
-  - {name: "cable_insertion",        frame: "cable_removal",  position: [0.004, -0.026, 0.040],  quaternion: [-0.000, -0.000, -0.383, 0.924]}
+  - {name: "cable_insertion",        frame: "reference",      position: [0.093, 0.079, -0.033],  quaternion: [0, 0, -0.3420201, 0.9396926]}
   - {name: "cable_picking",          frame: "reference",      position: [0.126, 0.111, -0.068],  quaternion: [0.000, -0.000, -0.348, 0.937]}
   - {name: "probe_approach",         frame: "standard_probe", position: [0.0,0,-0.070],            quaternion: [0.000, 0.000, 0.000, 1.000]}
-  - {name: "probe_testing",          frame: "reference",      position: [0.1655, 0.0325, -0.068],  quaternion: [0.109, 0.389, 0.903, 0.145]}
-  - {name: "probe_release",          frame: "reference",      position: [0.304, 0.273, 0.051],  quaternion: [-0.216, 0.233, -0.660, 0.681]}
+  - {name: "probe_testing",          frame: "reference",      position: [0.1655, 0.031, -0.068],  quaternion: [0.109, 0.389, 0.903, 0.145]}
+  - {name: "probe_release",          frame: "reference",      position: [-0.054, 0.333, 0.051],  quaternion: [ -0.3535534, 0.1464466, -0.3535534, 0.8535534]}
   # - {name: "probe_release",          frame: "reference",      position: [0.175, 0.220, -0.088],  quaternion: [0.056, -0.010, 0.996, 0.063]}
   - {name: "standard_probe",         frame: "reference",      position: [0.229, 0.075, -0.068],  quaternion: [0.000, 0.000, 1.000, 0.000]}
   - {name: "winding_pose_1",         frame: "reference",      position: [0.015, 0.141, -0.018],  quaternion: [0.315, -0.328, 0.641, 0.618]}
   # - {name: "winding_pose_2",         frame: "reference",      position: [0.182, 0.137, -0.027],  quaternion: [-0.308, 0.005, 0.018, 0.951]}
-  - {name: "winding_pose_2",         frame: "reference",      position: [0.132, 0.137, -0.037],  quaternion: [-0.308, 0.005, 0.018, 0.951]}
+  - {name: "winding_pose_2",         frame: "reference",      position: [0.172, 0.137, -0.037],  quaternion: [-0.308, 0.005, 0.018, 0.951]}
   - {name: "winding_pose_3",         frame: "reference",      position: [0.134, 0.219, 0.081],  quaternion: [0.001, 0.001, -0.598, 0.802]}
   - {name: "probe_before_insertion", frame: "reference",      position: [0.233, 0.173, -0.012],  quaternion: [0.000, 0.000, 0.923, -0.384]}
-  - {name: "probe_insertion",        frame: "reference",      position: [0.230, 0.168, -0.012],  quaternion: [0.000, 0.000, 1.000, 0.000]}
+  - {name: "probe_insertion",        frame: "reference",      position: [0.229, 0.167, -0.012],  quaternion: [0.000, 0.000, 1.000, 0.000]}
   - {name: "camera_pose",            frame: "base",           position: [-0.276, -0.525, 0.577], quaternion: [0.000, 0.000, 1.000, 0.000]}
+  - {name: "camera_pose_transf",     frame: "base",           position: [-0.276, -0.525, 0.51], quaternion: [0.000, 0.000, 1.000, 0.000]}
+
   - {name: "camera_pose_near",       frame: "reference",      position: [0.149, 0.097, -0.146], quaternion: [0.000, 0.000, 1.000, 0.000]}
 
-  - {name: "winding_pose_01",        frame: "reference",      position: [0.099, 0.238, 0.020],  quaternion: [0.000, -0.000, -0.532, 0.847]}
+  - {name: "winding_pose_01",        frame: "reference",      position: [0.094, 0.235, 0.018],  quaternion: [0.263, -0.165, -0.506, 0.805]}
+  # - {name: "winding_pose_01",        frame: "reference",      position: [0.099, 0.238, 0.020],  quaternion: [0.000, -0.000, -0.532, 0.847]}
+  - {name: "winding_pose_02",        frame: "board",      position: [0.190, -0.177,  0.0175],  quaternion: [0.901, 0.435, -0.000, 0.000]}
+  - {name: "winding_pose_03",        frame: "board",      position: [0.190, -0.177, -0.067],  quaternion: [0.901, 0.435, -0.000, 0.000]}
+
+  - {name: "winding_pose_21",        frame: "reference",      position: [0.236, 0.131, -0.028],  quaternion: [0.460, 0.005, -0.015, 0.888]}
+  - {name: "winding_pose_22",        frame: "reference",      position: [0.151, 0.214, -0.105],  quaternion: [0.000, 0.000, -0.000, 1.000]}
+  - {name: "winding_pose_23",        frame: "reference",      position: [0.015, 0.143, -0.016],  quaternion: [0.234, -0.265, 0.636, 0.686]}
+
+  - {name: "winding_pose_11",        frame: "reference",      position: [-0.195, 0.126, 0.084],  quaternion: [0.000, 0.000, 0.703, 0.712]}
+  - {name: "winding_pose_12",        frame: "reference",      position: [-0.125, 0.314, 0.060],  quaternion: [0.000, 0.000, 0.297, 0.955]}
+  - {name: "winding_pose_13",        frame: "reference",      position: [0.122, 0.364, 0.031],  quaternion: [-0.000, 0.000, -0.022, 1.000]}
+  - {name: "winding_pose_14",        frame: "reference",      position: [0.174, 0.243, 0.060],  quaternion: [0.000, 0.000, -0.525, 0.851]}

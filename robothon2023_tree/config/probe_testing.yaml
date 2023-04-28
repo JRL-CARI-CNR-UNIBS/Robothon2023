@@ -7,11 +7,13 @@ probe_testing:
     tool_frame: "open_tip"
     acceleration: 10
     velocity: 3
+    ik: true
 
   probe_gripper_position:
     skill_type: "robotiq_gripper_move"
     property_id: "pos_30_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
-
+    asinc: true
+    
   down_to_probe:
     skill_type: "ur_linear_move"
     reference_frame: "reference"

@@ -10,12 +10,13 @@ slider:
   screen_target_init:
     skill_type: "display_localization_init"
 
-  move_to_slider_approach":
+  move_to_slider_approach:
     skill_type: "ur_move_to"
     goal_frame: "slider_approach"
     tool_frame: "open_tip"
     acceleration: 10
     velocity: 3
+    ik: true
 
   move_to_slider:
     skill_type: "ur_move_to"
@@ -27,6 +28,11 @@ slider:
   open_gripper:
     skill_type: "robotiq_gripper_move"
     property_id: "pos_85_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+    asinc: true
+
+  open_gripper_2:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_35_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
     asinc: true
 
   down_to_slider:
@@ -41,13 +47,13 @@ slider:
 
   pick_slider_gripper_pose:
     skill_type: "robotiq_gripper_move"
-    property_id: "pos_20_force_5_vel_100"
+    property_id: "pos_20_force_100_vel_100"
 
   match_first_triangle:
       skill_type: "ur_linear_move"
       reference_frame: "reference"
       tool_frame: "tool_end"
-      traslation: [0,-0.0032,0.0]
+      traslation: [0,-0.0042,0.0]
       rotation: [0,0,0,1]
       velocity: 0.1
       acceleration: 0.5

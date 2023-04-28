@@ -7,3 +7,4 @@ identification:
     tool_frame: "open_tip"
     acceleration: 10
     velocity: 3
+    ik: true

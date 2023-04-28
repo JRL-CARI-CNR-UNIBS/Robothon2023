@@ -7,10 +7,12 @@ cable_positioning:
     tool_frame: "open_tip"
     acceleration: 10
     velocity: 3
+    ik: true
 
   cable_gripper_position:
     skill_type: "robotiq_gripper_move"
-    property_id: "pos_50_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+    property_id: "pos_35_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+    asinc: true
 
   down_to_removal:
     skill_type: "ur_linear_move"
@@ -18,8 +20,10 @@ cable_positioning:
     tool_frame: "real_tool"
     traslation: [0,0,0.065]
     rotation: [0,0,0,1]
-    velocity: 0.5
-    acceleration: 1
+    velocity: 2
+    acceleration: 4
+    # velocity: 0.5
+    # acceleration: 1
     n_point: 1
 
   close_gripper:
@@ -30,36 +34,41 @@ cable_positioning:
     skill_type: "ur_linear_move"
     reference_frame: "real_tool"
     tool_frame: "real_tool"
-    traslation: [0,0,-0.07]
+    traslation: [0,0,-0.03]
+    # traslation: [0,0,-0.07]
     rotation: [0,0,0,1]
-    velocity: 0.3
-    acceleration: 0.5
+    velocity: 2
+    acceleration: 4
+    # velocity: 0.3
+    # acceleration: 0.5
     n_point: 1
 
   move_to_cable_insertion:
-    # skill_type: "ur_move_to"
-    # goal_frame: "cable_insertion"
-    # tool_frame: "open_tip"
-    # acceleration: 10
-    # velocity: 3
-    skill_type: "ur_linear_move"
-    reference_frame: "reference"
-    tool_frame: "real_tool"
-    traslation: [-0.0005,-0.025,0]
-    rotation: [0,0,0,1]
-    velocity: 0.3
-    acceleration: 0.5
+    skill_type: "ur_move_to"
+    goal_frame: "cable_insertion"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3
+    # skill_type: "ur_linear_move"
+    # reference_frame: "reference"
+    # tool_frame: "real_tool"
+    # traslation: [-0.0005,-0.025,0]
+    # rotation: [0,0,0,1]
+    velocity: 2
+    acceleration: 4
+    # velocity: 0.3
+    # acceleration: 0.5
     n_point: 1
 
-  down_to_insertion:
-    skill_type: "ur_linear_move"
-    reference_frame: "base"
-    tool_frame: "real_tool"
-    traslation: [0,0,0.042]
-    rotation: [0,0,0,1]
-    velocity: 0.5
-    acceleration: 1
-    n_point: 1
+  # down_to_insertion:
+  #   skill_type: "ur_linear_move"
+  #   reference_frame: "base"
+  #   tool_frame: "real_tool"
+  #   traslation: [0,0,0.042]
+  #   rotation: [0,0,0,1]
+  #   velocity: 0.5
+  #   acceleration: 1
+  #   n_point: 1
 
   insertion:
     skill_type: "ur_linear_move"
@@ -78,7 +87,7 @@ cable_positioning:
     MOVEZ: 1.0
     VELOCITY: 0.05
     ACCELERATION: 0.5
-    FORCE: 15
+    FORCE: 20
 
   gripper_position_1:
     skill_type: "robotiq_gripper_move"
@@ -90,8 +99,10 @@ cable_positioning:
     tool_frame: "real_tool"
     traslation: [0,0,0]
     rotation: [0, 0, -0.8660254, 0.5]
-    velocity: 1
+    velocity: 2
     acceleration: 5
+    # velocity: 1
+    # acceleration: 5
     n_point: 1
 
   gripper_position_2:
@@ -104,7 +115,7 @@ cable_positioning:
     tool_frame: "real_tool"
     traslation: [0,0,0]
     rotation: [0, 0, 0.1736482, 0.9848078]
-    velocity: 1
+    velocity: 2
     acceleration: 5
     n_point: 1
 
@@ -114,6 +125,8 @@ cable_positioning:
     tool_frame: "real_tool"
     traslation: [0,0,-0.08]
     rotation: [0,0,0,1]
-    velocity: 0.5
-    acceleration: 5
+    velocity: 2
+    acceleration: 4
+    # velocity: 0.5
+    # acceleration: 5
     n_point: 1

@@ -10,7 +10,7 @@
       <RetryUntilSuccessful num_attempts="5">
         <SkillExecutionNode    name="init/board_localization"/>
       </RetryUntilSuccessful>
-      <SkillExecutionNode    name="init/home_configuration"/>
+      <!-- <SkillExecutionNode    name="init/home_configuration"/> -->
     </Sequence>
   </BehaviorTree>
 </root>

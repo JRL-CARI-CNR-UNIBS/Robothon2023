@@ -1,0 +1,35 @@
+init:
+  action_type: "init_trasnferability"
+
+  # board_localization:
+  #   skill_type: "board_localization"
+  #
+  # move_to_camera_pose:
+  #   skill_type: "ur_move_to"
+  #   goal_frame: "camera_pose"
+  #   tool_frame: "open_tip"
+  #   acceleration: 15
+  #   velocity: 10
+  #   ik: true
+  #
+  # move_to_camera_pose_near:
+  #   skill_type: "ur_move_to"
+  #   goal_frame: "camera_pose_near"
+  #   tool_frame: "open_tip"
+  #   acceleration: 15
+  #   velocity: 10
+  #   ik: true
+  #
+  # home_configuration:
+  #   skill_type: "ur_movej"
+  #   joint_target: [-1.78, -1.48, -2.12, -1.10, -1.57, 0.0]
+  #   acceleration: 30
+  #   velocity: 10
+
+  move_to_camera_pose_transferability:
+    skill_type: "ur_move_to"
+    goal_frame: "camera_pose_transf"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true

@@ -6,7 +6,8 @@
       <SkillExecutionNode    name="press_blue_button/move_to_blue_button"/>
       <!-- <SkillExecutionNode    name="press_blue_button/down_to_button"/> -->
       <SkillExecutionNode    name="press_blue_button/press_button"/>
-      <SkillExecutionNode    name="init/home_configuration"/>
+      <SkillExecutionNode    name="press_blue_button/move_to_blue_button"/>
+      <!-- <SkillExecutionNode    name="init/home_configuration"/> -->
     </Sequence>
   </BehaviorTree>
 </root>
