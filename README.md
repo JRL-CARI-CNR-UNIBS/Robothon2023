@@ -24,7 +24,7 @@ The overall **framework** is summarized in figure below.
   <img height="200" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/software_setup.png">
 </p>
 
-At the beginning, the vision system localizes the board and its feature points, so it reconstructs the position of the board in the robot workspace. Then, the sequence of tasks is executed with respect to such frames. The execution of each task combines different kind of controllers of the robot low-level controller (Sections 2.2 and Section 2.3).
+At the beginning, the vision system localizes the board and its feature points, so it reconstructs the position of the board in the robot workspace. Then, the sequence of tasks is executed with respect to such frames. The execution of each task combines different kind of controllers of the robot low-level controller.
 
 The main **idea** of 2023 solution is to combine the use ROS as **coordinator** with the UR-robot **low-level controllers** in the seak of movement for their stability and fastness.
 
