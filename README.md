@@ -5,7 +5,7 @@ Authors: Michele Delledonne, Roberto Fausti, Michele Ferrari, Samuele Sandrini
 
 ## Hardware Setup
 <p align="center">
-  <img height="600" src="https://drive.google.com/file/d/16xjGycicR4OtsMnXXcgbsW8IHuxIe7Gm/view">
+  <img height="600" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/setup_description.png">
 </p>
 A **6-DoF collaborative robot**, a Universal Robot **UR10e**, is used for object manipulation. The robot is mounted upside down on an actuated linear track. The linear guide is kept in a fixed position for challenge purposes, so the robotic system has 6 degrees of freedom.
 
@@ -19,7 +19,9 @@ In summary, the hardware setup consists of a hardware solution kept as **general
 Our software framework is developed using ROS (Robot Operating System).
 
 The overall framework is summarized in figure below. 
-
+<p align="center">
+  <img height="600" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/software_setup.png">
+</p>
 At the beginning, the vision system localizes the board and its feature points, so it reconstructs the position of the board in the robot workspace.Then, the sequence of tasks is executed with respect to such frames. The execution of each task combines motion planning and different kind of controllers (Sections 2.2 and Section 2.3).
 
 The main idea of 2023 solution is to combine the use ROS as coordinator with the UR-robot low-level controllers in the seak of movement for their stability and fastness.
