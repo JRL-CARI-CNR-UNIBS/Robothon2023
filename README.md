@@ -4,7 +4,9 @@ Authors: Michele Delledonne, Roberto Fausti, Michele Ferrari, Samuele Sandrini
 </p>
 
 ## Hardware Setup
-
+<p align="center">
+  <img height="600" src="https://drive.google.com/drive/u/1/folders/16rUCdtde8aHmrtBclGUTfCGy-HadtZXm">
+</p>
 A **6-DoF collaborative robot**, a Universal Robot **UR10e**, is used for object manipulation. The robot is mounted upside down on an actuated linear track. The linear guide is kept in a fixed position for challenge purposes, so the robotic system has 6 degrees of freedom.
 
 The robot is equipped with a classic **two-finger gripper** for pick-place (the **Hand-E Robotiq** model) with **custom fingers** for the e-waste manipulation application that are designed and 3D-printed by the team. 
