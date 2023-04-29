@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+  <group ns="RL_params">
+    <rosparam command="load" file="$(find robothon2023_tree)/config/tranferability_init.yaml"/>
+
+    <rosparam command="load" file="$(find robothon2023_tree)/config/.yaml"/>
+
+  </group>
+</launch>

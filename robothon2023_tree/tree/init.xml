@@ -2,6 +2,7 @@
 <root BTCPP_format="4">
   <BehaviorTree ID="init">
     <Sequence name="init">
+      <!-- <SkillExecutionNode    name="init/open_gripper"/> -->
       <SkillExecutionNode    name="init/move_to_camera_pose"/>
       <RetryUntilSuccessful num_attempts="5">
         <SkillExecutionNode    name="init/board_localization"/>

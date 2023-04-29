@@ -1,29 +1,27 @@
 cable_winding:
   action_type: "cable"
 
+  move_to_cable_picking_approach:
+    skill_type: "ur_move_to"
+    goal_frame: "cable_picking_approach"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3
+    ik: true
   move_to_cable_picking:
     skill_type: "ur_move_to"
     goal_frame: "cable_picking"
     tool_frame: "open_tip"
     acceleration: 10
     velocity: 3
-    ik: true
+    ik: false
+    # ik: true
 
   gripper_position_1:
     skill_type: "robotiq_gripper_move"
     property_id: "pos_50_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
     asinc: true
 
-  down_to_cable:
-    skill_type: "ur_linear_move"
-    reference_frame: "reference"
-    tool_frame: "tool_end"
-    traslation: [0,0,0.066]
-    rotation: [0,0,0,1]
-    velocity: 1
-    # velocity: 0.3
-    acceleration: 5
-    n_point: 1
 
   close_gripper:
     skill_type: "robotiq_gripper_move"
@@ -104,7 +102,7 @@ cable_winding:
     tool_frame: "tool_end"
     traslation: [0.235,0.005,0]
     rotation: [0,0,0,1]
-    velocity: 0.5
+    velocity: 0.25
     # velocity: 0.3
     acceleration: 5
     n_point: 1
@@ -157,21 +155,11 @@ cable_winding:
     acceleration: 5
     velocity: 1
 
-  # release_floor:
-  #   skill_type: "ur_linear_move"
-  #   reference_frame: "reference"
-  #   tool_frame: "tool_end"
-  #   traslation: [0,0,-0.005]
-  #   rotation: [0, 0, 0, 1]
-  #   velocity: 0.3
-  #   acceleration: 2
-  #   n_point: 1
-
-  release_floor_2:
+  release_floor:
     skill_type: "ur_linear_move"
     reference_frame: "tool_end"
     tool_frame: "tool_end"
-    traslation: [0,0,-0.001]
+    traslation: [0,0,-0.003]
     rotation: [0, 0, 0, 1]
     velocity: 1
     acceleration: 2
@@ -221,24 +209,14 @@ cable_winding:
     acceleration: 2
     n_point: 1
 
-  move_out:
-    skill_type: "ur_linear_move"
-    reference_frame: "real_tool"
-    tool_frame: "tool_end"
-    traslation: [0.02,0,0]
-    rotation: [0, 0, 0.7071068, 0.7071068]
-    velocity: 0.08
-    acceleration: 1
-    n_point: 1
-
   push_out:
     skill_type: "ur_simple_touch_tool"
     MOVEX: 0
     MOVEY: -1.0
-    MOVEZ: 0
+    MOVEZ: -0.3
     VELOCITY: 0.1
     ACCELERATION: 0.8
-    FORCE: 10 # 25
+    FORCE: 30 # 25
 
   # rotation_1:
   #   skill_type: "ur_linear_move"
@@ -304,9 +282,9 @@ cable_winding:
     MOVEX: 0.0
     MOVEY: 0.0
     MOVEZ: 1.0
-    VELOCITY: 0.01
+    VELOCITY: 0.1
     ACCELERATION: 1
-    FORCE: 20
+    FORCE: 10
 
   gripper_pose_1:
     skill_type: "robotiq_gripper_move"
@@ -316,7 +294,7 @@ cable_winding:
     skill_type: "ur_linear_move"
     reference_frame: "real_tool"
     tool_frame: "tool_end"
-    traslation: [0,-0.07,0]
+    traslation: [0,-0.07,-0.001]
     rotation: [0,0,0,1]
     velocity: 3
     acceleration: 5
@@ -351,7 +329,7 @@ cable_winding:
     goal_frame: "probe_before_insertion"
     tool_frame: "open_tip"
     acceleration: 10
-    velocity: 3
+    velocity: 1
 
   move_to_probe_insertion:
     skill_type: "ur_move_to"
@@ -397,12 +375,41 @@ cable_winding:
     MOVEZ: 0.0
     VELOCITY: 0.05
     ACCELERATION: 0.5
-    FORCE: 25
+    FORCE: 35
 
   # gripper_01:
   #   skill_type: "robotiq_gripper_move"
   #   property_id: "pos_85_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
-
+  winding_move_pose_101:
+    skill_type: "ur_move_to"
+    goal_frame: "winding_pose_101"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 1
+  winding_move_pose_102:
+    skill_type: "ur_move_to"
+    goal_frame: "winding_pose_102"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 1
+  winding_move_pose_103:
+    skill_type: "ur_move_to"
+    goal_frame: "winding_pose_103"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 1
+  winding_move_pose_104:
+    skill_type: "ur_move_to"
+    goal_frame: "winding_pose_104"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 1
+  winding_move_pose_10:
+    skill_type: "ur_move_to"
+    goal_frame: "winding_pose_10"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3
   winding_move_pose_11:
     skill_type: "ur_move_to"
     goal_frame: "winding_pose_11"
@@ -413,19 +420,25 @@ cable_winding:
     skill_type: "ur_move_to"
     goal_frame: "winding_pose_12"
     tool_frame: "open_tip"
-    acceleration: 10
-    velocity: 3
+    acceleration: 8
+    velocity: 2
   winding_move_pose_13:
     skill_type: "ur_move_to"
     goal_frame: "winding_pose_13"
     tool_frame: "open_tip"
-    acceleration: 10
-    velocity: 3
+    acceleration:  1
+    velocity: 1
   winding_move_pose_14:
     skill_type: "ur_move_to"
     goal_frame: "winding_pose_14"
     tool_frame: "open_tip"
-    acceleration: 10
+    acceleration: 5
+    velocity: 3
+  winding_move_pose_15:
+    skill_type: "ur_move_to"
+    goal_frame: "winding_pose_15"
+    tool_frame: "open_tip"
+    acceleration: 5
     velocity: 3
 
   winding_move_pose_21:
@@ -433,16 +446,182 @@ cable_winding:
     goal_frame: "winding_pose_21"
     tool_frame: "open_tip"
     acceleration: 10
-    velocity: 3
+    velocity: 0.25
   winding_move_pose_22:
     skill_type: "ur_move_to"
     goal_frame: "winding_pose_22"
     tool_frame: "open_tip"
     acceleration: 10
-    velocity: 3
+    velocity: 0.25
   winding_move_pose_23:
     skill_type: "ur_move_to"
     goal_frame: "winding_pose_23"
     tool_frame: "open_tip"
     acceleration: 10
-    velocity: 0.1
+    velocity: 0.25
+  winding_move_pose_24:
+    skill_type: "ur_move_to"
+    goal_frame: "winding_pose_24"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3
+  winding_move_pose_25:
+    skill_type: "ur_move_to"
+    goal_frame: "winding_pose_25"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3
+  winding_move_pose_26:
+    skill_type: "ur_move_to"
+    goal_frame: "winding_pose_26"
+    tool_frame: "open_tip"
+    acceleration: 10
+    velocity: 3
+
+  push_up:
+    skill_type: "ur_simple_touch_base"
+    MOVEX: 0
+    MOVEY: 0
+    MOVEZ: -1.0
+    # MOVEX: 0
+    # MOVEY: -1.0
+    # MOVEZ: -0.7
+    VELOCITY: 0.1
+    ACCELERATION: 0.8
+    FORCE: 18 # 25
+
+  rotation_:
+    skill_type: "ur_linear_move"
+    reference_frame: "real_tool"
+    tool_frame: "tool_end"
+    traslation: [0,0,0]
+    # traslation: [0,0.12,0.12]
+    rotation: [0.707,0,0,0.707]
+    velocity: 3
+    acceleration: 5
+    n_point: 3
+
+  release_push_out:
+    skill_type: "ur_linear_move"
+    reference_frame: "tool_end"
+    tool_frame: "tool_end"
+    traslation: [0,0.015,0.0]
+    rotation: [0, 0, 0, 1]
+    velocity: 0.5
+    acceleration: 0.5
+    n_point: 1
+
+
+  open_little_gripper:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_40_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+
+  approach_probe_first:
+    skill_type: "ur_linear_move"
+    reference_frame: "tool_end"
+    tool_frame: "tool_end"
+    traslation: [0,-0.14,0.0]
+    rotation: [0, 0, -0.707, 0.707]
+    velocity: 0.5
+    acceleration: 0.5
+    n_point: 1
+
+  approach_probe_second:
+    skill_type: "ur_linear_move"
+    reference_frame: "tool_end"
+    tool_frame: "tool_end"
+    traslation: [0,-0.08, 0.002]
+    rotation: [0, 0, 0, 1]
+    velocity: 0.5
+    acceleration: 0.5
+    n_point: 1
+
+  gripper_1:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_11_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+    asinc: true
+
+  door_opening:
+    skill_type: "ur_linear_move"
+    reference_frame: "winding_pose_00"
+    tool_frame: "winding_pose_00"
+    traslation: [0,0,-0.007]
+    rotation: [0, 0, -0.9659258, 0.258819]
+    velocity: 10
+    acceleration: 20
+    n_point: 100
+
+  door_opening_2:
+    skill_type: "ur_linear_move"
+    reference_frame: "winding_pose_00"
+    tool_frame: "winding_pose_00"
+    traslation: [0,0,-0.12]
+    rotation: [0, 0, -0.3420201, 0.9396926]
+    velocity: 10
+    acceleration: 20
+    n_point: 100
+
+  pose_1:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_1"
+    tool_frame: "open_tip"
+    acceleration: 10 #adbul
+    velocity: 2.0 #abdul
+  pose_2:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_2"
+    tool_frame: "open_tip"
+    acceleration: 10 #adbul
+    velocity: 2.0 #abdul
+  pose_3:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_3"
+    tool_frame: "open_tip"
+    acceleration: 10 #adbul
+    velocity: 2.0 #abdul
+  pose_4:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_4"
+    tool_frame: "open_tip"
+    acceleration: 10 #adbul
+    velocity: 2.0 #abdul
+  pose_5:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_5"
+    tool_frame: "open_tip"
+    acceleration: 10 #adbul
+    velocity: 2.0 #abdul
+  pose_6:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_6"
+    tool_frame: "open_tip"
+    acceleration: 10 #adbul
+    velocity: 2.0 #abdul
+  pose_7:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_7"
+    tool_frame: "open_tip"
+    acceleration: 10 #adbul
+    velocity: 2.0 #abdul
+  pose_8:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_8"
+    tool_frame: "open_tip"
+    acceleration: 10 #adbul
+    velocity: 2.0 #abdul
+  pose_9:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_9"
+    tool_frame: "open_tip"
+    acceleration: 10 #adbul
+    velocity: 2.0 #abdul
+
+  move_out:
+    skill_type: "ur_linear_move"
+    reference_frame: "real_tool"
+    tool_frame: "real_tool"
+    traslation: [0,-0.03,0]
+    rotation: [0, 0, 0, 1]
+    velocity: 0.2
+    acceleration: 5
+    n_point: 1

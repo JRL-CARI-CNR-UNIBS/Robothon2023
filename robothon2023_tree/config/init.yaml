@@ -1,15 +1,22 @@
 init:
   action_type: "init"
 
+  open_gripper:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_85_force_100_vel_100"
+    asinc: true
+
   board_localization:
     skill_type: "board_localization"
 
   move_to_camera_pose:
 
     skill_type: "ur_movej"
-    joint_target: [-1.7556942144977015, -1.7889677486815394, -2.339104652404785, -0.5843127530864258, -1.5721924940692347, 0.18749475479125977]
-    acceleration: 30
+    # joint_target: [-1.7556942144977015, -1.7889677486815394, -2.339104652404785, -0.5843127530864258, -1.5721924940692347, 0.18749475479125977]
+    joint_target: [-1.7734959761248987, -1.729960104028219, -2.419976234436035, -0.5624903005412598, -1.5722044149981897, 0.20527410507202148]
     velocity: 10
+    acceleration: 10
+
 
   move_to_camera_pose_near:
     skill_type: "ur_move_to"
@@ -32,3 +39,14 @@ init:
     acceleration: 15
     velocity: 10
     ik: true
+
+  move:
+    skill_type: "ur_linear_move"
+    reference_frame: "base"
+    tool_frame: "real_tool"
+    traslation: [0,0.05,0]
+    rotation: [0,0,0,1]
+    velocity: 1
+    # velocity: 0.3
+    acceleration: 5
+    n_point: 1

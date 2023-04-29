@@ -8,6 +8,7 @@
       <SkillExecutionNode    name="press_red_button/press_button"/>
       <SkillExecutionNode    name="press_red_button/move_to_red_button"/>
       <SkillExecutionNode    name="init/move_to_camera_pose"/>
+      <SkillExecutionNode    name="init/open_gripper"/>
     </Sequence>
   </BehaviorTree>
 </root>
