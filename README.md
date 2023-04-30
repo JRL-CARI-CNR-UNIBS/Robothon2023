@@ -62,11 +62,11 @@ The definition of skills is performed using [RL_task_framework](https://github.c
 Regarding behavior trees we use a well-known library in robotics ([BehaviorTree.CPP](https://github.com/BehaviorTree/BehaviorTree.CPP)) that is based on C++ and it provides a framework to create BehaviorTrees in a flexible, easy to use, reactive and fast way.
 
 ## Quick Start
-To launch the software solution, four roslaunch file are required:
+To start the framework, four main launcher files are required:
 1. [start_vision.launch](https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_vision/launch/start_vision.launch): brings up all the services related to the vision system.
 2. [real_start.launch](https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_cell/robothon2023_configurations/launch/real_start.launch): setup of the cell, run moveit and connect to the robot.
 3. [skills_servers.launch](https://github.com/JRL-CARI-CNR-UNIBS/RL_task_framework/blob/robothon/skills_util/launch/skills_servers.launch): run the skill server which define each skill and is responsible to run the behavior tree.
-4. [run_all.launch](https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_tree/launch/run_all.launch): provides the subtrees to run the tasks.
+4. [run_all.launch](https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_tree/launch/run_all.launch): provides the subtrees to run the tasks. This launcher must be the last since it will trigger the start the main behavior-tree.
 
 ## Authors
 
