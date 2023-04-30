@@ -60,7 +60,7 @@ For this task, the robot will follow a simple up-move-down trajectory to unplug 
   <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/cablePositioningBT.png">
 </p>
 
-### Open door
+### Door opening
 
 To open the door on the taskboard, the robot grasp the handle and moves following a circular trajectory around the door's rotational axis.
 A final brief linear movement increases the degree of openness to avoid possible collisions with the following task.
