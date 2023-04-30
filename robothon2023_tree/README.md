@@ -66,7 +66,7 @@ To open the door on the taskboard, the robot grasp the handle and moves followin
 A final brief linear movement increases the degree of openness to avoid possible collisions with the following task.
 
 <p align="center">
-  <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/doorOpeningBT.png">
+  <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/doorOpeningBT">
 </p>
 
 ### Circuit testing
