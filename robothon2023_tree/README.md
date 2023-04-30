@@ -52,4 +52,28 @@ Specifically:
 4. **Triangle matching procedure**. The tree consists of a fallback with two branches. The first branch identifies the absence of a triangle to be reached (target). If a triangle is identified, the node returns False, and the second branch (the right branch) is executed, which moves the robot so that the slider reaches the goal position (three relative movements around the target). If it was necessary to execute this branch, a Failure is forced in order to repeat the triangle check procedure so that the move is performed in case 1) The target was not adequately reached, 2) In the initial phase the center target was not adequately reached. When the triangle recognition leaf node no longer identifies any triangles, it returns True, and the fallback node does not call back the right branch, so the matching is performed correctly. This procedure is repeated for a maximum of 10 times. 
 5. The gripper is opened, and the task is completed by returning to the approach position.
 
+### Cable positioning
 
+For this task, the robot will follow a simple up-move-down trajectory to unplug the cable, move to the new position and plug in it inside.
+
+### Open door
+
+To open the door on the taskboard, the robot grasp the handle and moves following a circular trajectory around the door's rotational axis.
+A final brief linear movement increases the degree of openness to avoid possible collisions with the following task.
+
+### Circuit testing
+Exploiting the jaws, the robot:
+
+1. Extracts the probe from its seat and moves it over the circuit
+2. Descends along the vertical axis until a force is detected.
+3. Releases the probe far from the taskboard
+
+### Cable winding
+
+For this last task, the subtree is structured as follows:
+1. The robot will grasp the cable through the ad-hoc gripper
+2. A series of linear movements wrap the cable around the two sensors
+3. After the second winding is complete, the gripper is moved along the cable until it finds the probe.
+4. The probe is positioned on the floor and through a release-move-grasp movement, the robot can handle the probe directly
+5. A circular movement brings the probe aligned with the white plug
+6. A force-limited movement insert the probe in the plug. After that, the probe is released and moved above in order to be ready for the subsequent task
