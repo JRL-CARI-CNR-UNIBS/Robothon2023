@@ -21,7 +21,7 @@ Our software framework is developed using **ROS** (Robot Operating System).
 
 The overall **framework** is summarized in figure below.
 <p align="center">
-  <img height="200" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/software_setup.jpg">
+  <img height="200" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/software_setup.png">
 </p>
 
 At the beginning, the vision system localizes the board and its feature points, so it reconstructs the position of the board in the robot workspace. Then, the sequence of tasks is executed with respect to such frames. The execution of each task combines different kind of controllers of the robot low-level controller.
