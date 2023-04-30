@@ -64,9 +64,9 @@ A final brief linear movement increases the degree of openness to avoid possible
 ### Circuit testing
 Exploiting the jaws, the robot:
 
-1. Extract the probe from its seat and rotate it over the circuit
+1. Extracts the probe from its seat and moves it over the circuit
 2. Descends along the vertical axis until a force is detected.
-3. Releases the probe far from the taskboard to prepare the winding task
+3. Releases the probe far from the taskboard
 
 ### Cable winding
 
