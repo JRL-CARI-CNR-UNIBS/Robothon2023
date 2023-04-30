@@ -60,6 +60,7 @@ The definition of skills is performed using [RL_task_framework](https://github.c
 
 ## Dependencies
 Regarding behavior trees we use a well-known library in robotics ([BehaviorTree.CPP](https://github.com/BehaviorTree/BehaviorTree.CPP)) that is based on C++ and it provides a framework to create BehaviorTrees in a flexible, easy to use, reactive and fast way.
+
 Communication with the UR10e is performed thanks to the [Universal Robot packages](https://github.com/ros-industrial/universal_robot).
 
 ## Quick Start
