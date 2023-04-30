@@ -56,10 +56,18 @@ Specifically:
 
 For this task, the robot will follow a simple up-move-down trajectory to unplug the cable, move to the new position and plug in it inside.
 
+<p align="center">
+  <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/cablePositioningBT.png">
+</p>
+
 ### Open door
 
 To open the door on the taskboard, the robot grasp the handle and moves following a circular trajectory around the door's rotational axis.
 A final brief linear movement increases the degree of openness to avoid possible collisions with the following task.
+
+<p align="center">
+  <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/doorOpeningBT.png">
+</p>
 
 ### Circuit testing
 Exploiting the jaws, the robot:
@@ -67,6 +75,10 @@ Exploiting the jaws, the robot:
 1. Extracts the probe from its seat and moves it over the circuit
 2. Descends along the vertical axis until a force is detected.
 3. Releases the probe far from the taskboard
+
+<p align="center">
+  <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/probeTestingBT.png">
+</p>
 
 ### Cable winding
 
@@ -76,4 +88,10 @@ For this last task, the subtree is structured as follows:
 3. After the second winding is complete, the gripper is moved along the cable until it finds the probe.
 4. The probe is positioned on the floor and through a release-move-grasp movement, the robot can handle the probe directly
 5. A circular movement brings the probe aligned with the white plug
-6. A force-limited movement insert the probe in the plug. After that, the probe is released and moved above in order to be ready for the subsequent task
+6. A force-limited movement insert the probe in the plug. After that, the probe is released and moved above in order to be ready for the subsequent task 
+
+<p align="center">
+  <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/CableWindingSimplifiedBT.png">
+</p>
+
+(The image of the this behavior-tree represents the logic behind it rather than its actual implementation due to the high density of nodes in the actual tree).
