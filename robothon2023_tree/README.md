@@ -26,6 +26,13 @@ This section shows the BTs that manage the execution of individual tasks.
 
 ### Board identification
 
+This sub-tree represents a sequence in which:
+1. The robot moves to the starting configuration.
+2. The image from the camera is acquired, and the board is located (if it fails, the procedure is repeated for up to 5 attempts).
+3. The robot moves to a configuration close to the board so that a more accurate localization of the board can be performed.
+4. The image from the camera is acquired, and the localization of the board is performed (again, up to a maximum of 5 attempts are made).
+When the sub-tree is finished, the board reference system is published, and the other tasks can be executed.
+
 <p align="center">
   <img height="300" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/boardIdentificationBT.png">
 </p>
