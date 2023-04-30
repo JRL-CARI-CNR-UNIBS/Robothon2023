@@ -54,7 +54,7 @@ Specifically:
 
 ### Cable positioning
 
-For this task, the robot will follow a simple rectangluar trajectory to unplug the cable, move to the new position and plug in it inside.
+For this task, the robot will follow a simple up-move-down trajectory to unplug the cable, move to the new position and plug in it inside.
 
 ### Open door
 
@@ -70,3 +70,10 @@ Exploiting the jaws, the robot:
 
 ### Cable winding
 
+For this last task, the subtree is structured as follows:
+1. The robot will grasp the cable through the ad-hoc gripper
+2. A series of linear movements wrap the cable around the two sensors
+3. After the second winding is complete, the gripper is moved along the cable until it finds the probe.
+4. The probe is positioned on the floor and through a release-move-grasp movement, the robot can handle the probe directly
+5. A circular movement brings the probe aligned with the white plug
+6. A force-limited movement insert the probe in the plug. After that, the probe is released and moved above in order to be ready for the subsequent task
