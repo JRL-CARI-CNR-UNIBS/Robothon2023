@@ -63,7 +63,7 @@ For this task, the robot will follow a simple up-move-down trajectory to unplug 
 ### Door opening
 
 To open the door on the taskboard, the robot grasp the handle and moves following a circular trajectory around the door's rotational axis.
-A final brief linear movement increases the degree of openness to avoid possible collisions with the following task.
+A final brief linear movement increases the opening to avoid possible collisions with the following task.
 
 <p align="center">
   <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/doorOpeningBT">
