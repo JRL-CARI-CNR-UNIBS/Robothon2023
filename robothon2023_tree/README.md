@@ -8,6 +8,15 @@ Below are the most significant trees related to the accomplishment of the tasks 
 ## Main Behavior-Tree
 The main behavior tree is simply a sequence of sub-trees containing the individual tasks to be performed in the order required by the competition (and editable as desired).
 
+- 📷 Board identification (*init*)
+- 🔵 Press blue button
+- 🎚️ Match slider
+- 🔌 Cable positioning
+- 🚪 Open door
+- ⚡ Test circuit (*probe testing*)
+- 💥 Cable winding (*cable winding*)
+- 🔴 Press red button
+ 
 <p align="center">
   <img height="300" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/mainBT.png">
 </p>
@@ -24,6 +33,6 @@ This section shows the BTs that manage the execution of individual tasks.
 ### Slider (Triangles matching)
 
 <p align="center">
-  <img height="300" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/sliderBT.png">
+  <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/sliderBT.png">
 </p>
 
