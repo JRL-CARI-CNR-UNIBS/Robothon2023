@@ -42,13 +42,13 @@ The online procedure aims to:
 The figure below shows the whole procedure.
 
 ### Task execution management
-A Behavior Tree Executor manages the automatic execution of the tasks. BTs are a very efficient way of creating complex systems that are both modular and flexible. This tool makes it easy to manage the ability to change the order in which tasks are executed, thus creating a flexible application.
+A **Behavior Tree** Executor manages the automatic execution of the tasks. BTs are a very efficient way of creating complex systems that are both modular and flexible. This tool makes it easy to manage the ability to change the order in which tasks are executed, thus creating a flexible application.
 
-The implemented BT structure consists of a SubTree for each Robothon's task, in this way, their order can be changed quickly and easily. The leaves of these SubTrees correspond to the base skills that compose the task, these skills are the basic functions that the UR script proposes, like *movel* (linear move), *movej* (move in joints space) and so on. Universal Robots provides ROS drivers that allow to send UR scripts to the robot to perform them. Using this feature is possible to customize every single skill and then ask the robot to execute it.
+The implemented BT structure consists of a SubTree for each Robothon's task, in this way, their order can be changed quickly and easily. The leaves of these SubTrees correspond to the base skills that compose the task, these skills are the basic functions that the UR script proposes, like *movel* (linear move), *movej* (move in joints space) and so on. **Universal Robots** provides ROS drivers that allow to send UR scripts to the robot to perform them. Using this feature is possible to customize every single skill and then ask the robot to execute it.
 
 The definition of skills is performed using [RL_task_framework](https://github.com/JRL-CARI-CNR-UNIBS/RL_task_framework) that provides a simple BT leaf that, with a simple string input, generates a UR script that corresponds to the desired skill. RL_task_framework works with a task structure that breaks down the task into a sequence of actions and the actions into a sequence of skills. The user has to define ROS parameters for every skill specifying the skill type and its parameters, like velocity, distance, force. The BT leaf receiving the action and skill name can read its parameters and generate the UR command.
 
-BT IMAGE 
+BT IMAGE
 
 ## Repository of software modules
 - [Cell Configuration (Geometric configuration and controllers)](https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/tree/master/robothon2023_cell)
