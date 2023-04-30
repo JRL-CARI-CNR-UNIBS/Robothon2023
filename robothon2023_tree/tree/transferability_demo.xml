@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <root BTCPP_format="4">
-  <BehaviorTree ID="transferability_cable_insertion">
-    <Sequence name="transferability_cable_insertion">
-      <SkillExecutionNode    name="cable_insertion/cable_program"/>
+  <BehaviorTree ID="transferability_demo">
+    <Sequence name="transferability_demo">
+      <SubTree ID='transferability_init'/>
+      <SubTree ID='transferability_cable_insertion'/>
     </Sequence>
   </BehaviorTree>
 </root>

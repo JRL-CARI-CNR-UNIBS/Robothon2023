@@ -5,5 +5,5 @@ cable_insertion:
   cable_program:
     skill_type: "ur_load_program_"
     ur_hw_name: "ur10e_hw"
-    programs: ["/programs/transferability/cable_insertion.urp"]
+    programs: ["/programs/test_skill.urp"]
     play: true

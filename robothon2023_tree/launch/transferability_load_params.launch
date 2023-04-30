@@ -2,9 +2,10 @@
 
 <launch>
   <group ns="RL_params">
-    <rosparam command="load" file="$(find robothon2023_tree)/config/tranferability_init.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_init.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_cable_insertion.yaml"/>
 
-    <rosparam command="load" file="$(find robothon2023_tree)/config/.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_TF_params.yaml"/>
 
   </group>
 </launch>

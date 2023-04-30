@@ -1,0 +1,10 @@
+transferability_init:
+  action_type: "transferability_init"
+
+  move_to_camera_pose_transferability:
+    skill_type: "ur_move_to"
+    goal_frame: "camera_pose_transf"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true

@@ -1,0 +1,6 @@
+<launch>
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="camera_link_broadcaster"
+      args="-0.334, -0.726, 0.968  0, 0, 0.2070703, 0.9783261 base reference_transf" />
+       <!-- quat not aligned 0.002, -0.001, 0.207, 0.978 -->
+</launch>
