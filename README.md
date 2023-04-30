@@ -10,7 +10,7 @@ Authors: Michele Delledonne, Roberto Fausti, Michele Ferrari, Samuele Sandrini
 
 A **6-DoF collaborative robot**, a Universal Robot **UR10e**, is used for object manipulation. The robot is mounted upside down on an actuated linear track. The linear guide is kept in a fixed position for challenge purposes, so the robotic system has 6 degrees of freedom.
 
-The robot is equipped with a classic **two-finger gripper** for pick-place (the **Hand-E Robotiq** model) with **custom fingers** for the e-waste manipulation application that are designed and 3D-printed by the team.
+The robot is equipped with a classic **two-finger gripper** for pick-place (the **Hand-E Robotiq** model) with **custom fingers** for the e-waste manipulation application that has been designed and 3D-printed by the team.
 
 The setup is equipped with a **Vision System** that consists of an RGB-D Camera. The stereo-camera **Realsense-D435** was used, and it is rigidly mounted to the robot. Also, the camera support was designed and 3D-printed by the team.
 
@@ -60,6 +60,7 @@ The definition of skills is performed using [RL_task_framework](https://github.c
 
 ## Dependencies
 Regarding behavior trees we use a well-known library in robotics ([BehaviorTree.CPP](https://github.com/BehaviorTree/BehaviorTree.CPP)) that is based on C++ and it provides a framework to create BehaviorTrees in a flexible, easy to use, reactive and fast way.
+Communication with the UR10e is performed thanks to the [Universal Robot packages](https://github.com/ros-industrial/universal_robot).
 
 ## Quick Start
 To start the framework, four main launcher files are required:
