@@ -21,7 +21,7 @@ Our software framework is developed using **ROS** (Robot Operating System).
 
 The overall **framework** is summarized in figure below.
 <p align="center">
-  <img height="500" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/software_setup.png">
+  <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/software_setup.png">
 </p>
 
 At the beginning, the vision system localizes the board and its feature points, so it reconstructs the position of the board in the robot workspace. Then, the sequence of tasks is executed with respect to such frames. The execution of each task combines different kind of controllers of the robot low-level controller.
@@ -40,6 +40,10 @@ The online procedure aims to:
 2. The features used for reconstructing the position of the task board are the red button and the door handle since they are the ones estimated most accurately.
 
 The figure below shows the whole procedure.
+
+<p align="center">
+  <img height="400" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/vision_system_robothon.png">
+</p>
 
 ### Task execution management
 A **Behavior Tree** Executor manages the automatic execution of the tasks. BTs are a very efficient way of creating complex systems that are both modular and flexible. This tool makes it easy to manage the ability to change the order in which tasks are executed, thus creating a flexible application.
