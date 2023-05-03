@@ -43,6 +43,8 @@ from identification_function import *
 # from segment_anything import sam_model_registry, SamAutomaticMaskGenerator, SamPredictor
 # import supervision as sv
 
+from Inference import OnlineInference
+
 COLOR_FRAME_TOPIC = '/camera/color/image_raw'
 
 GREEN = '\033[92m'
@@ -134,6 +136,12 @@ class BoardLocalization:
         #
         # self.sam = sam_model_registry[MODEL_TYPE](checkpoint=self.weight_path_ssm).to(device=self.device)
         # self.mask_generator = SamAutomaticMaskGenerator(self.sam)
+
+        self.online_board_inference = OnlineInference(weights=self.weight_path,
+                                                      device=0,
+                                                      yaml=self.labels_path,
+                                                      img_size=[1280, 720],
+                                                      half=False)
         rospy.loginfo(GREEN + "Service alive ...." + END)
 
     def make_divisible(self, x, divisor):
@@ -193,14 +201,42 @@ class BoardLocalization:
         det = non_max_suppression(pred_results, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)[0]
         gn = torch.tensor(img_src.shape)[[1, 0, 1, 0]]  # normalization gain whwh
         img_ori = img_src.copy()
-
         features = {"red_button": [],
                     "door_handle": []}
+
         if len(det):
             det[:, :4] = Inferer.rescale(img.shape[2:], det[:, :4], img_src.shape).round()
             return det
         else:
             return None
+
+    def generate_colors(self, i, bgr=False):
+        hex = ('FF3838', 'FF9D97', 'FF701F', 'FFB21D', 'CFD231', '48F90A', '92CC17', '3DDB86', '1A9334', '00D4BB',
+               '2C99A8', '00C2FF', '344593', '6473FF', '0018EC', '8438FF', '520085', 'CB38FF', 'FF95C8', 'FF37C7')
+        palette = []
+        for iter in hex:
+            h = '#' + iter
+            palette.append(tuple(int(h[1 + i:1 + i + 2], 16) for i in (0, 2, 4)))
+        num = len(palette)
+        color = palette[int(i) % num]
+        return (color[2], color[1], color[0]) if bgr else color
+
+    # def plot_box_and_label(self, image, lw, box, label='', color=(128, 128, 128), txt_color=(255, 255, 255),font=cv2.FONT_HERSHEY_COMPLEX):
+    def plot_box_and_label(self, image, lw, box, label='', color=(128, 128, 128), txt_color=(255, 255, 255),
+                           font=cv2.FONT_HERSHEY_COMPLEX):
+        # Add one xyxy box to image with label
+
+        p1, p2 = (int(box[0]), int(box[1])), (int(box[2]), int(box[3]))
+        # p1, p2 = pp
+        cv2.rectangle(image, p1, p2, color, thickness=lw, lineType=cv2.LINE_AA)
+        if label:
+            tf = max(lw - 1, 1)  # font thickness
+            w, h = cv2.getTextSize(label, 0, fontScale=lw / 3, thickness=tf)[0]  # text width, height
+            outside = p1[1] - h - 3 >= 0  # label fits outside box
+            p2 = p1[0] + w, p1[1] - h - 3 if outside else p1[1] + h + 3
+            cv2.rectangle(image, p1, p2, color, -1, cv2.LINE_AA)  # filled
+            cv2.putText(image, label, (p1[0], p1[1] - 2 if outside else p1[1] + h + 2), font, lw / 3, txt_color,
+                        thickness=tf, lineType=cv2.LINE_AA)
 
     def board_localization(self, request):
         rospy.loginfo(SERVICE_CALLBACK.format(SERVICE_NAME_BOARD))
@@ -232,26 +268,52 @@ class BoardLocalization:
             features = {"red_button": [],
                         "door_handle": []}
 
+            inference_result, _, _ = self.online_board_inference.realtime_inference(frame, conf_thres=0.6,
+                                                                                    iou_thres=.45, agnostic_nms=False,
+                                                                                    max_det=1000, view_img=False)
+
+            print("---------------- INFERENCE RESULT -----------")
+            print(inference_result)
             det = self.make_inference(frame, 0.6)
             img_ori = rgb_frame.copy()
-            if det is not None:
-                for *xyxy, conf, cls in reversed(det):
-                    class_num = int(cls)
-
-                    print(f"Category: {self.class_names[class_num]}")
-                    print(f"Confidence: {conf}")
-                    label = None if hide_labels else (
-                        self.class_names[class_num] if hide_conf else f'{self.class_names[class_num]} {conf:.2f}')
-
-                    print((xyxy[0].cpu().data.numpy(), xyxy[1].cpu().data.numpy()))
-
-                    center_x = int((int(xyxy[0].cpu().data.numpy()) + int(xyxy[2].cpu().data.numpy())) / 2)
-                    center_y = int((int(xyxy[1].cpu().data.numpy()) + int(xyxy[3].cpu().data.numpy())) / 2)
-                    if self.class_names[class_num] in features:
-                        features[self.class_names[class_num]] = [center_x, center_y]
-
-                    img_ori = cv2.circle(img_ori, (center_x, center_y), 2, color=(255, 0, 0), thickness=2)
-
+            for recognize_object in inference_result:
+                class_name = recognize_object["class_name"]
+                xywh = recognize_object["xywh"]
+                conf = recognize_object["conf"]
+                if class_name in features:
+                    if features[class_name]:  # If already exist take the one with biggest conf
+                        if features[class_name][2] > conf:
+                            continue
+                    features[class_name] = [xywh[0], xywh[1], conf]
+            print(features)
+            #
+            # features = {"red_button": [],
+            #             "door_handle": []}
+            # if det is not None:
+            #     for *xyxy, conf, cls in reversed(det):
+            #         print("-----")
+            #         print(xyxy)
+            #         class_num = int(cls)
+            #
+            #         print(f"Category: {self.class_names[class_num]}")
+            #         print(f"Confidence: {conf}")
+            #         label = None if hide_labels else (
+            #             self.class_names[class_num] if hide_conf else f'{self.class_names[class_num]} {conf:.2f}')
+            #
+            #         center_x = int((int(xyxy[0].cpu().data.numpy()) + int(xyxy[2].cpu().data.numpy())) / 2)
+            #         center_y = int((int(xyxy[1].cpu().data.numpy()) + int(xyxy[3].cpu().data.numpy())) / 2)
+            #         print(f"Centri: {center_x, center_y}")
+            #         if self.class_names[class_num] in features:
+            #             features[self.class_names[class_num]] = [center_x, center_y]
+            #
+            #         img_ori = cv2.circle(img_ori, (center_x, center_y), 2, color=(255, 0, 0), thickness=2)
+            #         box_xyxy = (xyxy[0].cpu().data.numpy(), xyxy[1].cpu().data.numpy(), xyxy[2].cpu().data.numpy(),
+            #                     xyxy[3].cpu().data.numpy())
+            #         # print(box_xyxy)
+            #         self.plot_box_and_label(img_ori, max(round(sum(img_ori.shape) / 2 * 0.003), 2), box_xyxy, label,
+            #                                 color=self.generate_colors(class_num, True))
+            #         cv2.imwrite("/home/galois/init_file.png", img_ori)
+            # print(features)
             depth_frame = self.realsense.getDistanceFrame()
 
             print(f"Shape depth: {depth_frame.shape}")
@@ -288,7 +350,7 @@ class BoardLocalization:
             if self.first_identification is True and n_red >= 1 and n_door >= 1:
                 self.first_identification = False
                 break
-            if k >= max_trial-1:
+            if k >= max_trial - 1:
                 self.first_identification = True
 
         print(self.red_button_camera)
@@ -362,6 +424,37 @@ class BoardLocalization:
         static_transform_door = self.getStaticTrasformStamped("camera_color_optical_frame", "door_handle",
                                                               self.door_handle_camera,
                                                               [0, 0, 0, 1])
+
+        world_to_board_euler_rot_z = math.atan2(rot_mat_camera_board[1][0], rot_mat_camera_board[0][0])
+
+        tf_params = rospy.get_param('tf_params')
+
+        if ((world_to_board_euler_rot_z > math.radians(90)) or (world_to_board_euler_rot_z < math.radians(-160))):
+            print('Rotate position: ' + str(math.degrees(world_to_board_euler_rot_z)))
+            rospy.set_param("/RL_params/cable_winding/release_to_rotation/traslation", [0.0, 0.0, -0.03])
+            rospy.set_param("/RL_params/cable_winding/release_to_rotation/rotation", [0.0, 0.0, 0.0, 1.0])
+            rospy.set_param("/RL_params/cable_winding/rotation/traslation", [0.0, 0.0, 0.0])
+            rospy.set_param("/RL_params/cable_winding/rotation/rotation", [0.0, 0.0, 0.707, 0.707])
+            rospy.set_param("/RL_params/cable_winding/push_to_pick/MOVEY", 1.0)
+            rospy.set_param("/RL_params/cable_winding/push_2/MOVEY", 1.0)
+            for id, single_tf in enumerate(tf_params):
+                if single_tf["name"] == "probe_insertion":
+                    tf_params[id]["position"] = [0.2275, 0.097, -0.012]
+                    tf_params[id]["quaternion"] = [0.000, 0.000, 0.000, 1.000]
+        else:
+            print('Normal position: ' + str(math.degrees(world_to_board_euler_rot_z)))
+            rospy.set_param("/RL_params/cable_winding/release_to_rotation/traslation", [0.0, 0.0, 0.0])
+            rospy.set_param("/RL_params/cable_winding/release_to_rotation/rotation", [0.0, 0.0, 0.0, 1.0])
+            rospy.set_param("/RL_params/cable_winding/rotation/traslation", [0.0, 0.0, 0.0])
+            rospy.set_param("/RL_params/cable_winding/rotation/rotation", [0.0, 0.0, 0.0, 1.0])
+            rospy.set_param("/RL_params/cable_winding/push_to_pick/MOVEY", -1.0)
+            rospy.set_param("/RL_params/cable_winding/push_2/MOVEY", -1.0)
+            for id, single_tf in enumerate(tf_params):
+                if single_tf["name"] == "probe_insertion":
+                    tf_params[id]["position"] = [0.2275, 0.097, -0.014]
+                    tf_params[id]["quaternion"] = [0.000, 0.000, 1.000, 0.000]
+
+        rospy.set_param('tf_params', tf_params)
 
         rospy.loginfo(GREEN + "Published tf" + END)
 
@@ -1138,7 +1231,6 @@ class BoardLocalization:
         self.image_publisher.publish(self.bridge.cv2_to_imgmsg(img_sub))
         rospy.sleep(0.5)
 
-
         if no_red_triangle and len(right_cnt_centers_upper) >= 1:
             print("Rosso non identificato, Giallo/Verde si. Errore")
             return TriggerResponse(False, NOT_SUCCESSFUL)
@@ -1352,7 +1444,6 @@ class BoardLocalization:
         self.image_publisher.publish(self.bridge.cv2_to_imgmsg(img_sub))
         rospy.sleep(0.5)
 
-
         if no_red_triangle and len(right_cnt_centers_upper) >= 1:
             red_triangle = None
         else:
@@ -1381,7 +1472,8 @@ class BoardLocalization:
 
                 # pass
             elif len(right_cnt_centers_upper) == 2:
-                reference_triangle_id = np.argmin(np.linalg.norm(np.array(right_cnt_centers_upper) - center_blob, axis=1))
+                reference_triangle_id = np.argmin(
+                    np.linalg.norm(np.array(right_cnt_centers_upper) - center_blob, axis=1))
                 reference_triangle_center = right_cnt_centers_upper[reference_triangle_id]
                 right_cnt_centers_upper.pop(reference_triangle_id)
                 target_center = right_cnt_centers_upper[0]
@@ -1420,8 +1512,8 @@ class BoardLocalization:
 
         print(type(img))
         mask = img.copy()
-        mask[:,:,:] = 0
-        mask[300:550, 600:1000,:] = img[300:550, 600:1000,:]
+        mask[:, :, :] = 0
+        mask[300:550, 600:1000, :] = img[300:550, 600:1000, :]
         # cv2.imwrite(f"{self.folder_path}new_screen_{now}.png", mask)
         # Preprocess image
         lb_color = [0, 230, 245]
@@ -1457,8 +1549,9 @@ class BoardLocalization:
             # TODO: Check
 
         # Find centroids
-        img_final, red_triangle_center, red_triangle_2_center, reference_triangle_center, target_triangle_center = find_centroids_independent(edges, dist_percent,
-                                                                                       h_triangle, w_triangle)
+        img_final, red_triangle_center, red_triangle_2_center, reference_triangle_center, target_triangle_center = find_centroids_independent(
+            edges, dist_percent,
+            h_triangle, w_triangle)
         print(f"Red triangle 1: {red_triangle_center}")
         print(f"Red triangle 2: {red_triangle_2_center}")
         print(f"Yellow triangle: {reference_triangle_center}")
@@ -1491,7 +1584,7 @@ class BoardLocalization:
         if red_triangle_center and red_triangle_2_center:
             print("More than one red triangle detected")
             rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, 0, 0.0])
-            rospy.set_param("/RL_params/slider/match_second_triangle/traslation",[0.0, 0, 0.0])
+            rospy.set_param("/RL_params/slider/match_second_triangle/traslation", [0.0, 0, 0.0])
             rospy.set_param("/RL_params/slider/match_second_triangle_return/traslation", [0.0, 0, 0.0])
             return TriggerResponse(False, NOT_SUCCESSFUL)
         elif red_triangle_center and target_triangle_center:
@@ -1503,13 +1596,13 @@ class BoardLocalization:
         elif red_triangle_center and (reference_triangle_center is None) and (target_triangle_center is None):
             print("Only red triangle detected")
             rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, 0, 0.0])
-            rospy.set_param("/RL_params/slider/match_second_triangle/traslation",[0.0, 0, 0.0])
+            rospy.set_param("/RL_params/slider/match_second_triangle/traslation", [0.0, 0, 0.0])
             rospy.set_param("/RL_params/slider/match_second_triangle_return/traslation", [0.0, 0, 0.0])
             return TriggerResponse(False, NOT_SUCCESSFUL)
         elif (red_triangle_center is None) and (reference_triangle_center is None) and (target_triangle_center is None):
             print("Triangle already matched")
             rospy.set_param("/RL_params/slider/match_second_triangle_approach/traslation", [0.0, 0, 0.0])
-            rospy.set_param("/RL_params/slider/match_second_triangle/traslation",[0.0, 0, 0.0])
+            rospy.set_param("/RL_params/slider/match_second_triangle/traslation", [0.0, 0, 0.0])
             rospy.set_param("/RL_params/slider/match_second_triangle_return/traslation", [0.0, 0, 0.0])
             return TriggerResponse(True, SUCCESSFUL)
 
@@ -1546,15 +1639,14 @@ class BoardLocalization:
 
         rospy.loginfo(GREEN + f"Translation open_tip -> base_link: {translation_b_op}" + END)
         rospy.loginfo(GREEN + f"Orientation open_tip -> base_link: {rotation_b_op}" + END)
-        mismatched_angle = (np.arctan2(rotation_b_op[1,0],rotation_b_op[0,0]) - np.pi/2)
-        rospy.loginfo(GREEN + f"Mismatched angle: {mismatched_angle*180.0/np.pi}" + END)
+        mismatched_angle = (np.arctan2(rotation_b_op[1, 0], rotation_b_op[0, 0]) - np.pi / 2)
+        rospy.loginfo(GREEN + f"Mismatched angle: {mismatched_angle * 180.0 / np.pi}" + END)
 
-        mismatched_angle_as_quat = [0.0, 0.0, sin(-mismatched_angle/2.0), cos(-mismatched_angle/2.0)]
+        mismatched_angle_as_quat = [0.0, 0.0, sin(-mismatched_angle / 2.0), cos(-mismatched_angle / 2.0)]
         rospy.set_param("/RL_params/slider/align_slider/rotation",
                         mismatched_angle_as_quat)
         rospy.loginfo(GREEN + f"Mismatched angle quat: {mismatched_angle_as_quat}" + END)
         return TriggerResponse(True, NOT_SUCCESSFUL)
-
 
 
 def main():
