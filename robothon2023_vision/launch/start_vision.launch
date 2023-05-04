@@ -5,4 +5,7 @@
   <!-- <include file="$(find robothon2023_vision)/launch/board_location_service.launch"/> -->
   <include file="$(find robothon2023_vision)/launch/board_location_service_advanced.launch"/>
   <include file="$(find robothon2023_vision)/launch/calib_on_robot.launch"/>
+
+  <node name="circuit_identification" type="DigitDetection.py" pkg="robothon2023_vision" output="screen"/>
+
 </launch>

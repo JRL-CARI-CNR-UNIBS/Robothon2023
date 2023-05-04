@@ -46,4 +46,4 @@ ur10e_hw:
   robot_description_param: /robot_description
   robot_description_planning_param: /robot_description_planning
   dashboard:
-    receive_timeout: 3.0
+    receive_timeout: 10.0

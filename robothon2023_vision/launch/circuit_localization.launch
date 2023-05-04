@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="test" default="true"/>
+  <arg name="images_path" default=""/>
+
+  <node name="circuit_identification" type="DigitDetection.py" pkg="robothon2023_vision" output="screen"/>
+</launch>

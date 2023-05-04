@@ -1,0 +1,10 @@
+# Please insure that your custom_dataset are put in same parent dir with YOLOv6_DIR
+train: /home/gino/miscellaneous/YOLOv6/data/circuit/images/train
+val: /home/gino/miscellaneous/YOLOv6/data/circuit/images/valid
+test: /home/gino/miscellaneous/YOLOv6/data/circuit/images/test
+
+# whether it is coco dataset, only coco dataset should be set to True.
+is_coco: False
+
+nc: 3
+names: ['black_coil', 'heat_sink', 'yellow_coil']

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="test" default="true"/>
+  <arg name="images_path" default=""/>
+
+  <node name="on_screen_digit_detection" type="DigitDetection.py" pkg="robothon2023_vision" output="screen"/>
+  
+</launch>

@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 
 <launch>
+  <include file="$(find robothon2023_tree)/launch/transferability_tf.launch"/>
   <group ns="RL_params">
     <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_init.yaml"/>
     <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_cable_insertion.yaml"/>
-
-    <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_TF_params.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/transferability.yaml"/>
 
   </group>
+  <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_TF_params.yaml"/>
+
 </launch>

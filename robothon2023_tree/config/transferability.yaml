@@ -1,0 +1,29 @@
+transferability:
+  action_type: "transferability"
+
+  test:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/transferability/test.urp"]
+    play: true
+
+  cable_insertion:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/transferability/cable_insertion.urp"]
+    play: true
+
+  resistance_test:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/transferability/test_resistenza.urp"]
+    play: true
+
+  up_from_test:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/transferability/up_from_test.urp"]
+    play: true
+
+  digit_screen_reading:
+    skill_type: "digit_screen_reading"

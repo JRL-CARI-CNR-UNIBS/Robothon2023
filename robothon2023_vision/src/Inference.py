@@ -6,25 +6,26 @@ from yolov6.data.data_augment import letterbox
 import torch
 import numpy as np
 import time
-
+import cv2
 
 class OnlineInference(Inferer):
     def __init__(self, weights, device, yaml, img_size, half, source="", webcam="", webcam_addr=""):
         super().__init__(source, webcam, webcam_addr, weights, device, yaml, img_size, half)
 
     @staticmethod
-    def process_online_image(frame, img_size, stride, half,):
+    def process_online_image(frame, img_size, stride, half, ):
         """Process image before image inference."""
 
         image = letterbox(frame, img_size, stride=stride)[0]
 
         # Convert
-        image = image.transpose((2, 0, 1)) # [::-1]  # HWC to CHW, BGR to RGB
+        image = image.transpose((2, 0, 1))  # [::-1]  # HWC to CHW, BGR to RGB
         image = torch.from_numpy(np.ascontiguousarray(image))
         image = image.half() if half else image.float()  # uint8 to fp16/32
         image /= 255  # 0 - 255 to 0.0 - 1.0
 
         return image, frame
+
     def realtime_inference(self, img, conf_thres, iou_thres, agnostic_nms, max_det, view_img=False):
         inference_result = []
         img, img_src = self.process_online_image(img, self.img_size, self.stride, self.half)
@@ -56,6 +57,9 @@ class OnlineInference(Inferer):
 
                 inference_result.append({"class_name": class_name, "xywh": xywh, "conf": conf.data.cpu().item()})
             img_src = np.asarray(img_ori)
+        cv2.imshow("inference", img_ori)
+        cv2.waitKey(-1)
+        cv2.destroyAllWindows()
         img_result = img_src.copy()
         inference_time = t2 - t1
 

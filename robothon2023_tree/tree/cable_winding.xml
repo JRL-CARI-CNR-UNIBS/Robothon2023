@@ -40,9 +40,16 @@
       <SkillExecutionNode    name="cable_winding/approach_probe_first"/>
       <SkillExecutionNode    name="cable_winding/open_little_gripper"/>
       <SkillExecutionNode    name="cable_winding/approach_probe_second"/>
+      <SkillExecutionNode    name="cable_winding/release_to_rotation"/>
+      <SkillExecutionNode    name="cable_winding/rotation"/>
+      <SkillExecutionNode    name="cable_winding/rotation"/>
       <SkillExecutionNode    name="cable_winding/touch_floor"/>
       <SkillExecutionNode    name="cable_winding/release_floor"/>
+
+      <SkillExecutionNode    name="cable_winding/gripper_pose_01"/>
+      <SkillExecutionNode    name="cable_winding/push_to_pick"/>
       <SkillExecutionNode    name="cable_winding/close_gripper"/>
+      <SkillExecutionNode    name="cable_winding/release_pick"/>
 
       <SkillExecutionNode    name="cable_winding/door_opening"/>
       <SkillExecutionNode    name="cable_winding/door_opening_2"/>

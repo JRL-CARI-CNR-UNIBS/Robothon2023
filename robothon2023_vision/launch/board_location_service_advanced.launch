@@ -7,8 +7,8 @@
   <node name="board_identification" type="BoardLocalizationAdvanced.py" pkg="robothon2023_vision" output="screen">
           <param name="test" value="$(arg test)" />
           <param name="images_path" type="string" value="$(find robothon2023_vision)/file/" />
-          <param name="weight_path" type="string" value="$(find robothon2023_vision)/weight/best_ckpt.pt" />
+          <param name="weight_path" type="string" value="$(find robothon2023_vision)/weight/best_ckpt_board.pt" />
           <param name="labels_path" type="string" value="$(find robothon2023_vision)/config/robothon.yaml" />
-          <param name="weight_path_ssm" type="string" value="$(find robothon2023_vision)/../../weights_ssm/sam_vit_b_01ec64.pth" />
+          <param name="weight_path_ssm" type="string" value="$(find robothon2023_vision)/weight/best_ckpt.pt" />
   </node>
 </launch>

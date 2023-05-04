@@ -159,7 +159,17 @@ cable_winding:
     skill_type: "ur_linear_move"
     reference_frame: "tool_end"
     tool_frame: "tool_end"
-    traslation: [0,0,-0.003]
+    traslation: [0,0,-0.006]
+    rotation: [0, 0, 0, 1]
+    velocity: 1
+    acceleration: 2
+    n_point: 1
+
+  release_pick:
+    skill_type: "ur_linear_move"
+    reference_frame: "tool_end"
+    tool_frame: "tool_end"
+    traslation: [0,0,-0.01]
     rotation: [0, 0, 0, 1]
     velocity: 1
     acceleration: 2
@@ -273,9 +283,9 @@ cable_winding:
     acceleration: 10
     velocity: 3
 
-  gripper_pose_3:
+  gripper_pose_01:
     skill_type: "robotiq_gripper_move"
-    property_id: "pos_12_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
+    property_id: "pos_17_force_100_vel_100" # "pos_15_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
 
   touch_floor:
     skill_type: "ur_simple_touch_tool"
@@ -304,14 +314,13 @@ cable_winding:
     skill_type: "robotiq_gripper_move"
     property_id: "pos_18_force_100_vel_100" # pos_10_force_10_vel_20   (pos_mm_force_N_vel_m/s)
 
-  # push:
-  #   skill_type: "ur_simple_touch_tool"
-  #   MOVEX: 0.0
-  #   MOVEY: -1.0
-  #   MOVEZ: 0.0
-  #   VELOCITY: 0.05
-  #   ACCELERATION: 0.5
-  #   FORCE: 5
+  push_to_pick:
+    skill_type: "ur_simple_touch_tool"
+    MOVEX: 0.0
+    MOVEZ: 0.0
+    VELOCITY: 0.05
+    ACCELERATION: 0.5
+    FORCE: 15
 
   return:
     skill_type: "ur_linear_move"
@@ -371,7 +380,6 @@ cable_winding:
   push_2:
     skill_type: "ur_simple_touch_tool"
     MOVEX: 0.0
-    MOVEY: -1.0
     MOVEZ: 0.0
     VELOCITY: 0.05
     ACCELERATION: 0.5
@@ -530,7 +538,7 @@ cable_winding:
     skill_type: "ur_linear_move"
     reference_frame: "tool_end"
     tool_frame: "tool_end"
-    traslation: [0,-0.08, 0.002]
+    traslation: [0,-0.05, 0.0]
     rotation: [0, 0, 0, 1]
     velocity: 0.5
     acceleration: 0.5
@@ -565,56 +573,56 @@ cable_winding:
     skill_type: "ur_move_to"
     goal_frame: "pose_1"
     tool_frame: "open_tip"
-    acceleration: 10 #adbul
-    velocity: 2.0 #abdul
+    acceleration: 10
+    velocity: 2.0
   pose_2:
     skill_type: "ur_move_to"
     goal_frame: "pose_2"
     tool_frame: "open_tip"
-    acceleration: 10 #adbul
-    velocity: 2.0 #abdul
+    acceleration: 10
+    velocity: 2.0
   pose_3:
     skill_type: "ur_move_to"
     goal_frame: "pose_3"
     tool_frame: "open_tip"
-    acceleration: 10 #adbul
-    velocity: 2.0 #abdul
+    acceleration: 10
+    velocity: 2.0
   pose_4:
     skill_type: "ur_move_to"
     goal_frame: "pose_4"
     tool_frame: "open_tip"
-    acceleration: 10 #adbul
-    velocity: 2.0 #abdul
+    acceleration: 10
+    velocity: 2.0
   pose_5:
     skill_type: "ur_move_to"
     goal_frame: "pose_5"
     tool_frame: "open_tip"
-    acceleration: 10 #adbul
-    velocity: 2.0 #abdul
+    acceleration: 10
+    velocity: 2.0
   pose_6:
     skill_type: "ur_move_to"
     goal_frame: "pose_6"
     tool_frame: "open_tip"
-    acceleration: 10 #adbul
-    velocity: 2.0 #abdul
+    acceleration: 10
+    velocity: 2.0
   pose_7:
     skill_type: "ur_move_to"
     goal_frame: "pose_7"
     tool_frame: "open_tip"
-    acceleration: 10 #adbul
-    velocity: 2.0 #abdul
+    acceleration: 10
+    velocity: 2.0
   pose_8:
     skill_type: "ur_move_to"
     goal_frame: "pose_8"
     tool_frame: "open_tip"
-    acceleration: 10 #adbul
-    velocity: 2.0 #abdul
+    acceleration: 10
+    velocity: 2.0
   pose_9:
     skill_type: "ur_move_to"
     goal_frame: "pose_9"
     tool_frame: "open_tip"
-    acceleration: 10 #adbul
-    velocity: 2.0 #abdul
+    acceleration: 10
+    velocity: 2.0
 
   move_out:
     skill_type: "ur_linear_move"
@@ -625,3 +633,19 @@ cable_winding:
     velocity: 0.2
     acceleration: 5
     n_point: 1
+
+  release_to_rotation:
+    skill_type: "ur_linear_move"
+    reference_frame: "real_tool"
+    tool_frame: "real_tool"
+    velocity: 1
+    acceleration: 5
+    n_point: 1
+
+  rotation:
+    skill_type: "ur_linear_move"
+    reference_frame: "real_tool"
+    tool_frame: "real_tool"
+    velocity: 3
+    acceleration: 5
+    n_point: 3
