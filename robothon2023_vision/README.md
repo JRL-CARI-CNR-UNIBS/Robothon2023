@@ -1,10 +1,7 @@
-# Robothon bringsCARI Vision System
-<p align="center">
-Authors: Michele Delledonne, Roberto Fausti, Michele Ferrari, Samuele Sandrini
-</p>
+# Robothon bisCARI - Vision System Repository
 
 <p align="center">
-  <img height="500" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/vision_system_robothon.png">
+  <img height="300" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/vision_system_robothon.png">
 </p>
 
 The **vision** system is based on a **two-step procedure**: one performed offline and one online for real-time board identification.
