@@ -7,10 +7,14 @@ import torch
 import numpy as np
 import time
 import cv2
+import multiprocessing
+import matplotlib.pyplot as plt
 
 class OnlineInference(Inferer):
     def __init__(self, weights, device, yaml, img_size, half, source="", webcam="", webcam_addr=""):
         super().__init__(source, webcam, webcam_addr, weights, device, yaml, img_size, half)
+
+
 
     @staticmethod
     def process_online_image(frame, img_size, stride, half, ):
@@ -18,13 +22,13 @@ class OnlineInference(Inferer):
 
         image = letterbox(frame, img_size, stride=stride)[0]
 
-        # Convert
-        image = image.transpose((2, 0, 1))  # [::-1]  # HWC to CHW, BGR to RGB
+        image = image.transpose((2, 0, 1))[::-1]  # HWC to CHW, BGR to RGB
         image = torch.from_numpy(np.ascontiguousarray(image))
         image = image.half() if half else image.float()  # uint8 to fp16/32
         image /= 255  # 0 - 255 to 0.0 - 1.0
 
         return image, frame
+
 
     def realtime_inference(self, img, conf_thres, iou_thres, agnostic_nms, max_det, view_img=False):
         inference_result = []
@@ -49,18 +53,26 @@ class OnlineInference(Inferer):
 
                 class_num = int(cls)
                 class_name = self.class_names[class_num]
-
-                if view_img:
-                    label = (f'{self.class_names[class_num]} {conf:.2f}')
-                    self.plot_box_and_label(img_ori, max(round(sum(img_ori.shape) / 2 * 0.003), 2), xyxy, label,
-                                            color=self.generate_colors(class_num, True))
+                label = (f'{self.class_names[class_num]} {conf:.2f}')
+                self.plot_box_and_label(img_ori, max(round(sum(img_ori.shape) / 2 * 0.003), 2), xyxy, label,
+                                        color=self.generate_colors(class_num, True))
 
                 inference_result.append({"class_name": class_name, "xywh": xywh, "conf": conf.data.cpu().item()})
             img_src = np.asarray(img_ori)
-        cv2.imshow("inference", img_ori)
-        cv2.waitKey(-1)
-        cv2.destroyAllWindows()
+        if view_img:
+            def plot():
+                plt.figure(multiprocessing.current_process().name)
+                plt.imshow(cv2.cvtColor(img_ori, cv2.COLOR_RGB2BGR))
+                plt.show()
+
+            # p = multiprocessing.Process(target=plot)
+            # p.start()
+            # cv2.imshow("inference", img_ori)
+            # cv2.waitKey(-1)
+            # cv2.destroyAllWindows()
         img_result = img_src.copy()
         inference_time = t2 - t1
 
         return inference_result, img_result, inference_time
+
+

@@ -8,7 +8,7 @@
     <param name="images_path" type="string" value="$(find robothon2023_vision)/file/" />
     <param name="weight_path_circuit" type="string" value="$(find robothon2023_vision)/weight/best_ckpt_circuit_noAugment_noPreproc.pt" />
     <param name="labels_path_circuit" type="string" value="$(find robothon2023_vision)/config/circuit.yaml" />
-    <param name="weight_path_digits" type="string" value="$(find robothon2023_vision)/weight/best_ckpt_digits.pt" />
+    <param name="weight_path_digits" type="string" value="$(find robothon2023_vision)/weight/best_ckpt_digits_augment_preproc.pt" />
     <param name="labels_path_digits" type="string" value="$(find robothon2023_vision)/config/digits.yaml" />
   </node>
 </launch>
