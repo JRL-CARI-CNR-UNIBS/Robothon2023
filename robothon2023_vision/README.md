@@ -27,6 +27,10 @@ The same method used to identify task board features is applied to the transfera
   <img height="500" src="https://github.com/JRL-CARI-CNR-UNIBS/Robothon2023/blob/master/robothon2023_images/transferability_identification.png">
 </p>
 
+## Datasets
+
+The datasets can be fond [here](https://drive.google.com/drive/folders/1ryi3AYt6uhYTUwoSmcqQi38MafNBGv6B?usp=share_link).
+
 
 ## Authors
 
