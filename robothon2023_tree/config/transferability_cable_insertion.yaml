@@ -2,8 +2,407 @@ cable_insertion:
   action_type: "cable_insertion"
 
 
-  cable_program:
+  # cable_program:
+  #   skill_type: "ur_load_program_"
+  #   ur_hw_name: "ur10e_hw"
+  #   programs: ["/programs/test_skill.urp"]
+  #   play: true
+
+
+  open_gripper:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_85_force_100_vel_100"
+    asinc: true
+
+  close_gripper:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_0_force_100_vel_100"
+
+  close_gripper_little:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_60_force_100_vel_100"
+
+  close_gripper_for_pushing:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_0_force_0_vel_0"
+
+  close_gripper_little_over_wall_plug:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_45_force_100_vel_100"
+
+  close_gripper_before_winding:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_40_force_100_vel_0"
+
+  close_gripper_for_winding:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_8_force_100_vel_0"
+
+  close_gripper_for_winding_loose:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_12_force_100_vel_0"
+
+  open_gripper_after_winding_first:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_25_force_100_vel_0"
+
+
+  move_to_approach_big_connector:
+    skill_type: "ur_move_to"
+    goal_frame: "approach_big_connector"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_grasp_big_connector:
+    skill_type: "ur_move_to"
+    goal_frame: "grasp_big_connector"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_big_connector_exit:
+    skill_type: "ur_move_to"
+    goal_frame: "big_connector_exit"
+    tool_frame: "open_tip"
+    acceleration: 1
+    velocity: 0.1
+    ik: true
+  move_to_big_connector_up:
+    skill_type: "ur_move_to"
+    goal_frame: "big_connector_up"
+    tool_frame: "open_tip"
+    acceleration: 2
+    velocity: 0.2
+    ik: true
+  move_to_intermediate_to_insertion1:
+    skill_type: "ur_move_to"
+    goal_frame: "intermediate_to_insertion1"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_pre_touch:
+    skill_type: "ur_move_to"
+    goal_frame: "pre_touch"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_approach_plug_insertion:
+    skill_type: "ur_move_to"
+    goal_frame: "approach_plug_insertion"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_pre_plug_insertion:
+    skill_type: "ur_move_to"
+    goal_frame: "pre_plug_insertion"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+
+  move_to_plug_insertion:
+    skill_type: "ur_move_to"
+    goal_frame: "plug_insertion"
+    tool_frame: "open_tip"
+    acceleration: 1
+    velocity: 0.1
+    ik: true
+
+  move_to_post_plug_insertion:
+    skill_type: "ur_move_to"
+    goal_frame: "post_plug_insertion"
+    tool_frame: "open_tip"
+    acceleration: 1
+    velocity: 0.1
+    ik: true
+
+  move_to_push_post_plug_insertion:
+    skill_type: "ur_move_to"
+    goal_frame: "push_post_plug_insertion"
+    tool_frame: "open_tip"
+    acceleration: 1
+    velocity: 0.1
+    ik: true
+
+  move_to_release_plug:
+    skill_type: "ur_move_to"
+    goal_frame: "release_plug"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_to_wall_plug:
+    skill_type: "ur_move_to"
+    goal_frame: "to_wall_plug"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 10
+    ik: true
+  move_to_approach_wall_plug:
+    skill_type: "ur_move_to"
+    goal_frame: "approach_wall_plug"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_pick_wall_plug:
+    skill_type: "ur_move_to"
+    goal_frame: "pick_wall_plug"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_over_wall_plug_after_pick:
+    skill_type: "ur_move_to"
+    goal_frame: "over_wall_plug_after_pick"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_approach_big_connector_for_first_touch:
+    skill_type: "ur_move_to"
+    goal_frame: "approach_big_connector_for_first_touch"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_midair_wall_plug_pose:
+    skill_type: "ur_move_to"
+    goal_frame: "midair_wall_plug_pose"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  # move_to_over_socket_1:
+  #   skill_type: "ur_move_to"
+  #   goal_frame: "over_socket_1"
+  #   tool_frame: "open_tip"
+  #   acceleration: 5
+  #   velocity: 0.5
+  #   ik: true
+  # move_to_over_socket_2:
+  #   skill_type: "ur_move_to"
+  #   goal_frame: "over_socket_2"
+  #   tool_frame: "open_tip"
+  #   acceleration: 5
+  #   velocity: 0.5
+  #   ik: true
+  # move_to_approach_socket:
+  #   skill_type: "ur_move_to"
+  #   goal_frame: "approach_socket"
+  #   tool_frame: "open_tip"
+  #   acceleration: 5
+  #   velocity: 0.5
+  #   ik: true
+  # move_to_leaning_socket:
+  #   skill_type: "ur_move_to"
+  #   goal_frame: "approach_socket"
+  #   tool_frame: "open_tip"
+  #   acceleration: 5
+  #   velocity: 0.5
+  #   ik: true
+  move_to_insertion_socket:
+    skill_type: "ur_move_to"
+    goal_frame: "insertion_socket"
+    tool_frame: "open_tip"
+    acceleration: 1
+    velocity: 0.1
+    ik: true
+  move_to_over_socket:
+    skill_type: "ur_move_to"
+    goal_frame: "over_socket"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+  move_to_centering:
+    skill_type: "ur_move_to"
+    goal_frame: "centering"
+    tool_frame: "open_tip"
+    acceleration: 5
+    velocity: 0.5
+    ik: true
+
+## Cable winding
+  move_to_pose_1:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_1"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: true
+  move_to_pose_2:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_2"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_3:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_3"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_4:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_4"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_5:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_5"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_6:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_6"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_7:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_7"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_8:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_8"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_9:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_9"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_10:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_10"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_11:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_11"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_12:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_12"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_13:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_13"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_14:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_14"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_15:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_15"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  move_to_pose_16:
+    skill_type: "ur_move_to"
+    goal_frame: "pose_16"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+## END cable winding
+
+  touch_for_alignment:
     skill_type: "ur_load_program_"
     ur_hw_name: "ur10e_hw"
-    programs: ["/programs/test_skill.urp"]
+    programs: ["/programs/robothon2023/transferability/touch_plug.urp"]
+    play: true
+
+  touch_for_socket:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/robothon2023/transferability/socket.urp"]
+    play: true
+
+  push_socket:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/robothon2023/transferability/push_socket.urp"]
+    play: true
+
+  touch_pick_plug:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/robothon2023/transferability/touch_pick_plug.urp"]
+    play: true
+
+  center_cable:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/robothon2023/center_xz_tool.urp"]
+    play: true
+
+  center_x:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/robothon2023/center_x_tool.urp"]
+    play: true
+  center_y:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/robothon2023/center_y_tool.urp"]
+    play: true
+# Emergency movement
+  emergency_move:
+    skill_type: "ur_linear_move"
+    reference_frame: "circuit_reference"
+    tool_frame: "open_tip"
+    traslation: [0,0,0.1]
+    rotation: [0,0,0,1]
+    velocity: 0.1
+    acceleration: 1
+    n_point: 1
+
+# Altro
+  move_to_side_plug:
+    skill_type: "ur_move_to"
+    goal_frame: "side_plug"
+    tool_frame: "open_tip"
+    acceleration: 1 # winding_acc
+    velocity: 0.2 # winding_vel
+    ik: false
+  pick_plug_v2:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/robothon2023/transferability/pick_plug_v2.urp"]
     play: true

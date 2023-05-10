@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="transferability_test_resistance">
+    <Sequence name="transferability_test_resistance">
+      <SkillExecutionNode    name="test_probe/open_gripper"/>
+      <SkillExecutionNode    name="test_probe/move_to_start_probe_test"/>
+      <!-- <SkillExecutionNode    name="test_probe/move_to_intermediate_to_probe"/> -->
+      <SkillExecutionNode    name="test_probe/move_to_pre_approach_probe"/>
+      <SkillExecutionNode    name="test_probe/move_to_approach_probe"/>
+      <SkillExecutionNode    name="test_probe/move_to_grasp_pose"/>
+      <SkillExecutionNode    name="test_probe/close_gripper"/>
+      <SkillExecutionNode    name="test_probe/move_to_release_pose"/>
+      <SkillExecutionNode    name="test_probe/move_to_resistance_up"/>
+      <SkillExecutionNode    name="test_probe/move_to_sense_resistance"/>
+      <SkillExecutionNode    name="test_probe/sense_resistance"/>
+      <SkillExecutionNode    name="test_probe/digits_recognition"/>
+
+      <SkillExecutionNode    name="test_probe/move_to_sense_resistance"/>
+      <SkillExecutionNode    name="test_probe/move_to_resistance_up"/>
+      <SkillExecutionNode    name="test_probe/move_to_release_pose"/>
+      <!-- <SkillExecutionNode    name="test_probe/open_gripper"/> -->
+
+
+    </Sequence>
+  </BehaviorTree>
+</root>

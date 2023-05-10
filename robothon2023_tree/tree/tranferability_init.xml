@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<root BTCPP_format="4">
-  <BehaviorTree ID="tranferability_init">
-    <Sequence name="tranferability_init">
-      <SkillExecutionNode    name="transferability_init/move_to_camera_pose_transferability"/>
-    </Sequence>
-  </BehaviorTree>
-</root>

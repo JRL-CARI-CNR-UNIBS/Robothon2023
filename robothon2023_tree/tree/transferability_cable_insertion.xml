@@ -2,7 +2,49 @@
 <root BTCPP_format="4">
   <BehaviorTree ID="transferability_cable_insertion">
     <Sequence name="transferability_cable_insertion">
-      <SkillExecutionNode    name="cable_insertion/cable_program"/>
+      <SkillExecutionNode    name="cable_insertion/open_gripper"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_to_wall_plug"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_approach_wall_plug"/>
+      <SkillExecutionNode    name="cable_insertion/touch_for_socket"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_approach_wall_plug"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_over_wall_plug_after_pick"/>
+
+      <SkillExecutionNode    name="cable_insertion/move_to_midair_wall_plug_pose"/>
+      <SkillExecutionNode    name="cable_insertion/center_x"/>
+
+      <SkillExecutionNode    name="cable_insertion/push_socket"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_over_socket"/>
+      <SkillExecutionNode    name="cable_insertion/close_gripper"/>
+
+      <SkillExecutionNode    name="cable_insertion/move_to_side_plug"/>
+      <SkillExecutionNode    name="cable_insertion/pick_plug_v2"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_intermediate_to_insertion1"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_approach_plug_insertion"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pre_plug_insertion"/>
+      <SkillExecutionNode    name="cable_insertion/touch_for_alignment"/>
+
+      <SkillExecutionNode    name="cable_insertion/close_gripper_before_winding"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_1"/>
+      <SkillExecutionNode    name="cable_insertion/close_gripper_for_winding_loose"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_2"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_3"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_4"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_5"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_6"/>
+      <SkillExecutionNode    name="cable_insertion/close_gripper_for_winding"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_7"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_8"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_9"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_10"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_11"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_12"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_13"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_14"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_15"/>
+      <SkillExecutionNode    name="cable_insertion/open_gripper_after_winding_first"/>
+      <SkillExecutionNode    name="cable_insertion/move_to_pose_16"/>
+      <SkillExecutionNode    name="cable_insertion/open_gripper"/>
+
     </Sequence>
   </BehaviorTree>
 </root>

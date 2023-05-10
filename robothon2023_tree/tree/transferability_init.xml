@@ -2,7 +2,29 @@
 <root BTCPP_format="4">
   <BehaviorTree ID="transferability_init">
     <Sequence name="transferability_init">
+
+      <SkillExecutionNode    name="transferability_init/open_gripper"/>
+
       <SkillExecutionNode    name="transferability_init/move_to_camera_pose_transferability"/>
+
+      <RetryUntilSuccessful num_attempts="10">
+        <SkillExecutionNode    name="transferability_init/circuit_localization"/>
+      </RetryUntilSuccessful>
+
+      <!-- <SkillExecutionNode    name="transferability_init/move_to_camera_pose_near"/>
+
+      <RetryUntilSuccessful num_attempts="5">
+        <SkillExecutionNode    name="transferability_init/circuit_localization"/>
+      </RetryUntilSuccessful> -->
+
+      <SkillExecutionNode    name="transferability_init/move_to_calib_circuit_approach"/>
+      <SkillExecutionNode    name="transferability_init/move_to_calib_circuit"/>
+
+      <SkillExecutionNode    name="transferability_init/calib_program"/>
+      <SkillExecutionNode    name="transferability_init/save_circuit_loc"/>
+      <SkillExecutionNode    name="transferability_init/set_ref_params"/>
+      <SkillExecutionNode    name="transferability_init/rotate1"/>
+      <SkillExecutionNode    name="transferability_init/rotate2"/>
     </Sequence>
   </BehaviorTree>
 </root>

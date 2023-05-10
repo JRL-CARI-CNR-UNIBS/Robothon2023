@@ -1,3 +1,88 @@
 tf_params:
-  - {name: "camera_pose_transf",            frame: "base",           position: [-0.276, -0.475, 0.505], quaternion: [0.000, 0.000, 1.000, 0.000]}
+  # - {name: "camera_pose_transf",            frame: "base",         position: [-0.276, -0.525, 0.577], quaternion: [0.000, 0.000, 1.000, 0.000]}
+  # - {name: "camera_pose_transf_near",       frame: "circuit",         position: [0.246, 0.480, 0.756], quaternion: [0.000, -0.000, 0.267, 0.964]}
+  - {name: "start_calibration_approach",    frame: "circuit",      position: [0.043, 0.290, 0.285],  quaternion: [0.998, -0.056, 0.000, -0.000]}
+  - {name: "start_calibration",             frame: "circuit",      position: [0.020, 0.222, -0.036],  quaternion: [1.000, -0.021, -0.000, -0.000]}
+# resistance_test
+  - {name: "start_calibration_approach_rotate1",    frame: "circuit_reference",      position: [-0.111, 0.118, -0.286],  quaternion: [0.004, 0.000, -0.658, 0.753]}
+  - {name: "start_calibration_approach_rotate2",    frame: "circuit_reference",      position: [-0.111, 0.118, -0.286],  quaternion: [0.003, -0.002, 0.067, 0.998]}
+  - {name: "start_probe_test",                      frame: "circuit_reference",      position: [-0.107, -0.054, -0.168],  quaternion: [-0.020, 0.012, -0.722, 0.691]}
+  - {name: "intermediate_to_probe",                 frame: "circuit_reference",      position: [-0.164, -0.054, -0.171],  quaternion:  [0.003, -0.005, 0.994, -0.111]}
+  - {name: "pre_approach_probe",                    frame: "circuit_reference",     position: [-0.312, -0.045, -0.158],  quaternion: [0.001, -0.004, 0.735, 0.678]}
+  - {name: "approach_probe",                        frame: "circuit_reference",     position: [-0.351, 0.034, -0.114],  quaternion: [0.007, 0.009, -0.062, 0.998]}
+  - {name: "grasp_pose",                            frame: "circuit_reference",     position: [-0.349, 0.034, -0.019],  quaternion: [0.007, 0.009, -0.062, 0.998]}
+  - {name: "release_pose",                          frame: "circuit_reference",     position: [-0.349, 0.034, -0.099],  quaternion: [0.007, 0.009, -0.062, 0.998]}
+  - {name: "resistance_up",                         frame: "circuit_reference",     position: [-0.187, -0.107, -0.106],  quaternion: [0.006, 0.027, -0.690, 0.723]}
+  - {name: "sense_resistance",                      frame: "circuit_reference",     position: [-0.184, -0.105, -0.065],  quaternion: [0.005, 0.027, -0.688, 0.726]}
+
+# cable insertion
+  # - {name: "approach_big_connector",                frame: "circuit_reference",     position: [0.210, -0.368, -0.029],  quaternion: [0.002, 0.000, -0.690, 0.724] }
+  - {name: "approach_big_connector",                frame: "circuit_reference",     position: [0.195, -0.377, -0.029],  quaternion: [0.000, 0.000, -0.707, 0.707] }
+  - {name: "approach_big_connector_for_first_touch",frame: "circuit_reference",     position: [0.225, -0.377, -0.029],  quaternion: [0.000, 0.000, -0.707, 0.707] }
+  # - {name: "grasp_big_connector",                   frame: "circuit_reference",     position: [0.210, -0.368, 0.008],   quaternion: [0.002, 0.000, -0.690, 0.724] }
+  - {name: "grasp_big_connector",                   frame: "circuit_reference",     position: [0.195, -0.370, 0.004],   quaternion: [0.002, 0.000, -0.690, 0.724] }
+  # - {name: "big_connector_exit",                    frame: "circuit_reference",     position: [0.174, -0.370, 0.008],   quaternion: [0.002, 0.000, -0.690, 0.724] }
+  - {name: "big_connector_exit",                    frame: "circuit_reference",     position: [0.156, -0.376, 0.004],   quaternion: [0.002, 0.000, -0.690, 0.724] }
+  # - {name: "big_connector_up",                      frame: "circuit_reference",     position: [0.174, -0.370, -0.072],  quaternion: [0.002, 0.000, -0.690, 0.724] }
+  - {name: "big_connector_up",                      frame: "circuit_reference",     position: [0.156, -0.376, -0.096],  quaternion: [0.002, 0.000, -0.690, 0.724] }
+  # [0.018, 0.006, 0.999, -0.034]
+  - {name: "intermediate_to_insertion1",            frame: "circuit_reference",     position: [0.032, -0.522, -0.033],  quaternion: [0.0, 0.0, 1.0, 0.0] }
+  - {name: "pre_touch",                             frame: "circuit_reference",     position: [0.020, -0.354, -0.050],  quaternion: [0.0, 0.0, 1.0, 0.0] }
+  - {name: "approach_plug_insertion",               frame: "circuit_reference",     position: [-0.135, -0.341, -0.010], quaternion: [0.008, -0.016, 1.000, -0.002] }
+  - {name: "pre_plug_insertion",                    frame: "circuit_reference",     position: [-0.135, -0.293, -0.010], quaternion: [0.008, -0.016, 1.000, -0.002] }
+  # - {name: "plug_insertion",                        frame: "circuit_reference",     position: [-0.133, -0.268, -0.003], quaternion: [0.008, -0.016, 1.000, -0.002] }
+  - {name: "plug_insertion",                        frame: "circuit_reference",     position: [-0.139, -0.257, 0.002], quaternion: [0.008, -0.016, 1.000, -0.002] } # t_y = -0.262
+  - {name: "post_plug_insertion",                   frame: "circuit_reference",     position: [-0.139, -0.296, 0.002], quaternion: [0.008, -0.016, 1.000, -0.002] } # t_y = -0.262
+  - {name: "push_post_plug_insertion",              frame: "circuit_reference",     position: [-0.139, -0.286, 0.002], quaternion: [0.008, -0.016, 1.000, -0.002] } # t_y = -0.262
+
+  - {name: "release_plug",                          frame: "circuit_reference",     position: [-0.134, -0.267, -0.042], quaternion: [0.008, -0.016, 1.000, -0.002] }
+  - {name: "to_wall_plug",                          frame: "circuit_reference",     position: [0.164, -0.316, -0.047],  quaternion: [0.003, 0.001, -0.700, 0.714] }
+
+  # - {name: "approach_wall_plug",                    frame: "circuit_reference",     position: [0.234, -0.316, -0.080],  quaternion: [-0.001, -0.003, 1.000, -0.025] }
+  - {name: "approach_wall_plug",                    frame: "circuit_reference",     position: [0.241, -0.316, -0.080],  quaternion: [-0.001, -0.003, 1.000, -0.025] }
+
+  # - {name: "pick_wall_plug",                        frame: "circuit_reference",     position: [0.234, -0.316, -0.043],  quaternion: [-0.001, -0.003, 1.000, -0.025] }
+
+  # - {name: "over_wall_plug_after_pick",             frame: "circuit_reference",     position: [0.087, -0.381, -0.084],  quaternion: [-0.001, -0.003, 1.000, -0.025] }
+  - {name: "over_wall_plug_after_pick",             frame: "circuit_reference",     position: [0.095, -0.378, -0.084],  quaternion: [ 0, 0, 1, 0 ] }
+  - {name: "midair_wall_plug_pose",                 frame: "circuit_reference",     position: [0.095, -0.378, -0.050],  quaternion: [ 0, 0, 1, 0 ] }
+  - {name: "insertion_socket",                      frame: "circuit_reference",     position: [0.095, -0.378, -0.025],  quaternion: [ 0, 0, 1, 0 ] }
+  - {name: "over_socket",                           frame: "circuit_reference",     position: [0.095, -0.378, -0.061],  quaternion: [ 0, 0, 1, 0 ] }
+  - {name: "centering",                             frame: "circuit_reference",     position: [-0.133, -0.260, 0.000],   quaternion: [0.008, -0.016, 1.000, -0.002] }
+
+## CABLE WINDING
+  - {name: "pose_1",                           frame: "circuit_reference",     position: [-0.138, -0.315, -0.003],  quaternion: [-0.015, -0.001, 1.000, -0.009] }
+  # Nota: dopo questo un close_gripper
+  - {name: "pose_2",                           frame: "circuit_reference",      position: [-0.127, -0.356, -0.007],  quaternion: [-0.015, 0.001, 0.982, -0.186]  }
+  - {name: "pose_3",                           frame: "circuit_reference",      position: [-0.065, -0.447, -0.007],  quaternion: [0.014, -0.007, -0.851, 0.524]  }
+  - {name: "pose_4",                           frame: "circuit_reference",      position: [0.124, -0.523, -0.002],   quaternion: [0.011, -0.011, -0.636, 0.772]  }
+  - {name: "pose_5",                           frame: "circuit_reference",      position: [0.289, -0.531, 0.004],    quaternion: [0.007, -0.014, -0.400, 0.917]  }
+  - {name: "pose_6",                           frame: "circuit_reference",      position: [0.408, -0.391, 0.008],    quaternion: [0.003, -0.015, -0.129, 0.991]  }
+  - {name: "pose_7",                           frame: "circuit_reference",      position: [0.376, -0.117, 0.007],    quaternion: [-0.000, -0.015, 0.125, 0.992]  }
+  - {name: "pose_8",                           frame: "circuit_reference",      position: [0.339, 0.029, 0.006],     quaternion: [0.002, -0.015, 0.003, 1.000]   }
+  - {name: "pose_9",                           frame: "circuit_reference",      position: [0.090, 0.027, -0.001],    quaternion: [-0.009, -0.012, 0.717, 0.697]  }
+  - {name: "pose_10",                          frame: "circuit_reference",      position: [0.098, -0.242, -0.002],   quaternion: [0.001, -0.002, 0.717, 0.697]   }
+  - {name: "pose_11",                          frame: "circuit_reference",      position: [0.144, -0.240, -0.002],   quaternion: [-0.001, -0.002, 0.999, -0.053] }
+  - {name: "pose_12",                          frame: "circuit_reference",      position: [0.194, -0.235, -0.026],   quaternion: [-0.001, -0.002, 0.999, -0.053] }
+  - {name: "pose_13",                          frame: "circuit_reference",      position: [0.262, -0.228, -0.025],   quaternion: [-0.001, -0.002, 0.999, -0.053] }
+  - {name: "pose_14",                          frame: "circuit_reference",      position: [0.262, -0.228, 0.003],    quaternion: [-0.002, -0.002, 0.966, -0.260] }
+  - {name: "pose_15",                          frame: "circuit_reference",      position: [0.230, -0.246, 0.006],    quaternion: [-0.140, -0.039, 0.956, -0.257] }
+  - {name: "pose_16",                          frame: "circuit_reference",      position: [0.247, -0.237, -0.058],   quaternion: [-0.129, -0.065, 0.987, -0.068] }
+
+# # new_frame_no_shuko
+
+  - {name: "side_plug",                          frame: "circuit_reference",      position: [0.228, -0.410, -0.03],   quaternion: [0.000, 0.000, -0.707, 0.707] }
+
+# # old_frames
+  # - {name: "approach_big_connector",                frame: "circuit_reference",     position: [0.207, -0.379, -0.015],  quaternion:[0.004, 0.001, -0.701, 0.713]}
+  # - {name: "grasp_big_connector",                   frame: "circuit_reference",     position: [0.210, -0.379, 0.018],  quaternion: [0.004, 0.001, -0.701, 0.713]}
+  # - {name: "big_connector_exit",                    frame: "circuit_reference",     position: [0.173, -0.380, 0.018],  quaternion: [0.004, 0.001, -0.701, 0.713]}
+  # - {name: "big_connector_up",                      frame: "circuit_reference",     position: [0.237, -0.378, -0.094],  quaternion: [0.004, 0.001, -0.701, 0.713]}
+  # - {name: "intermediate_to_insertion1",            frame: "circuit_reference",     position: [0.092, -0.535, -0.063],  quaternion: [0.004, 0.001, -0.699, 0.715]}
+  # - {name: "pre_touch",                             frame: "circuit_reference",     position: [0.016, -0.375, -0.062],  quaternion: [0.004, 0.001, 0.999, 0.034]}
+  # - {name: "approach_plug_insertion",               frame: "circuit_reference",     position: [-0.140, -0.305, -0.008], quaternion: [-0.002, -0.003, 1.000, -0.011]}
+  # - {name: "plug_insertion",                        frame: "circuit_reference",     position: [-0.141, -0.269, -0.008], quaternion: [-0.002, -0.003, 1.000, -0.011]}
+  # - {name: "release_plug",                          frame: "circuit_reference",     position: [-0.124, -0.363, -0.109], quaternion: [-0.002, -0.003, 1.000, -0.011]}
+
+
   # - {name: "reference_transf",                     frame: "base",           position: [-0.334, -0.726, 0.968], quaternion: [0.002, -0.001, 0.207, 0.978]}

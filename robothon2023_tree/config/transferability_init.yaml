@@ -1,9 +1,77 @@
 transferability_init:
   action_type: "transferability_init"
 
+  circuit_localization:
+    skill_type: "circuit_localization"
+
+  set_ref_params:
+    skill_type: "set_ref_params"
+
+  save_circuit_loc:
+    skill_type: "pose_publication"
+    tf_name: "circuit_reference"
+    target_frame: "real_tool"
+
+  open_gripper:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_85_force_100_vel_100"
+    asinc: true
+
+  # move_to_camera_pose_transferability:
+  #   skill_type: "ur_move_to"
+  #   goal_frame: "camera_pose_transf"
+  #   tool_frame: "open_tip"
+  #   acceleration: 15
+  #   velocity: 10
+  #   ik: true
+  #
   move_to_camera_pose_transferability:
+
+    skill_type: "ur_movej"
+    joint_target: [-1.7557299772845667, -1.7890039883055628, -2.3391408920288086, -0.5843008321574708, -1.5722163359271448, 0.18745851516723633]
+    velocity: 10
+    acceleration: 10
+  #
+  # move_to_camera_pose_near:
+  #   skill_type: "ur_move_to"
+  #   goal_frame: "camera_pose_transf_near"
+  #   tool_frame: "open_tip"
+  #   acceleration: 15
+  #   velocity: 10
+  #   ik: true
+
+  move_to_calib_circuit_approach:
     skill_type: "ur_move_to"
-    goal_frame: "camera_pose_transf"
+    goal_frame: "start_calibration_approach"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+
+  move_to_calib_circuit:
+    skill_type: "ur_move_to"
+    goal_frame: "start_calibration"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+
+  calib_program:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/robothon2023/transferability/calibration.urp"]
+    play: true
+
+  rotate1:
+    skill_type: "ur_move_to"
+    goal_frame: "start_calibration_approach_rotate1"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+  rotate2:
+    skill_type: "ur_move_to"
+    goal_frame: "start_calibration_approach_rotate2"
     tool_frame: "open_tip"
     acceleration: 15
     velocity: 10

@@ -1,0 +1,80 @@
+test_probe:
+  action_type: "test_probe"
+
+  digits_recognition:
+    skill_type: "digit_screen_reading"
+
+  open_gripper:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_85_force_100_vel_100"
+    asinc: true
+
+  close_gripper:
+    skill_type: "robotiq_gripper_move"
+    property_id: "pos_0_force_100_vel_100"
+
+  move_to_start_probe_test:
+    skill_type: "ur_move_to"
+    goal_frame: "start_probe_test"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+
+  move_to_intermediate_to_probe:
+    skill_type: "ur_move_to"
+    goal_frame: "intermediate_to_probe"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+
+  move_to_pre_approach_probe:
+    skill_type: "ur_move_to"
+    goal_frame: "pre_approach_probe"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+
+  move_to_approach_probe:
+    skill_type: "ur_move_to"
+    goal_frame: "approach_probe"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+
+  move_to_grasp_pose:
+    skill_type: "ur_move_to"
+    goal_frame: "grasp_pose"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+  move_to_release_pose:
+    skill_type: "ur_move_to"
+    goal_frame: "release_pose"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+  move_to_resistance_up:
+    skill_type: "ur_move_to"
+    goal_frame: "resistance_up"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+  move_to_sense_resistance:
+    skill_type: "ur_move_to"
+    goal_frame: "sense_resistance"
+    tool_frame: "open_tip"
+    acceleration: 15
+    velocity: 10
+    ik: true
+  sense_resistance:
+    skill_type: "ur_load_program_"
+    ur_hw_name: "ur10e_hw"
+    programs: ["/programs/robothon2023/transferability/contact_and_slide.urp"]
+    play: true

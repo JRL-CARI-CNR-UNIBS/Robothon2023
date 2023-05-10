@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
 <launch>
-  <include file="$(find robothon2023_tree)/launch/transferability_tf.launch"/>
   <group ns="RL_params">
     <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_init.yaml"/>
     <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_cable_insertion.yaml"/>
+    <rosparam command="load" file="$(find robothon2023_tree)/config/transferability_test_probe.yaml"/>
     <rosparam command="load" file="$(find robothon2023_tree)/config/transferability.yaml"/>
 
   </group>

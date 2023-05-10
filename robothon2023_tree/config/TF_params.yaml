@@ -70,3 +70,6 @@ tf_params:
   - {name: "pose_7",        frame: "reference",      position: [0.009, 0.121, -0.016],  quaternion: [-0.217, 0.202, 0.677, 0.674]}
   - {name: "pose_8",        frame: "reference",      position: [0.008, 0.137, 0.006],  quaternion: [-0.217, 0.202, 0.677, 0.674]}
   - {name: "pose_9",        frame: "reference",      position: [0.013, 0.182, 0.039],  quaternion: [0.315, -0.328, 0.641, 0.619]}
+
+  - {name: "start_calibration_approach",    frame: "base_link",      position: [0.144, 0.776, 0.672],  quaternion: [-0.000, 0.000, 0.944, -0.330]}
+  - {name: "start_calibration",             frame: "base_link",      position: [0.200, 0.731, 0.993],  quaternion: [0.000, 0.000, 0.955, -0.296]}

@@ -3,11 +3,8 @@
   <BehaviorTree ID="transferability_demo">
     <Sequence name="transferability_demo">
       <SubTree ID='transferability_init'/>
-      <!-- <SkillExecutionNode    name="transferability/test"/>
-      <SkillExecutionNode    name="transferability/cable_insertion"/> -->
-      <!-- <SkillExecutionNode    name="transferability/resistance_test"/>
-      <SkillExecutionNode    name="transferability/digit_screen_reading"/>
-      <SkillExecutionNode    name="transferability/up_from_test"/> -->
+      <SubTree ID='transferability_cable_insertion'/>
+      <SubTree ID='transferability_test_resistance'/>
     </Sequence>
   </BehaviorTree>
 </root>
