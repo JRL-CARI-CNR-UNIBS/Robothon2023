@@ -20,7 +20,6 @@ from cv_bridge import CvBridge, CvBridgeError
 from PIL import Image
 import cv2
 from slider_detect_triangles import *
-from identification_function import *
 
 from Inference import OnlineInference
 
@@ -335,14 +334,7 @@ class BoardLocalization:
         # print(type(mask))
         img = cv2.cvtColor(mask, cv2.COLOR_BGR2RGB)
         img = Image.fromarray(img)
-        # red = []
-        # yellow = []
-        # green = []
-        # try:
-        #     identification(img, red, yellow, green, self.folder_path)
-        # except Exception:
-        #     rospy.info(YELLOW + "Function identifiction failed" + END)
-        # print(type(img))
+
         numpy_image = np.array(img)
         opencv_image = cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
         self.image_publisher.publish(self.bridge.cv2_to_imgmsg(opencv_image))
