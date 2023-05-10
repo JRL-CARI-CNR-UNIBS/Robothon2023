@@ -15,8 +15,8 @@ test:  # test images (optional)
 
 # Classes
 names:
-  0: blue_button
-  1: red_button
+  0: red_button
+  1: blue_button
   2: red_plug
   3: door_handle
   4: slider

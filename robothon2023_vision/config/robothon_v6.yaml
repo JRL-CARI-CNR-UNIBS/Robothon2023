@@ -10,4 +10,4 @@ nc: 4
 is_coco: False
 
 # class names
-names: [ 'blue_button', 'red_button', 'red_plug', 'door_handle', 'slider']
+names: ['red_button', 'blue_button',  'red_plug', 'door_handle', 'slider']

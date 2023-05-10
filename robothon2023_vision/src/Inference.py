@@ -64,7 +64,6 @@ class OnlineInference(Inferer):
                 plt.figure(multiprocessing.current_process().name)
                 plt.imshow(cv2.cvtColor(img_ori, cv2.COLOR_RGB2BGR))
                 plt.show()
-                cv2.imwrite(f"/home/galois/projects/robothon23/src/Robothon2023/robothon2023_vision/file/{multiprocessing.current_process().name}.png",img_ori)
             p = multiprocessing.Process(target=plot)
             p.start()
             # cv2.imshow("inference", img_ori)

@@ -22,7 +22,6 @@ from cv_bridge import CvBridge, CvBridgeError
 from PIL import Image
 import cv2
 from slider_detect_triangles import *
-from identification_function import *
 
 from Inference import OnlineInference
 import multiprocessing
