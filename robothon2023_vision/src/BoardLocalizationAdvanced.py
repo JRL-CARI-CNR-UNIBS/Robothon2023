@@ -280,7 +280,9 @@ class BoardLocalization:
         self.broadcaster.sendTransform(
             [static_transformStamped_board, static_transform_red,
              static_transform_door])
-
+        self.online_board_inference.realtime_inference(frame, conf_thres=0.6,
+                                                       iou_thres=.45, agnostic_nms=False,
+                                                       max_det=1000, view_img=True)
         return TriggerResponse(True, SUCCESSFUL)
 
     def get4Vector(self, vect):
